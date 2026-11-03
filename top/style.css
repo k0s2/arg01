@@ -1,0 +1,88 @@
+/* -------------------------------------------------- */
+/* 基本 */
+/* -------------------------------------------------- */
+
+body {
+    background-color: #000;
+    color: #fff;
+}
+
+#area-main>section {
+    max-width: 720px;
+    padding: 0 20px;
+}
+
+h1 {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 4em;
+}
+
+h1>span.subTitle {
+    font-size: 1.25rem;
+}
+
+h2 {
+    border-bottom: solid 2px #fff;
+    margin-bottom: 0;
+}
+
+h3 {
+    margin-bottom: 0;
+}
+
+section div {
+    margin-bottom: 40px;
+}
+
+section p {
+    margin-top: 4px;
+}
+
+/* -------------------------------------------------- */
+/* 入力エリア*/
+/* -------------------------------------------------- */
+
+/* ラッパー */
+.area-input {
+    margin-top: 40px;
+}
+
+/* 文章 */
+.area-input p {
+    text-align: center;
+}
+
+/* 入力セット */
+.inputSet {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* ボタン */
+.inputSet button {
+    display: inline-flex;
+    padding: 10px 20px;
+    background: #fff;
+    border: none;
+    border-radius: 100px;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.25s;
+    cursor: pointer;
+}
+
+/* ボタン：非活性 */
+.inputSet button:disabled {
+    background: #888;
+    cursor: not-allowed;
+}
+
+/* ボタン：ホバー */
+.inputSet button:not(:disabled):hover {
+    background-color: var(--color-main);
+    color: #fff;
+}
