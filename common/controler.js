@@ -24,6 +24,7 @@ async function loadCollectList() {
         container.innerHTML = html;
 
         initCollectPanel();
+
         renderCollectList();
 
     } catch (error) {
@@ -84,6 +85,8 @@ function renderCollectList() {
         const li = document.createElement("li");
         li.textContent = word;
         list.appendChild(li);
+
+        setEventWordInput(li);
     });
 }
 
@@ -163,19 +166,19 @@ function addCollectWord(word) {
 
     // 対象要素を取得
     const list = document.querySelector("#collectWords");
-    if (!list) {
-        return;
+    if (list) {
+        const li = document.createElement("li");
+        li.textContent = word;
+        li.classList.add("is-new");
+
+        list.appendChild(li);
+
+        li.addEventListener("animationend", function () {
+            li.classList.remove("is-new");
+        });
+
+        setEventWordInput(li);
     }
-
-    const li = document.createElement("li");
-    li.textContent = word;
-    li.classList.add("is-new");
-
-    list.appendChild(li);
-
-    li.addEventListener("animationend", function () {
-        li.classList.remove("is-new");
-    });
 
     // --------------------------------------------------
 
@@ -186,9 +189,7 @@ function addCollectWord(word) {
 // イベントを設定
 // --------------------------------------------------
 
-// 全てのワード要素を取得
 const targets = document.querySelectorAll(".collectWord");
-
 targets.forEach(target => {
 
     // ワードを抽出
@@ -215,6 +216,7 @@ targets.forEach(target => {
         }
 
     });
+
 });
 
 // ====================================================================================================
@@ -228,52 +230,13 @@ let activeInput = null;
 let typingTimer = null;
 
 /**
- * 入力欄の選択状態を管理
- */
-document.addEventListener("click", function (event) {
-
-    // 対象を取得
-    const target = event.target.closest(".inputBox");
-    if (!target) {
-        return;
-    }
-
-    // 前の入力欄の選択状態を解除
-    if (activeInput) {
-        activeInput.classList.remove("is-active");
-    }
-
-    // ●入力ＯＮ
-    if (target != activeInput) {
-        // 中身を空にする
-        target.textContent = "";
-
-        // 現在の入力欄を選択状態にする
-        activeInput = target;
-        activeInput.classList.add("is-active");
-
-        // コレクトリストを開く
-        initCollectPanel(1);
-    }
-    // ●入力ＯＦＦ
-    else {
-        // アクティブ状態を解除
-        activeInput = null;
-    }
-
-});
-
-/**
  * タイピング演出
  */
 function typeWord(element, word) {
-    // 入力欄のアクティブ解除
     element.classList.remove("is-active");
+    activeInput = null;
 
-    // 前のタイピング演出を中断
     clearTimeout(typingTimer);
-
-    // 表示を空にする
     element.textContent = "";
 
     let index = 0;
@@ -295,19 +258,49 @@ function typeWord(element, word) {
 /**
  * コレクトリストのワードを入力欄に挿入
  */
-document.addEventListener("click", function (event) {
-    const target = event.target.closest("#collectWords li");
+function setEventWordInput(target) {
+    target.addEventListener("click", function () {
+        if (!activeInput) {
+            return;
+        }
 
-    if (!target || !activeInput) {
-        return;
-    }
+        const word = target.textContent.trim();
+        typeWord(activeInput, word);
+    });
+}
 
-    if (!activeInput.isConnected) {
-        activeInput = null;
-        return;
-    }
+// --------------------------------------------------
+// イベントを設定
+// --------------------------------------------------
 
-    // ワードをタイピング表示
-    const word = target.textContent.trim();
-    typeWord(activeInput, word);
+/**
+ * 入力欄の選択状態を管理
+ */
+const targetsInput = document.querySelectorAll(".inputBox");
+targetsInput.forEach(target => {
+
+    target.addEventListener("click", function () {
+
+        // ●同じ入力欄をクリックした場合：入力ＯＦＦ
+        if (target === activeInput) {
+            target.classList.remove("is-active");
+            activeInput = null;
+            return;
+        }
+
+        // ●前の入力欄のアクティブ状態を解除
+        if (activeInput) {
+            activeInput.classList.remove("is-active");
+        }
+
+        // 新しい入力欄を選択：入力ＯＮ
+        activeInput = target;
+        activeInput.textContent = "";
+        activeInput.classList.add("is-active");
+
+        // コレクトリストを開く
+        initCollectPanel(1);
+
+    });
+
 });
