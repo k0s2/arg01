@@ -19,7 +19,7 @@ buttonDecide.addEventListener("click", function () {
 
     const inputStart = document.getElementById("");
 
-    if (inputStart.value == "調査を開始") {
+    if (inputStart.textContent == "調査を開始") {
         window.location.href = "page/a-mail.html";
     }
 
