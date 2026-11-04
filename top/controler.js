@@ -1,9 +1,23 @@
+/**
+ * コレクトリストのリセット
+ */
+function listReset() {
+    // リセット
+    localStorage.removeItem("wordList");
 
-const buttonDecide = document.getElementById("button-decide");
+    // ページのリロード
+    location.reload();
+}
+
+// --------------------------------------------------
+// イベントを設定
+// --------------------------------------------------
+
+const buttonDecide = document.getElementById("button-start");
 
 buttonDecide.addEventListener("click", function () {
 
-    const inputStart = document.getElementById("input-start");
+    const inputStart = document.getElementById("");
 
     if (inputStart.value == "調査を開始") {
         window.location.href = "page/a-mail.html";

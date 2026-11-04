@@ -6,8 +6,8 @@
  * コレクトリストのテンプレート読み込み
  */
 async function loadCollectList() {
+    // 読み込み先を取得
     const container = document.querySelector("#collectListContainer");
-
     if (!container) {
         return;
     }
@@ -36,10 +36,8 @@ async function loadCollectList() {
  * @param {Number} mode 0:トグル / 1:開く / 2:閉じる
  */
 function initCollectPanel(mode = 0) {
-    const toggle = document.querySelector("#collectToggle");
     const container = document.querySelector("#collectListContainer");
-
-    if (!toggle || !container) {
+    if (!container) {
         return;
     }
 
@@ -60,15 +58,6 @@ function initCollectPanel(mode = 0) {
             default:
                 container.classList.toggle("is-hidden");
         }
-    }
-
-    // ボタンのクリックイベントは一度だけ登録
-    if (!toggle.dataset.initialized) {
-        toggle.addEventListener("click", function () {
-            changePanel(0);
-        });
-
-        toggle.dataset.initialized = "true";
     }
 
     // 引数に応じて処理を実行
@@ -100,78 +89,15 @@ function renderCollectList() {
 
 // 別ウィンドウからの更新を検出
 window.addEventListener("storage", function (event) {
+
     if (event.key === "wordList") {
         renderCollectList();
     }
+
 });
 
 // ページ読み込み時に実行
 loadCollectList();
-
-// ====================================================================================================
-// ワード自動入力
-// ====================================================================================================
-
-let activeInput = null;
-
-/**
- * 入力欄の選択状態を管理
- */
-document.addEventListener("focusin", function (event) {
-    if (
-        event.target.matches("input, textarea") &&
-        !event.target.readOnly &&
-        !event.target.disabled
-    ) {
-        // 前の入力欄の選択状態を解除
-        if (activeInput) {
-            activeInput.classList.remove("is-active");
-        }
-
-        activeInput = event.target;
-
-        // 現在の入力欄を選択状態にする
-        activeInput.classList.add("is-active");
-    }
-});
-
-/**
- * 最後にフォーカスした入力欄を記憶
- */
-document.addEventListener("focusin", function (event) {
-    if (
-        event.target.matches("input, textarea") &&
-        !event.target.readOnly &&
-        !event.target.disabled
-    ) {
-        activeInput = event.target;
-    }
-});
-
-/**
- * コレクトリストのワードを入力欄に挿入
- */
-document.addEventListener("click", function (event) {
-    const target = event.target.closest("#collectWords li");
-
-    if (!target || !activeInput) {
-        return;
-    }
-
-    const input = activeInput;
-
-    if (!input.isConnected || input.disabled || input.readOnly) {
-        return;
-    }
-
-    // 入力欄の内容をすべて置き換え
-    input.value = target.textContent.trim();
-
-    // 入力イベントを発生させる
-    input.dispatchEvent(new Event("input", {
-        bubbles: true
-    }));
-});
 
 // ====================================================================================================
 // ワードコレクト
@@ -183,9 +109,62 @@ document.addEventListener("click", function (event) {
  * @returns {Boolean}
  */
 function isCollected(word) {
+    // 追加するワードを取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
+    // 既にコレクトされているかどうかを返す
     return words.includes(word);
+}
+
+/**
+ * コレクトリストを更新
+ */
+async function showCollectPanel() {
+    // ローディング表示要素を取得
+    const loading = document.querySelector("#collectLoading");
+    if (!loading) {
+        return;
+    }
+
+    // スタイル制御
+    loading.classList.add("animate-in");
+    loading.classList.remove("is-hidden");
+
+    // ウェイト
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // リストを更新
+    renderCollectList();
+
+    // ウェイト
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // スタイル制御
+    loading.classList.remove("animate-in", "is-visible");
+    loading.classList.add("is-hidden");
+}
+
+/**
+ * ポップアップ
+ */
+function playCollectEffect(target) {
+    const effect = document.createElement("span");
+
+    effect.textContent = "COLLECT";
+    effect.classList.add("collectEffect");
+
+    // クリック位置を取得
+    const rect = target.getBoundingClientRect();
+
+    effect.style.left = `${rect.left + rect.width / 2}px`;
+    effect.style.top = `${rect.top}px`;
+
+    document.body.appendChild(effect);
+
+    // アニメーション終了後に削除
+    effect.addEventListener("animationend", function () {
+        effect.remove();
+    });
 }
 
 /**
@@ -194,6 +173,7 @@ function isCollected(word) {
  * @returns {Boolean} 追加に成功した場合はtrue
  */
 function addCollectWord(word) {
+    // 追加するワードを取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
     // 重複チェック
@@ -201,50 +181,11 @@ function addCollectWord(word) {
         return false;
     }
 
+    // ワードをローカルストレージに追加
     words.push(word);
     localStorage.setItem("wordList", JSON.stringify(words));
 
     return true;
-}
-
-/**
- * コレクトリストを開く
- */
-async function showCollectPanel(newWord = false) {
-    const loading = document.querySelector("#collectLoading");
-    const container = document.querySelector("#collectListContainer");
-
-    if (!loading || !container) {
-        return;
-    }
-
-    const wasOpen = !container.classList.contains("is-hidden");
-
-    // リストを開く
-    initCollectPanel(1);
-
-    if (newWord) {
-        if (wasOpen) {
-            loading.classList.add("animate-in");
-            loading.classList.remove("is-hidden");
-
-            await new Promise(requestAnimationFrame);
-
-            loading.classList.add("is-visible");
-        } else {
-            loading.classList.remove("animate-in", "is-visible");
-            loading.classList.remove("is-hidden");
-        }
-    }
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    renderCollectList();
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-
-    loading.classList.remove("animate-in", "is-visible");
-    loading.classList.add("is-hidden");
 }
 
 // --------------------------------------------------
@@ -272,11 +213,110 @@ targets.forEach(target => {
 
         // 新規追加された場合だけクラスを付与
         if (newWord) {
+            // ポップアップ
+            playCollectEffect(target);
+
+            // リスト更新
+            showCollectPanel();
+
+            // コレクト済み表示に変更
             target.classList.add("collected");
         }
 
-        // リストを開く
-        await showCollectPanel(newWord);
-
     });
+});
+
+// ====================================================================================================
+// ワード自動入力
+// ====================================================================================================
+
+// アクティブなインプットボックス
+let activeInput = null;
+
+// タイピング演出用
+let typingTimer = null;
+
+/**
+ * 入力欄の選択状態を管理
+ */
+document.addEventListener("click", function (event) {
+
+    // 対象を取得
+    const target = event.target.closest(".inputBox");
+    if (!target) {
+        return;
+    }
+
+    // 前の入力欄の選択状態を解除
+    if (activeInput) {
+        activeInput.classList.remove("is-active");
+    }
+
+    // ●入力ＯＮ
+    if (target != activeInput) {
+        // 中身を空にする
+        target.value = "";
+
+        // 現在の入力欄を選択状態にする
+        activeInput = target;
+        activeInput.classList.add("is-active");
+
+        // コレクトリストを開く
+        initCollectPanel(1);
+    }
+    // ●入力ＯＦＦ
+    else {
+        // アクティブ状態を解除
+        activeInput = null;
+    }
+
+});
+
+/**
+ * タイピング演出
+ */
+function typeWord(element, word) {
+    // 入力欄のアクティブ解除
+    element.classList.remove("is-active");
+
+    // 前のタイピング演出を中断
+    clearTimeout(typingTimer);
+
+    // 表示を空にする
+    element.textContent = "";
+
+    let index = 0;
+
+    function typeNext() {
+        if (index >= word.length) {
+            return;
+        }
+
+        element.textContent += word[index];
+        index++;
+
+        typingTimer = setTimeout(typeNext, 100);
+    }
+
+    typeNext();
+}
+
+/**
+ * コレクトリストのワードを入力欄に挿入
+ */
+document.addEventListener("click", function (event) {
+    const target = event.target.closest("#collectWords li");
+
+    if (!target || !activeInput) {
+        return;
+    }
+
+    if (!activeInput.isConnected) {
+        activeInput = null;
+        return;
+    }
+
+    // ワードをタイピング表示
+    const word = target.textContent.trim();
+    typeWord(activeInput, word);
 });
