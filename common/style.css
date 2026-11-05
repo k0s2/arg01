@@ -91,13 +91,6 @@ main {
     animation: inputBoxActive 0.8s ease-in-out infinite alternate;
 }
 
-/* 入力待機中：文字列 */
-.inputBox.is-active::before {
-    content: "INPUT";
-    color: var(--color-collect);
-    font-weight: bold;
-}
-
 /* 枠の点滅 */
 @keyframes inputBoxActive {
     from {
@@ -107,6 +100,32 @@ main {
     to {
         outline-color: inherit;
     }
+}
+
+/* 入力待機中：左右の三角カーソル */
+.inputBox.is-active {
+    position: relative;
+}
+
+.inputBox.is-active::before,
+.inputBox.is-active::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 8px;
+    height: 12px;
+    background-color: var(--color-collect);
+    transform: translateY(-50%);
+}
+
+.inputBox.is-active::before {
+    left: -8px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.inputBox.is-active::after {
+    right: -8px;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
 }
 
 /* -------------------------------------------------- */
