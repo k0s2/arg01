@@ -13,7 +13,7 @@ async function loadCollectList() {
     }
 
     try {
-        const response = await fetch("../common/template/collect-list.html");
+        const response = await fetch("/common/templates/collect-list/index.html");
 
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
@@ -22,8 +22,6 @@ async function loadCollectList() {
         const html = await response.text();
 
         container.innerHTML = html;
-
-        initCollectPanel();
 
         renderCollectList();
 
@@ -223,83 +221,87 @@ function setEventWordInput(target) {
 // モジュール初期化
 // ====================================================================================================
 
-// --------------------------------------------------
-// イベント設定
-// --------------------------------------------------
+export function initWordCollect() {
 
-// 別ウィンドウからの更新を検出
-window.addEventListener("storage", function (event) {
+    // --------------------------------------------------
+    // イベント設定
+    // --------------------------------------------------
 
-    if (event.key === "wordList") {
-        renderCollectList();
-    }
+    // 別ウィンドウからの更新を検出
+    window.addEventListener("storage", function (event) {
 
-});
+        if (event.key === "wordList") {
+            renderCollectList();
+        }
 
-// ワード
-const targets = document.querySelectorAll(".collectWord");
-targets.forEach(target => {
+    });
 
-    // ワードを抽出
-    const word = target.textContent.trim();
+    // ワード
+    const targets = document.querySelectorAll(".collectWord");
+    targets.forEach(target => {
 
-    // すでにコレクト済みならクラスを付与
-    if (isCollected(word)) {
-        target.classList.add("collected");
-    }
+        // ワードを抽出
+        const word = target.textContent.trim();
 
-    // クリックイベントを付与
-    target.addEventListener("click", async function () {
-
-        // ワードを追加
-        const newWord = addCollectWord(word);
-
-        // 新規追加された場合だけクラスを付与
-        if (newWord) {
-            // ポップアップ
-            playCollectEffect(target);
-
-            // コレクト済み表示に変更
+        // すでにコレクト済みならクラスを付与
+        if (isCollected(word)) {
             target.classList.add("collected");
         }
 
-    });
+        // クリックイベントを付与
+        target.addEventListener("click", async function () {
 
-});
+            // ワードを追加
+            const newWord = addCollectWord(word);
 
-// 入力欄
-const targetsInput = document.querySelectorAll(".inputBox");
-targetsInput.forEach(target => {
+            // 新規追加された場合だけクラスを付与
+            if (newWord) {
+                // ポップアップ
+                playCollectEffect(target);
 
-    target.addEventListener("click", function () {
+                // コレクト済み表示に変更
+                target.classList.add("collected");
+            }
 
-        // ●同じ入力欄をクリックした場合：入力ＯＦＦ
-        if (target === activeInput) {
-            target.classList.remove("is-active");
-            activeInput = null;
-            return;
-        }
-
-        // ●前の入力欄のアクティブ状態を解除
-        if (activeInput) {
-            activeInput.classList.remove("is-active");
-        }
-
-        // 新しい入力欄を選択：入力ＯＮ
-        activeInput = target;
-        activeInput.textContent = "";
-        activeInput.classList.add("is-active");
-
-        // コレクトリストを開く
-        initCollectPanel(1);
+        });
 
     });
 
-});
+    // 入力欄
+    const targetsInput = document.querySelectorAll(".inputBox");
+    targetsInput.forEach(target => {
 
-// --------------------------------------------------
-// ページ読み込み時に実行
-// --------------------------------------------------
+        target.addEventListener("click", function () {
 
-// テンプレート読み込み
-loadCollectList();
+            // ●同じ入力欄をクリックした場合：入力ＯＦＦ
+            if (target === activeInput) {
+                target.classList.remove("is-active");
+                activeInput = null;
+                return;
+            }
+
+            // ●前の入力欄のアクティブ状態を解除
+            if (activeInput) {
+                activeInput.classList.remove("is-active");
+            }
+
+            // 新しい入力欄を選択：入力ＯＮ
+            activeInput = target;
+            activeInput.textContent = "";
+            activeInput.classList.add("is-active");
+
+            // コレクトリストを開く
+            initCollectPanel(1);
+
+        });
+
+    });
+
+    // --------------------------------------------------
+    // ページ読み込み時に実行
+    // --------------------------------------------------
+
+    // テンプレート読み込み
+    loadCollectList();
+
+}
