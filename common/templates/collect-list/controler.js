@@ -13,16 +13,19 @@ async function loadCollectList() {
     }
 
     try {
-        const response = await fetch("/common/templates/collect-list/index.html");
-
+        // テンプレートHTMLを取得
+        const response = await fetch(
+            new URL("./index.html", import.meta.url)
+        );
         if (!response.ok) {
             throw new Error(`HTTP error: ${response.status}`);
         }
 
+        // 描画
         const html = await response.text();
-
         container.innerHTML = html;
 
+        // リスト内容を描画
         renderCollectList();
 
     } catch (error) {
