@@ -89,31 +89,6 @@ ul#collectWords {
 }
 
 /* -------------------------------------------------- */
-/* キーワード */
-/* -------------------------------------------------- */
-
-.collectWord {
-    border-bottom: dotted 2px var(--color-main);
-    transition: all 0.25s;
-}
-
-.collectWord:hover {
-    background: var(--color-main);
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.collectWord.collected {
-    border-color: #888;
-}
-
-.collectWord.collected:hover {
-    background: #888;
-    color: #fff;
-}
-
-/* -------------------------------------------------- */
 /* コレクトポップアップ */
 /* -------------------------------------------------- */
 

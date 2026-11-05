@@ -221,3 +221,28 @@ footer {
     font-size: 0.75em;
     text-align: center;
 }
+
+/* -------------------------------------------------- */
+/* キーワード */
+/* -------------------------------------------------- */
+
+/* 基本 */
+.collectWord {
+    border-bottom: dotted 2px var(--color-main);
+    transition: all 0.25s;
+}
+
+/* ホバー */
+.collectWord:not(.collected):hover {
+    background: var(--color-main);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 取得済み */
+.collectWord.collected {
+    border-color: #888;
+
+    cursor: inherit;
+}
