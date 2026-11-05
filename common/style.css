@@ -224,44 +224,53 @@ header>.headerButtons>button>i {
 
 /* トグルボタン */
 #collectToggle .toggleButtonIcon {
-    display: flex;
-    justify-content: right;
-    align-items: center;
+    position: relative;
+    flex-shrink: 0;
 
-    width: 40px;
+    width: 32px;
     height: stretch;
 
     margin-left: 8px;
 
-    background: #000;
-    border: solid 1px var(--color-main);
+    background: #fff;
     border-radius: 100px;
 
-    transition: all 0.25s;
+    transition: background-color 0.25s, border-color 0.25s;
+}
+
+:root {
+    --toggleSize: 16px;
 }
 
 /* トグルボタン：アイコン */
 #collectToggle .toggleButtonIcon::after {
     content: "";
 
-    width: 16px;
-    height: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    width: var(--toggleSize);
+    height: var(--toggleSize);
 
     background: var(--color-main);
-    border: solid 2px #000;
+    border: solid 2px #fff;
     border-radius: 100px;
+    box-sizing: border-box;
+
+    transition: right 0.25s, left 0.25s, border-color 0.25s;
 }
 
 /* トグルボタン：ＯＮ */
 #collectToggle.is-active .toggleButtonIcon {
-    justify-content: left;
-
-    background: #080;
+    background: #cfc;
 }
 
 /* トグルボタン：ＯＮ：アイコン */
 #collectToggle.is-active .toggleButtonIcon::after {
-    border-color: #080;
+    right: calc(100% - var(--toggleSize));
+
+    border-color: #cfc;
 }
 
 /* -------------------------------------------------- */
