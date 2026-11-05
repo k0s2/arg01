@@ -12,21 +12,30 @@ function initCollectPanel(mode = 0) {
         return;
     }
 
+    // ボタン
+    const button = document.getElementById("collectToggle");
+    if (!button) {
+        return;
+    }
+
     // 開閉処理
     switch (mode) {
         // ●開く
         case 1:
             container.classList.remove("is-hidden");
+            button.classList.add("is-active");
             break;
 
         // ●閉じる
         case 2:
             container.classList.add("is-hidden");
+            button.classList.remove("is-active");
             break;
 
         // ●トグル
         default:
             container.classList.toggle("is-hidden");
+            button.classList.toggle("is-active");
     }
 }
 
