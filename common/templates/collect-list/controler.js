@@ -3,37 +3,6 @@
 // ====================================================================================================
 
 /**
- * コレクトリストのテンプレート読み込み
- */
-async function loadCollectList() {
-    // 読み込み先を取得
-    const container = document.querySelector("#collectListContainer");
-    if (!container) {
-        return;
-    }
-
-    try {
-        // テンプレートHTMLを取得
-        const response = await fetch(
-            new URL("./index.html", import.meta.url)
-        );
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-
-        // 描画
-        const html = await response.text();
-        container.innerHTML = html;
-
-        // リスト内容を描画
-        renderCollectList();
-
-    } catch (error) {
-        console.error("コレクトリストの読み込みに失敗しました。", error);
-    }
-}
-
-/**
  * コレクトリストの開閉
  * @param {Number} mode 0:トグル / 1:開く / 2:閉じる
  */
@@ -224,7 +193,9 @@ function setEventWordInput(target) {
 // モジュール初期化
 // ====================================================================================================
 
-export function initWordCollect() {
+import { loadTemplate } from "../../controler.js";
+
+export async function initWordCollect() {
 
     // --------------------------------------------------
     // イベント設定
@@ -304,7 +275,15 @@ export function initWordCollect() {
     // ページ読み込み時に実行
     // --------------------------------------------------
 
-    // テンプレート読み込み
-    loadCollectList();
+    const container = await loadTemplate(
+        import.meta.url,
+        "#collectListContainer"
+    );
+
+    if (!container) {
+        return;
+    }
+
+    renderCollectList();
 
 }
