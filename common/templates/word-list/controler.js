@@ -210,9 +210,23 @@ export async function initWordCollect() {
 
     });
 
+    // トグルボタン
+    const targetToggleButton = document.getElementById("collectToggle");
+    if (targetToggleButton) {
+
+        // クリックイベントを付与
+        targetToggleButton.addEventListener("click", async function () {
+
+            // 開閉
+            initCollectPanel();
+
+        });
+
+    };
+
     // キーワード
-    const targets = document.querySelectorAll(".collectWord");
-    targets.forEach(target => {
+    const targetsKeyword = document.querySelectorAll(".collectWord");
+    targetsKeyword.forEach(target => {
 
         // キーワードを抽出
         const word = target.textContent.trim();

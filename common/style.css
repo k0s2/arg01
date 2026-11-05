@@ -187,7 +187,7 @@ header>h1 {
 }
 
 /* ボタン */
-header button {
+header>.headerButtons>button {
     background: var(--color-main);
     border: solid 1px var(--color-main);
     border-radius: 40px;
@@ -202,8 +202,13 @@ header button {
     cursor: pointer;
 }
 
+/* ボタン：非活性 */
+header>.headerButtons>button.is-hidden {
+    transform: translateY(-50px);
+}
+
 /* ボタン：ホバー */
-header button:hover {
+header>.headerButtons>button:hover {
     background: #000 !important;
 
     color: var(--color-main);
