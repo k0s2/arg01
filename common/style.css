@@ -196,8 +196,9 @@ header>.headerButtons>button {
     border-radius: 40px;
 
     margin: 0 4px;
-    padding: 4px;
+    padding: 0 4px;
 
+    font-size: 24px;
     font-weight: bold;
 
     transition: all 0.25s;
@@ -222,24 +223,32 @@ header>.headerButtons>button>i {
     margin-left: 8px;
 }
 
+/* -------------------------------------------------- */
 /* トグルボタン */
+/* -------------------------------------------------- */
+
+:root {
+    /* ノブサイズ */
+    --toggleSize: 16px;
+
+    /* トラックの余白 */
+    --togglePadding: 2px;
+}
+
+/* 基本 */
 #collectToggle .toggleButtonIcon {
     position: relative;
     flex-shrink: 0;
 
-    width: 32px;
-    height: stretch;
+    width: calc(var(--toggleSize) * 2 + var(--togglePadding) * 2);
+    height: calc(var(--toggleSize) + var(--togglePadding) * 2);
 
-    margin-left: 8px;
+    margin: 4px 0 4px 8px;
 
     background: #fff;
     border-radius: 100px;
 
-    transition: background-color 0.25s, border-color 0.25s;
-}
-
-:root {
-    --toggleSize: 16px;
+    transition: background-color 0.25s;
 }
 
 /* トグルボタン：アイコン */
@@ -247,18 +256,18 @@ header>.headerButtons>button>i {
     content: "";
 
     position: absolute;
-    top: 0;
-    right: 0;
+    top: var(--togglePadding);
+    right: var(--togglePadding);
 
     width: var(--toggleSize);
     height: var(--toggleSize);
 
     background: var(--color-main);
     border: solid 2px #fff;
-    border-radius: 100px;
+    border-radius: 50%;
     box-sizing: border-box;
 
-    transition: right 0.25s, left 0.25s, border-color 0.25s;
+    transition: right 0.25s, border-color 0.25s;
 }
 
 /* トグルボタン：ＯＮ */
@@ -268,7 +277,7 @@ header>.headerButtons>button>i {
 
 /* トグルボタン：ＯＮ：アイコン */
 #collectToggle.is-active .toggleButtonIcon::after {
-    right: calc(100% - var(--toggleSize));
+    right: calc(100% - var(--toggleSize) - var(--togglePadding));
 
     border-color: #cfc;
 }
