@@ -54,16 +54,16 @@ function renderCollectList() {
 }
 
 // ====================================================================================================
-// ワードコレクト
+// キーワードコレクト
 // ====================================================================================================
 
 /**
  * コレクト済みか判定
- * @param {String} word 判定するワード
+ * @param {String} word 判定するキーワード
  * @returns {Boolean} コレクト済みの場合はtrue
  */
 function isCollected(word) {
-    // 追加するワードを取得
+    // 追加するキーワードを取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
     // 既にコレクトされているかどうかを返す
@@ -95,12 +95,12 @@ function playCollectEffect(target) {
 }
 
 /**
- * ワードを追加
- * @param {String} word コレクトするワード
+ * キーワードを追加
+ * @param {String} word コレクトするキーワード
  * @returns {Boolean} 追加に成功した場合はtrue
  */
 function addCollectWord(word) {
-    // 追加するワードを取得
+    // 追加するキーワードを取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
     // 重複チェック
@@ -108,7 +108,7 @@ function addCollectWord(word) {
         return false;
     }
 
-    // ワードをローカルストレージに追加
+    // キーワードをローカルストレージに追加
     words.push(word);
     localStorage.setItem("wordList", JSON.stringify(words));
 
@@ -138,7 +138,7 @@ function addCollectWord(word) {
 }
 
 // ====================================================================================================
-// ワード自動入力
+// キーワード自動入力
 // ====================================================================================================
 
 // アクティブなインプットボックス
@@ -150,7 +150,7 @@ let typingTimer = null;
 /**
  * タイピング演出
  * @param {HTMLElement} target 入力対称
- * @param {String} word ワード
+ * @param {String} word キーワード
  */
 function typeWord(target, word) {
     target.classList.remove("is-active");
@@ -176,7 +176,7 @@ function typeWord(target, word) {
 }
 
 /**
- * コレクトリストのワードを入力欄に挿入
+ * コレクトリストのキーワードを入力欄に挿入
  */
 function setEventWordInput(target) {
     target.addEventListener("click", function () {
@@ -210,11 +210,11 @@ export async function initWordCollect() {
 
     });
 
-    // ワード
+    // キーワード
     const targets = document.querySelectorAll(".collectWord");
     targets.forEach(target => {
 
-        // ワードを抽出
+        // キーワードを抽出
         const word = target.textContent.trim();
 
         // すでにコレクト済みならクラスを付与
@@ -225,7 +225,7 @@ export async function initWordCollect() {
         // クリックイベントを付与
         target.addEventListener("click", async function () {
 
-            // ワードを追加
+            // キーワードを追加
             const newWord = addCollectWord(word);
 
             // 新規追加された場合だけクラスを付与

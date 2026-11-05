@@ -2,8 +2,8 @@
 import { initDialog } from "./templates/dialog/controler.js";
 initDialog();
 
-// ワードコレクト
-import { initWordCollect } from "./templates/collect-list/controler.js";
+// キーワードコレクト
+import { initWordCollect } from "./templates/word-list/controler.js";
 initWordCollect();
 
 /**

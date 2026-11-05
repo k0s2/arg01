@@ -41,7 +41,7 @@ h3 {
 }
 
 section>div {
-    margin-bottom: 24px;
+    margin-bottom: 8px;
 }
 
 section p {
@@ -54,6 +54,7 @@ section p+p {
 
 .box {
     background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
 
     padding: 1em;
 }

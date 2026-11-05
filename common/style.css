@@ -3,8 +3,7 @@
 /* -------------------------------------------------- */
 
 :root {
-    --color-main: #80f;
-    --color-collect: #0c0;
+    --color-main: #0af;
 }
 
 /* -------------------------------------------------- */
@@ -83,7 +82,7 @@ main {
 /* ホバー／有効 */
 .inputBox:hover,
 .inputBox.is-active {
-    outline: solid 3px var(--color-collect);
+    outline: solid 3px var(--color-main);
 }
 
 /* 入力待機中：アニメ */
@@ -94,7 +93,7 @@ main {
 /* 枠の点滅 */
 @keyframes inputBoxActive {
     from {
-        outline-color: var(--color-collect);
+        outline-color: var(--color-main);
     }
 
     to {
@@ -114,7 +113,7 @@ main {
     top: 50%;
     width: 8px;
     height: 12px;
-    background-color: var(--color-collect);
+    background-color: var(--color-main);
     transform: translateY(-50%);
 }
 
@@ -174,7 +173,7 @@ header {
     justify-content: space-between;
 
     background: #000;
-    border-bottom: solid 1px var(--color-collect);
+    border-bottom: solid 1px var(--color-main);
 
     padding: 8px;
 }
@@ -182,15 +181,15 @@ header {
 header>h1 {
     margin: 0;
 
-    color: var(--color-collect);
+    color: var(--color-main);
     font-size: 1rem;
     text-align: start;
 }
 
 /* ボタン */
 header button {
-    background: var(--color-collect);
-    border: solid 1px var(--color-collect);
+    background: var(--color-main);
+    border: solid 1px var(--color-main);
     border-radius: 40px;
 
     margin: 0 4px;
@@ -205,9 +204,9 @@ header button {
 
 /* ボタン：ホバー */
 header button:hover {
-    background: #000;
+    background: #000 !important;
 
-    color: var(--color-collect);
+    color: var(--color-main);
 }
 
 /* -------------------------------------------------- */
@@ -216,9 +215,9 @@ header button:hover {
 
 footer {
     background: #000;
-    border-top: solid 1px var(--color-collect);
+    border-top: solid 1px var(--color-main);
 
-    color: var(--color-collect);
+    color: var(--color-main);
     font-size: 0.75em;
     text-align: center;
 }
