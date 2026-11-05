@@ -67,7 +67,6 @@ main {
     align-items: center;
 
     background: #fff;
-    border: solid 3px transparent;
 
     margin: 0;
     padding: 8px 4px;
@@ -81,19 +80,20 @@ main {
     transition: all 0.25s;
 }
 
-.inputBox:hover {
-    border-color: var(--color-collect);
+/* ホバー／有効 */
+.inputBox:hover,
+.inputBox.is-active {
+    outline: solid 3px var(--color-collect);
 }
 
-/* 有効 */
+/* 入力待機中：アニメ */
 .inputBox.is-active {
-    border-color: var(--color-collect);
     animation: inputBoxActive 0.8s ease-in-out infinite alternate;
 }
 
-/* 「入力待機中」 */
+/* 入力待機中：文字列 */
 .inputBox.is-active::before {
-    content: "入力待機中";
+    content: "INPUT";
     color: var(--color-collect);
     font-weight: bold;
 }
@@ -101,11 +101,11 @@ main {
 /* 枠の点滅 */
 @keyframes inputBoxActive {
     from {
-        border-color: var(--color-collect);
+        outline-color: var(--color-collect);
     }
 
     to {
-        border-color: inherit;
+        outline-color: inherit;
     }
 }
 
@@ -353,17 +353,23 @@ ul#collectWords {
 
 /* 新規ワード */
 #collectWords li.is-new {
-    animation: wordSlideIn 0.25s ease-out both;
+    animation: wordSlideIn 0.5s ease-out both;
 }
 
 @keyframes wordSlideIn {
-    from {
+    0% {
+        background: #0f0;
         opacity: 0;
         transform: translateX(50%);
     }
 
-    to {
+    50% {
+        background: #0f0;
         opacity: 1;
         transform: translateX(0);
+    }
+
+    100% {
+        background: #fff;
     }
 }

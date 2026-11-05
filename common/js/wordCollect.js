@@ -90,18 +90,6 @@ function renderCollectList() {
     });
 }
 
-// 別ウィンドウからの更新を検出
-window.addEventListener("storage", function (event) {
-
-    if (event.key === "wordList") {
-        renderCollectList();
-    }
-
-});
-
-// ページ読み込み時に実行
-loadCollectList();
-
 // ====================================================================================================
 // ワードコレクト
 // ====================================================================================================
@@ -185,40 +173,6 @@ function addCollectWord(word) {
     return true;
 }
 
-// --------------------------------------------------
-// イベントを設定
-// --------------------------------------------------
-
-const targets = document.querySelectorAll(".collectWord");
-targets.forEach(target => {
-
-    // ワードを抽出
-    const word = target.textContent.trim();
-
-    // すでにコレクト済みならクラスを付与
-    if (isCollected(word)) {
-        target.classList.add("collected");
-    }
-
-    // クリックイベントを付与
-    target.addEventListener("click", async function () {
-
-        // ワードを追加
-        const newWord = addCollectWord(word);
-
-        // 新規追加された場合だけクラスを付与
-        if (newWord) {
-            // ポップアップ
-            playCollectEffect(target);
-
-            // コレクト済み表示に変更
-            target.classList.add("collected");
-        }
-
-    });
-
-});
-
 // ====================================================================================================
 // ワード自動入力
 // ====================================================================================================
@@ -269,38 +223,91 @@ function setEventWordInput(target) {
     });
 }
 
-// --------------------------------------------------
-// イベントを設定
-// --------------------------------------------------
+// ====================================================================================================
+// モジュール初期化
+// ====================================================================================================
 
-/**
- * 入力欄の選択状態を管理
- */
-const targetsInput = document.querySelectorAll(".inputBox");
-targetsInput.forEach(target => {
+export function initWordCollect() {
 
-    target.addEventListener("click", function () {
+    // --------------------------------------------------
+    // イベント設定
+    // --------------------------------------------------
 
-        // ●同じ入力欄をクリックした場合：入力ＯＦＦ
-        if (target === activeInput) {
-            target.classList.remove("is-active");
-            activeInput = null;
-            return;
+    // 別ウィンドウからの更新を検出
+    window.addEventListener("storage", function (event) {
+
+        if (event.key === "wordList") {
+            renderCollectList();
         }
-
-        // ●前の入力欄のアクティブ状態を解除
-        if (activeInput) {
-            activeInput.classList.remove("is-active");
-        }
-
-        // 新しい入力欄を選択：入力ＯＮ
-        activeInput = target;
-        activeInput.textContent = "";
-        activeInput.classList.add("is-active");
-
-        // コレクトリストを開く
-        initCollectPanel(1);
 
     });
 
-});
+    // ワード
+    const targets = document.querySelectorAll(".collectWord");
+    targets.forEach(target => {
+
+        // ワードを抽出
+        const word = target.textContent.trim();
+
+        // すでにコレクト済みならクラスを付与
+        if (isCollected(word)) {
+            target.classList.add("collected");
+        }
+
+        // クリックイベントを付与
+        target.addEventListener("click", async function () {
+
+            // ワードを追加
+            const newWord = addCollectWord(word);
+
+            // 新規追加された場合だけクラスを付与
+            if (newWord) {
+                // ポップアップ
+                playCollectEffect(target);
+
+                // コレクト済み表示に変更
+                target.classList.add("collected");
+            }
+
+        });
+
+    });
+
+    // 入力欄
+    const targetsInput = document.querySelectorAll(".inputBox");
+    targetsInput.forEach(target => {
+
+        target.addEventListener("click", function () {
+
+            // ●同じ入力欄をクリックした場合：入力ＯＦＦ
+            if (target === activeInput) {
+                target.classList.remove("is-active");
+                activeInput = null;
+                return;
+            }
+
+            // ●前の入力欄のアクティブ状態を解除
+            if (activeInput) {
+                activeInput.classList.remove("is-active");
+            }
+
+            // 新しい入力欄を選択：入力ＯＮ
+            activeInput = target;
+            activeInput.textContent = "";
+            activeInput.classList.add("is-active");
+
+            // コレクトリストを開く
+            initCollectPanel(1);
+
+        });
+
+    });
+
+    // --------------------------------------------------
+    // ページ読み込み時に実行
+    // --------------------------------------------------
+
+    // テンプレート読み込み
+    loadCollectList();
+
+}
