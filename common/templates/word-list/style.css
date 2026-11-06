@@ -58,7 +58,11 @@ ul#collectWords {
     gap: 8px;
 
     margin: 0;
-    padding: 0 16px;
+}
+
+/* キーワード：パディング */
+ul#collectWords:has(li) {
+    padding: 0 16px 16px;
 }
 
 /* キーワード：ボタン */
@@ -81,9 +85,19 @@ ul#collectWords {
 }
 
 /* キーワード：ボタン：ホバー */
-#collectWords>li:hover {
-    background: var(--color-main);
-    color: #000;
+@media (hover: hover) {
+    #collectWords>li:hover {
+        background: var(--color-main);
+        color: #000;
+    }
+}
+
+/* キーワードが空 */
+#listEmpty {
+    padding: 0 16px;
+
+    color: #aaa;
+    font-weight: normal;
 }
 
 /* 画面幅に余裕がある場合 */
@@ -163,7 +177,7 @@ ul#collectWords {
 
     /* コレクトリスト本体 */
     #collectListContainer {
-        width: 100svw;
+        width: 100%;
         height: 40svh;
 
         transition: height 0.3s ease;

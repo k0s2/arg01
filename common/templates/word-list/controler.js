@@ -44,7 +44,6 @@ function initCollectPanel(mode = 0) {
  */
 function renderCollectList() {
     const list = document.querySelector("#collectWords");
-
     if (!list) {
         return;
     }
@@ -53,13 +52,25 @@ function renderCollectList() {
 
     list.innerHTML = "";
 
-    words.forEach(function (word) {
-        const li = document.createElement("li");
-        li.textContent = word;
-        list.appendChild(li);
+    // ●キーワードを取得している
+    if (words.length > 0) {
 
-        setEventWordInput(li);
-    });
+        words.forEach(function (word) {
+            const li = document.createElement("li");
+            li.textContent = word;
+            list.appendChild(li);
+
+            setEventWordInput(li);
+        });
+    }
+    // ●そうでない場合
+    else {
+        const target = document.getElementById("collectPanel");
+        const p = document.createElement("p");
+        p.innerHTML = "キーワードがありません。<br>水色の点線が付いた文字をクリックし、取得してください。";
+        p.id = "listEmpty";
+        target.appendChild(p);
+    }
 }
 
 // ====================================================================================================
@@ -109,7 +120,18 @@ function playCollectEffect(target) {
  * @returns {Boolean} 追加に成功した場合はtrue
  */
 function addCollectWord(word) {
-    // 追加するキーワードを取得
+    // --------------------------------------------------
+    // 空表示を消す
+    // --------------------------------------------------
+
+    const target = document.getElementById("listEmpty");
+    target.remove();
+
+    // --------------------------------------------------
+    // キーワード追加
+    // --------------------------------------------------
+
+    // 取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
     // 重複チェック

@@ -71,8 +71,14 @@ ul {
     transition: all 0.25s;
 }
 
-/* ホバー／有効 */
-.inputBox:hover,
+/* ホバー */
+@media (hover: hover) {
+    .inputBox:hover {
+        outline: solid 3px var(--color-main);
+    }
+}
+
+/* アクティブ */
 .inputBox.is-active {
     outline: solid 3px var(--color-main);
 }
@@ -150,9 +156,54 @@ button:disabled {
 }
 
 /* ホバー */
-button:not(:disabled):hover {
-    background-color: var(--color-main);
-    color: #fff;
+@media (hover: hover) {
+    button:not(:disabled):hover {
+        background-color: var(--color-main);
+        color: #fff;
+    }
+}
+
+/* -------------------------------------------------- */
+/* ヘッダー＆フッター */
+/* -------------------------------------------------- */
+
+/* ボタン */
+:is(header, footer)>.buttons>button {
+    display: flex;
+    align-items: center;
+
+    background: var(--color-main);
+    border: solid 1px var(--color-main);
+    border-radius: 40px;
+
+    margin: 0 4px;
+    padding: 0 4px;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    transition: all 0.25s;
+
+    cursor: pointer;
+}
+
+/* ボタン：非活性 */
+:is(header, footer)>.buttons>button.is-hidden {
+    transform: translateY(50px);
+}
+
+/* ボタン：ホバー */
+@media (hover: hover) {
+    :is(header, footer)>.buttons>button:hover {
+        background: #000 !important;
+
+        color: var(--color-main);
+    }
+}
+
+/* ボタン：アイコン */
+:is(header, footer)>.buttons>button>i {
+    margin-left: 8px;
 }
 
 /* -------------------------------------------------- */
@@ -178,41 +229,26 @@ header>h1 {
     text-align: start;
 }
 
-/* ボタン */
-header>.headerButtons>button {
+/* -------------------------------------------------- */
+/* フッター */
+/* -------------------------------------------------- */
+
+footer {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 
-    background: var(--color-main);
-    border: solid 1px var(--color-main);
-    border-radius: 40px;
-
-    margin: 0 4px;
-    padding: 0 4px;
-
-    font-size: 24px;
-    font-weight: bold;
-
-    transition: all 0.25s;
-
-    cursor: pointer;
-}
-
-/* ボタン：非活性 */
-header>.headerButtons>button.is-hidden {
-    transform: translateY(-50px);
-}
-
-/* ボタン：ホバー */
-header>.headerButtons>button:hover {
-    background: #000 !important;
+    padding: 8px;
+    background: #000;
+    border-top: solid 1px var(--color-main);
 
     color: var(--color-main);
+    font-size: 0.75em;
+    text-align: center;
 }
 
-/* ボタン：アイコン */
-header>.headerButtons>button>i {
-    margin-left: 8px;
+footer>p {
+    margin: 0;
 }
 
 /* -------------------------------------------------- */
@@ -291,19 +327,6 @@ header>.headerButtons>button>i {
 }
 
 /* -------------------------------------------------- */
-/* フッター */
-/* -------------------------------------------------- */
-
-footer {
-    background: #000;
-    border-top: solid 1px var(--color-main);
-
-    color: var(--color-main);
-    font-size: 0.75em;
-    text-align: center;
-}
-
-/* -------------------------------------------------- */
 /* キーワード */
 /* -------------------------------------------------- */
 
@@ -314,11 +337,13 @@ footer {
 }
 
 /* ホバー */
-.collectWord:not(.collected):hover {
-    background: var(--color-main);
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
+@media (hover: hover) {
+    .collectWord:not(.collected):hover {
+        background: var(--color-main);
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+    }
 }
 
 /* 取得済み */
