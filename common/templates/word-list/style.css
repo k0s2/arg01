@@ -13,7 +13,7 @@
     transition: width 0.3s ease;
 }
 
-/*  */
+/* セクション */
 #collectListContainer section {
     height: 100%;
 }
@@ -23,10 +23,6 @@
     box-sizing: border-box;
 
     position: relative;
-
-    width: 30vw;
-    min-width: 30vw;
-    height: 100%;
 
     border-left: 1px solid var(--color-main);
 
@@ -57,6 +53,10 @@
 
 /* キーワード */
 ul#collectWords {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+
     margin: 0;
     padding: 0 16px;
 }
@@ -80,15 +80,19 @@ ul#collectWords {
     transition: all 0.25s;
 }
 
-/* キーワード：ボタン：間隔 */
-#collectWords>li+li {
-    margin-top: 8px;
-}
-
 /* キーワード：ボタン：ホバー */
 #collectWords>li:hover {
     background: var(--color-main);
     color: #000;
+}
+
+/* 画面幅に余裕がある場合 */
+@media (min-width: 1280px) {
+
+    ul#collectWords {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
 
 /* -------------------------------------------------- */
@@ -144,4 +148,39 @@ ul#collectWords {
     100% {
         background: #fff;
     }
+}
+
+/* -------------------------------------------------- */
+/* スマホ表示 */
+/* -------------------------------------------------- */
+
+@media (max-width: 779px) {
+
+    /* メイン */
+    main {
+        flex-direction: column;
+    }
+
+    /* コレクトリスト本体 */
+    #collectListContainer {
+        width: 100svw;
+        height: 40svh;
+
+        transition: height 0.3s ease;
+    }
+
+    #collectPanel {
+        width: 100%;
+        height: 100%;
+
+        border-top: 1px solid var(--color-main);
+        border-left: none;
+    }
+
+    /* 非表示時 */
+    #collectListContainer.is-hidden {
+        width: 100%;
+        height: 0;
+    }
+
 }
