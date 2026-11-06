@@ -13,7 +13,7 @@ function initCollectPanel(mode = 0) {
     }
 
     // ボタン
-    const button = document.getElementById("collectToggle");
+    const button = document.getElementById("buttonWord");
     if (!button) {
         return;
     }
@@ -22,19 +22,19 @@ function initCollectPanel(mode = 0) {
     switch (mode) {
         // ●開く
         case 1:
-            container.classList.remove("is-hidden");
+            container.classList.add("is-open");
             button.classList.add("is-active");
             break;
 
         // ●閉じる
         case 2:
-            container.classList.add("is-hidden");
+            container.classList.remove("is-open");
             button.classList.remove("is-active");
             break;
 
         // ●トグル
         default:
-            container.classList.toggle("is-hidden");
+            container.classList.toggle("is-open");
             button.classList.toggle("is-active");
     }
 }
@@ -66,10 +66,10 @@ function renderCollectList() {
     // ●そうでない場合
     else {
         const target = document.getElementById("collectPanel");
-        const p = document.createElement("p");
-        p.innerHTML = "キーワードがありません。<br>水色の点線が付いた文字をクリックし、取得してください。";
-        p.id = "listEmpty";
-        target.appendChild(p);
+        const element = document.createElement("p");
+        element.innerHTML = "キーワードがありません。<br>下部に水色の点線が表示されている文字をクリックし、リストに登録してください。";
+        element.id = "listEmpty";
+        target.appendChild(element);
     }
 }
 
@@ -121,14 +121,7 @@ function playCollectEffect(target) {
  */
 function addCollectWord(word) {
     // --------------------------------------------------
-    // 空表示を消す
-    // --------------------------------------------------
-
-    const target = document.getElementById("listEmpty");
-    target.remove();
-
-    // --------------------------------------------------
-    // キーワード追加
+    // キーワード取得
     // --------------------------------------------------
 
     // 取得
@@ -144,12 +137,14 @@ function addCollectWord(word) {
     localStorage.setItem("wordList", JSON.stringify(words));
 
     // --------------------------------------------------
-    // リストに追加
+    // リストに追加する処理
     // --------------------------------------------------
 
-    // 対象要素を取得
-    const list = document.querySelector("#collectWords");
-    if (list) {
+    const addToList = () => {
+        // 対象要素を取得
+        const list = document.querySelector("#collectWords");
+        if (!list) return;
+
         const li = document.createElement("li");
         li.textContent = word;
         li.classList.add("is-new");
@@ -161,6 +156,29 @@ function addCollectWord(word) {
         });
 
         setEventWordInput(li);
+    };
+
+    // --------------------------------------------------
+    // 「キーワードがありません。」を消す
+    // --------------------------------------------------
+
+    // 取得
+    const empty = document.getElementById("listEmpty");
+
+    // 最初のキーワードだった場合
+    if (empty) {
+        // 非表示にする
+        empty.classList.add("is-hidden");
+
+        // 非表示アニメーションが終わった後に処理
+        empty.addEventListener("transitionend", () => {
+            empty.remove();
+            addToList();
+        }, { once: true });
+
+    } else {
+        // 2個目以降はそのまま追加
+        addToList();
     }
 
     // --------------------------------------------------
@@ -242,7 +260,7 @@ export async function initWordCollect() {
     });
 
     // トグルボタン
-    const targetToggleButton = document.getElementById("collectToggle");
+    const targetToggleButton = document.getElementById("buttonWord");
     if (targetToggleButton) {
 
         // クリックイベントを付与

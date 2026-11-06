@@ -13,7 +13,7 @@ function listReset() {
 // イベントを設定
 // --------------------------------------------------
 
-const targetToggleButton = document.getElementById("collectToggle");
+const targetToggleButton = document.getElementById("buttonWord");
 
 // キーワード
 const targetsKeyword = document.querySelectorAll(".collectWord");

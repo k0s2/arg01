@@ -2,15 +2,24 @@
 /* コレクトリスト */
 /* -------------------------------------------------- */
 
+:root {
+    --pannel-width: 30vw;
+}
+
 /* 右側：コレクトリストの領域 */
 #collectListContainer {
-    width: 30vw;
+    width: 0;
     height: 100%;
 
     background: rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(10px);
 
     transition: width 0.3s ease;
+}
+
+/* 開く */
+#collectListContainer.is-open {
+    width: var(--pannel-width);
 }
 
 /* セクション */
@@ -20,19 +29,15 @@
 
 /* コレクトリスト本体 */
 #collectPanel {
-    box-sizing: border-box;
-
     position: relative;
+
+    width: var(--pannel-width);
+    box-sizing: border-box;
 
     border-left: 1px solid var(--color-main);
 
     overflow-y: auto;
     overflow-x: hidden;
-}
-
-/* 非表示時 */
-#collectListContainer.is-hidden {
-    width: 0;
 }
 
 /* 見出し */
@@ -98,6 +103,13 @@ ul#collectWords:has(li) {
 
     color: #aaa;
     font-weight: normal;
+
+    transition: all 0.25s;
+}
+
+/* キーワードが空：非表示 */
+#listEmpty.is-hidden {
+    opacity: 0;
 }
 
 /* 画面幅に余裕がある場合 */
@@ -150,7 +162,7 @@ ul#collectWords:has(li) {
     0% {
         background: var(--color-main);
         opacity: 0;
-        transform: translateX(50%);
+        transform: translateX(100%);
     }
 
     50% {
@@ -178,7 +190,7 @@ ul#collectWords:has(li) {
     /* コレクトリスト本体 */
     #collectListContainer {
         width: 100%;
-        height: 40svh;
+        height: 0;
 
         transition: height 0.3s ease;
     }
@@ -192,9 +204,23 @@ ul#collectWords:has(li) {
     }
 
     /* 非表示時 */
-    #collectListContainer.is-hidden {
+    #collectListContainer.is-open {
         width: 100%;
-        height: 0;
+        height: 40svh;
+    }
+
+    /* キーワード */
+    ul#collectWords {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 479px) {
+
+    /* キーワード */
+    ul#collectWords {
+        grid-template-columns: none;
     }
 
 }

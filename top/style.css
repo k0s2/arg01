@@ -23,12 +23,14 @@ h1 {
 
     margin: 16px 0 24px;
 
-    font-size: 4em;
+    font-size: 80px;
     text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    word-break: keep-all;
 }
 
 h1>span.subTitle {
-    font-size: 1.25rem;
+    font-size: 0.25em;
 }
 
 h2 {
@@ -59,6 +61,14 @@ section p+p {
     padding: 1em;
 }
 
+@media (max-width: 779px) {
+
+    h1 {
+        font-size: 48px;
+    }
+
+}
+
 /* -------------------------------------------------- */
 /* 入力エリア */
 /* -------------------------------------------------- */
@@ -70,4 +80,30 @@ section p+p {
 .area-input p {
     margin-top: 0;
     margin-bottom: 1em;
+}
+
+/* -------------------------------------------------- */
+/* リンク */
+/* -------------------------------------------------- */
+
+a {
+    background: #fff;
+    border-radius: 100px;
+
+    padding: 4px 16px;
+
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+
+    transition: all 0.25s;
+}
+
+/* ホバー */
+@media (hover: hover) {
+    a:hover {
+        background: var(--color-main);
+        color: #fff;
+    }
 }

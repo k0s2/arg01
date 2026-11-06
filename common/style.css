@@ -159,13 +159,27 @@ button:disabled {
 @media (hover: hover) {
     button:not(:disabled):hover {
         background-color: var(--color-main);
+
         color: #fff;
     }
+}
+
+/* アイコン */
+.buttonIcon {
+    margin: 0 8px;
+
+    width: 24px;
+    height: auto;
 }
 
 /* -------------------------------------------------- */
 /* ヘッダー＆フッター */
 /* -------------------------------------------------- */
+
+/* ラッパー */
+:is(header, footer)>.buttons {
+    display: flex;
+}
 
 /* ボタン */
 :is(header, footer)>.buttons>button {
@@ -199,11 +213,6 @@ button:disabled {
 
         color: var(--color-main);
     }
-}
-
-/* ボタン：アイコン */
-:is(header, footer)>.buttons>button>i {
-    margin-left: 8px;
 }
 
 /* -------------------------------------------------- */
@@ -264,14 +273,14 @@ footer>p {
 }
 
 /* 基本 */
-#collectToggle .toggleButtonIcon {
+#buttonWord .toggleButtonIcon {
     position: relative;
     flex-shrink: 0;
 
     width: calc(var(--toggleSize) * 2 + var(--togglePadding) * 2);
     height: calc(var(--toggleSize) + var(--togglePadding) * 2);
 
-    margin: 4px 0 4px 8px;
+    margin: 4px 0;
 
     background: #fff;
     border-radius: 100px;
@@ -280,7 +289,7 @@ footer>p {
 }
 
 /* トグルボタン：アイコン */
-#collectToggle .toggleButtonIcon::after {
+#buttonWord .toggleButtonIcon::after {
     content: "";
 
     position: absolute;
@@ -299,12 +308,12 @@ footer>p {
 }
 
 /* トグルボタン：ＯＮ */
-#collectToggle.is-active .toggleButtonIcon {
+#buttonWord.is-active .toggleButtonIcon {
     background: #cfc;
 }
 
 /* トグルボタン：ＯＮ：アイコン */
-#collectToggle.is-active .toggleButtonIcon::after {
+#buttonWord.is-active .toggleButtonIcon::after {
     right: calc(100% - var(--toggleSize) - var(--togglePadding));
 
     border-color: #cfc;
