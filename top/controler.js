@@ -123,6 +123,12 @@ buttonDecide.addEventListener("click", function () {
         // メールページへ遷移
         window.location.href = new URL("../a-mail/", location.href).href;
 
+    } else if (inputStart.textContent == "") {
+        // ダイアログ表示
+        showDialog("キーワードを入力してください。");
+    } else {
+        // ダイアログ表示
+        showDialog("キーワードが違います。");
     }
 
 });

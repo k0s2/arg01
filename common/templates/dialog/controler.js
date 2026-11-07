@@ -1,6 +1,28 @@
 // テンプレート読み込みモジュール
 import { loadTemplate } from "../../controler.js";
 
+// ダイアログ要素
+let resultContainer = null;
+
+/**
+ * ダイアログを閉じる
+ */
+function hideDialog() {
+    // ダイアログを取得
+    const target = resultContainer.querySelector("#dialog");
+
+    // 非表示クラスを付与
+    target.classList.add("is-hidden");
+
+    // 非表示アニメーションが終わった後に処理
+    target.addEventListener("transitionend", () => {
+
+        // ダイアログ要素を削除
+        resultContainer.remove();
+
+    }, { once: true });
+}
+
 /**
  * ダイアログを表示
  * @param {String} message 確認文章
@@ -10,10 +32,11 @@ export async function showDialog(message, title = "", buttons = null) {
     return new Promise(async (resolve) => {
 
         // --------------------------------------------------
-        // テンプレート読み込み
+        // テンプレート
         // --------------------------------------------------
 
-        let resultContainer = await loadTemplate(
+        // 読み込み
+        resultContainer = await loadTemplate(
             import.meta.url,
             null
         );
@@ -58,36 +81,33 @@ export async function showDialog(message, title = "", buttons = null) {
         // 閉じるボタン
         // --------------------------------------------------
 
-        // ●設定値あり
-        if (buttons) {
-            // ボタン配置位置を取得
-            const targetButtons = resultContainer.querySelector(".buttons");
-
-            buttons.forEach((text, index) => {
-                // ボタンを追加
-                const button = document.createElement("button");
-                button.textContent = text;
-                button.addEventListener("click", () => {
-                    // ダイアログを閉じる
-                    resultContainer.remove();
-                    resolve(index);
-                });
-                targetButtons.appendChild(button);
-            });
-
-        }
         // ●設定値なし
-        else {
-            // 「閉じる」ボタンを追加
+        if (!buttons) {
+            // 「閉じる」ボタンのみにする
+            buttons = ["閉じる"];
+        }
+
+        // ボタン配置位置を取得
+        const targetButtons = resultContainer.querySelector(".buttons");
+
+        // 設定値ごとに処理
+        buttons.forEach((text, index) => {
+            // ボタンを生成
             const button = document.createElement("button");
-            button.textContent = "閉じる";
+            button.textContent = text;
+
+            // クリックイベントを追加
             button.addEventListener("click", () => {
                 // ダイアログを閉じる
-                resultContainer.remove();
-                resolve(-1);
+                hideDialog();
+
+                // 選択インデックスを渡す
+                resolve(index);
             });
-            resultContainer.querySelector(".buttons").appendChild(button);
-        }
+
+            // ボタンエリアに追加
+            targetButtons.appendChild(button);
+        });
 
         // --------------------------------------------------
         // 枠外をクリックで閉じる
@@ -99,7 +119,9 @@ export async function showDialog(message, title = "", buttons = null) {
             // 子要素クリックで発火しないようにする
             if (event.target === event.currentTarget) {
                 // ダイアログを閉じる
-                resultContainer.remove();
+                hideDialog();
+
+                // 選択インデックスを渡す
                 resolve(-1);
             }
 
@@ -109,7 +131,14 @@ export async function showDialog(message, title = "", buttons = null) {
         // トランジション
         // --------------------------------------------------
 
-        resultContainer.querySelector("#dialog").classList.remove("is-closed");
+        // 描画を待つ
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // 非表示クラスを除去
+                const target = resultContainer.querySelector("#dialog");
+                target.classList.remove("is-hidden");
+            });
+        });
 
     });
 
