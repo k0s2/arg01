@@ -340,14 +340,14 @@ footer>p {
 /* -------------------------------------------------- */
 
 /* 基本 */
-.collectWord {
+.keyword {
     border-bottom: dotted 2px var(--color-main);
     transition: all 0.25s;
 }
 
 /* ホバー */
 @media (hover: hover) {
-    .collectWord:not(.collected):hover {
+    .keyword:not(.collected):hover {
         background: var(--color-main);
         color: #fff;
         font-weight: bold;
@@ -356,7 +356,7 @@ footer>p {
 }
 
 /* 取得済み */
-.collectWord.collected {
+.keyword.collected {
     border-color: #888;
 
     cursor: inherit;

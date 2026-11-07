@@ -1,12 +1,12 @@
 /* -------------------------------------------------- */
-/* コレクトリスト */
+/* キーワードリスト */
 /* -------------------------------------------------- */
 
 :root {
     --pannel-width: 30vw;
 }
 
-/* 右側：コレクトリストの領域 */
+/* 右側：キーワードリストの領域 */
 #collectListContainer {
     width: 0;
     height: 100%;
@@ -27,7 +27,7 @@
     height: 100%;
 }
 
-/* コレクトリスト本体 */
+/* キーワードリスト本体 */
 #collectPanel {
     position: relative;
 
@@ -57,7 +57,7 @@
 }
 
 /* キーワード */
-ul#collectWords {
+ul#keywords {
     display: grid;
     grid-template-columns: 1fr;
     gap: 8px;
@@ -66,12 +66,12 @@ ul#collectWords {
 }
 
 /* キーワード：パディング */
-ul#collectWords:has(li) {
+ul#keywords:has(li) {
     padding: 0 16px 16px;
 }
 
 /* キーワード：ボタン */
-#collectWords>li {
+#keywords>li {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -91,7 +91,7 @@ ul#collectWords:has(li) {
 
 /* キーワード：ボタン：ホバー */
 @media (hover: hover) {
-    #collectWords>li:hover {
+    #keywords>li:hover {
         background: var(--color-main);
         color: #000;
     }
@@ -115,14 +115,14 @@ ul#collectWords:has(li) {
 /* 画面幅に余裕がある場合 */
 @media (min-width: 1280px) {
 
-    ul#collectWords {
+    ul#keywords {
         grid-template-columns: repeat(2, 1fr);
     }
 
 }
 
 /* -------------------------------------------------- */
-/* コレクトポップアップ */
+/* 取得ポップアップ */
 /* -------------------------------------------------- */
 
 .collectEffect {
@@ -150,11 +150,11 @@ ul#collectWords:has(li) {
 }
 
 /* -------------------------------------------------- */
-/* コレクトリスト：更新 */
+/* キーワードリスト：更新 */
 /* -------------------------------------------------- */
 
 /* 新規キーワード */
-#collectWords li.is-new {
+#keywords li.is-new {
     animation: wordSlideIn 0.5s ease-out both;
 }
 
@@ -187,7 +187,7 @@ ul#collectWords:has(li) {
         flex-direction: column;
     }
 
-    /* コレクトリスト本体 */
+    /* キーワードリスト本体 */
     #collectListContainer {
         width: 100%;
         height: 0;
@@ -210,7 +210,7 @@ ul#collectWords:has(li) {
     }
 
     /* キーワード */
-    ul#collectWords {
+    ul#keywords {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -219,7 +219,7 @@ ul#collectWords:has(li) {
 @media (max-width: 479px) {
 
     /* キーワード */
-    ul#collectWords {
+    ul#keywords {
         grid-template-columns: none;
     }
 

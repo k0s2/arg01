@@ -86,7 +86,14 @@ section p+p {
 /* リンク */
 /* -------------------------------------------------- */
 
-a {
+.links {
+    display: flex;
+    gap: 8px;
+}
+
+.links>a {
+    display: inline-flex;
+
     background: #fff;
     border-radius: 100px;
 
@@ -100,9 +107,15 @@ a {
     transition: all 0.25s;
 }
 
+.links>a>.buttonIcon {
+    margin-left: 0;
+
+    width: 16px;
+}
+
 /* ホバー */
 @media (hover: hover) {
-    a:hover {
+    .links>a:hover {
         background: var(--color-main);
         color: #fff;
     }

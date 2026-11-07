@@ -1,9 +1,9 @@
 // ====================================================================================================
-// コレクトリスト
+// キーワードリスト
 // ====================================================================================================
 
 /**
- * コレクトリストの開閉
+ * キーワードリストの開閉
  * @param {Number} mode 0:トグル / 1:開く / 2:閉じる
  */
 function initCollectPanel(mode = 0) {
@@ -40,10 +40,10 @@ function initCollectPanel(mode = 0) {
 }
 
 /**
- * コレクトリストの描画
+ * キーワードリストの描画
  */
 function renderCollectList() {
-    const list = document.querySelector("#collectWords");
+    const list = document.querySelector("#keywords");
     if (!list) {
         return;
     }
@@ -74,19 +74,19 @@ function renderCollectList() {
 }
 
 // ====================================================================================================
-// キーワードコレクト
+// キーワード取得
 // ====================================================================================================
 
 /**
- * コレクト済みか判定
+ * 取得済みか判定
  * @param {String} word 判定するキーワード
- * @returns {Boolean} コレクト済みの場合はtrue
+ * @returns {Boolean} 取得済みの場合はtrue
  */
 function isCollected(word) {
     // 追加するキーワードを取得
     const words = JSON.parse(localStorage.getItem("wordList") || "[]");
 
-    // 既にコレクトされているかどうかを返す
+    // 既に取得されているかどうかを返す
     return words.includes(word);
 }
 
@@ -116,7 +116,7 @@ function playCollectEffect(target) {
 
 /**
  * キーワードを追加
- * @param {String} word コレクトするキーワード
+ * @param {String} word 取得するキーワード
  * @returns {Boolean} 追加に成功した場合はtrue
  */
 function addCollectWord(word) {
@@ -142,7 +142,7 @@ function addCollectWord(word) {
 
     const addToList = () => {
         // 対象要素を取得
-        const list = document.querySelector("#collectWords");
+        const list = document.querySelector("#keywords");
         if (!list) return;
 
         const li = document.createElement("li");
@@ -225,7 +225,7 @@ function typeWord(target, word) {
 }
 
 /**
- * コレクトリストのキーワードを入力欄に挿入
+ * キーワードリストのキーワードを入力欄に挿入
  */
 function setEventWordInput(target) {
     target.addEventListener("click", function () {
@@ -242,8 +242,12 @@ function setEventWordInput(target) {
 // モジュール初期化
 // ====================================================================================================
 
+// テンプレート読み込みモジュール
 import { loadTemplate } from "../../controler.js";
 
+/**
+ * 初期化
+ */
 export async function initWordCollect() {
 
     // --------------------------------------------------
@@ -274,13 +278,13 @@ export async function initWordCollect() {
     };
 
     // キーワード
-    const targetsKeyword = document.querySelectorAll(".collectWord");
+    const targetsKeyword = document.querySelectorAll(".keyword");
     targetsKeyword.forEach(target => {
 
         // キーワードを抽出
         const word = target.textContent.trim();
 
-        // すでにコレクト済みならクラスを付与
+        // すでに取得済みならクラスを付与
         if (isCollected(word)) {
             target.classList.add("collected");
         }
@@ -296,7 +300,7 @@ export async function initWordCollect() {
                 // ポップアップ
                 playCollectEffect(target);
 
-                // コレクト済み表示に変更
+                // 取得済み表示に変更
                 target.classList.add("collected");
             }
 
@@ -327,7 +331,7 @@ export async function initWordCollect() {
             activeInput.textContent = "";
             activeInput.classList.add("is-active");
 
-            // コレクトリストを開く
+            // キーワードリストを開く
             initCollectPanel(1);
 
         });
@@ -335,18 +339,21 @@ export async function initWordCollect() {
     });
 
     // --------------------------------------------------
-    // ページ読み込み時に実行
+    // キーワードリストのテンプレートを読み込み
     // --------------------------------------------------
 
-    const container = await loadTemplate(
+    // テンプレート読み込み
+    const resultContainer = await loadTemplate(
         import.meta.url,
         "#collectListContainer"
     );
 
-    if (!container) {
+    // 読み込み失敗時
+    if (!resultContainer) {
         return;
     }
 
+    // リスト内容を描画
     renderCollectList();
 
 }
