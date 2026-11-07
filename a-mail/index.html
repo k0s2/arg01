@@ -37,19 +37,13 @@
 
                     <ul class="buttons">
 
-                        <li class="is-active">
+                        <li id="button-receive" class="is-active">
                             受信ボックス
-                            <span class="count new">1</span>
+                            <span class="count"></span>
                         </li>
 
-                        <li>
+                        <li id="button-send">
                             送信ボックス
-                            <span class="count">0</span>
-                        </li>
-
-                        <li>
-                            お気に入り
-                            <span class="count">0</span>
                         </li>
 
                     </ul>
@@ -57,16 +51,35 @@
                 </div>
 
                 <!-- メール本文 -->
-                <div id="mailDetail">
-                    <ul class="mails">
+                <div id="mail">
 
-                        <li class="mailHeader">
+                    <ul id="list">
+
+                        <li class="header">
                             <div class="user">送信者</div>
                             <div class="title">件名</div>
                             <div class="date">受信日時</div>
                         </li>
 
                     </ul>
+
+                    <div id="detail" class="is-hidden">
+                        <div class="header1">
+                            <button>
+                            </button>
+                        </div>
+
+                        <div class="header2">
+                            <div class="user">送信者</div>
+                            <div class="title">件名</div>
+                            <div class="date">受信日時</div>
+                        </div>
+
+                        <div class="message">
+                        </div>
+
+                    </div>
+
                 </div>
 
             </section>
