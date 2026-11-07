@@ -226,26 +226,33 @@ let typingTimer = null;
  * @param {String} word キーワード
  */
 function typeWord(target, word) {
+    // アクティブを解除
     target.classList.remove("is-active");
     activeInput = null;
 
-    clearTimeout(typingTimer);
-    target.textContent = "";
+    // アクティブ解除アニメーション終了後に実行（表示バグ対策）
+    target.addEventListener("transitionend", () => {
 
-    let index = 0;
+        // 中身を空にする
+        target.textContent = "";
 
-    function typeNext() {
-        if (index >= word.length) {
-            return;
+        // 1文字ずつ描画
+        let index = 0;
+        function typeNext() {
+            if (index >= word.length) {
+                return;
+            }
+
+            target.textContent += word[index];
+            index++;
+
+            typingTimer = setTimeout(typeNext, 100);
         }
 
-        target.textContent += word[index];
-        index++;
+        // 描画の実行
+        typeNext();
 
-        typingTimer = setTimeout(typeNext, 100);
-    }
-
-    typeNext();
+    }, { once: true });
 }
 
 /**

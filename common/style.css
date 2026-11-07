@@ -81,10 +81,6 @@ ul {
 /* アクティブ */
 .inputBox.is-active {
     outline: solid 3px var(--color-main);
-}
-
-/* 入力待機中：アニメ */
-.inputBox.is-active {
     animation: inputBoxActive 0.8s ease-in-out infinite alternate;
 }
 
@@ -109,7 +105,6 @@ ul {
     content: "";
     position: absolute;
     top: 50%;
-    z-index: 2000;
     width: 8px;
     height: 12px;
     background-color: var(--color-main);
@@ -224,6 +219,15 @@ button:disabled {
 
         color: var(--color-main);
     }
+}
+
+/* ボタン：カレント */
+:is(header, footer)>.buttons>button.is-current {
+    background: #000 !important;
+
+    color: var(--color-main);
+
+    cursor: inherit;
 }
 
 /* -------------------------------------------------- */

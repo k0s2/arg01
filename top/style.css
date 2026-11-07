@@ -1,123 +1,125 @@
-/* -------------------------------------------------- */
-/* 基本 */
-/* -------------------------------------------------- */
-
-body#top {
+#top {
     background-image: url("../common/images/bg.jpg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     color: #fff;
-}
 
-#top #area-main>section {
-    padding: 0 20px;
-    max-width: 720px;
-    height: fit-content;
-}
+    /* メインコンテンツ */
+    main>#area-main {
 
-#top #area-main h1 {
-    display: flex;
-    flex-direction: column;
+        /* ラッパー */
+        section {
+            padding: 0 20px;
+            max-width: 720px;
+            height: fit-content;
 
-    margin: 16px 0 24px;
+            >div {
+                margin-bottom: 8px;
 
-    font-size: 80px;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    word-break: keep-all;
-}
+                /* タイトル */
+                h1 {
+                    display: flex;
+                    flex-direction: column;
 
-#top #area-main h1>span.subTitle {
-    font-size: 0.25em;
-}
+                    margin: 16px 0 24px;
 
-#top #area-main h2 {
-    border-bottom: solid 1px #fff;
-    margin: 0 0 1rem 0;
-}
+                    font-size: 80px;
+                    text-align: center;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+                    word-break: keep-all;
 
-#top #area-main h3 {
-    margin: 0;
-}
+                    /* サブタイトル */
+                    span.subTitle {
+                        font-size: 0.25em;
+                    }
+                }
 
-#top #area-main section>div {
-    margin-bottom: 8px;
-}
+                /* 見出し */
+                h2 {
+                    border-bottom: solid 1px #fff;
+                    margin: 0 0 1rem 0;
+                }
 
-#top #area-main section p {
-    margin: 0;
-}
+                /* ボックス */
+                &.box {
+                    background: rgba(0, 0, 0, 0.5);
+                    backdrop-filter: blur(10px);
 
-#top #area-main section p+p {
-    margin-top: 1em;
-}
+                    padding: 1em;
 
-#top #area-main .box {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+                    /* 入力エリア */
+                    &.area-input {
+                        text-align: center;
 
-    padding: 1em;
-}
+                        p {
+                            margin-top: 0;
+                            margin-bottom: 1em;
+                        }
+                    }
+                }
 
-/* スマホ用 */
-@media (max-width: 779px) {
+                /* 段落 */
+                p {
+                    margin: 0;
 
-    #top #area-main h1 {
-        font-size: 48px;
-    }
+                    /* 間隔 */
+                    &+p {
+                        margin-top: 1em;
+                    }
+                }
 
-}
+                /* リンク */
+                .links {
+                    display: flex;
+                    gap: 8px;
 
-/* -------------------------------------------------- */
-/* 入力エリア */
-/* -------------------------------------------------- */
+                    /* リンクボタン */
+                    >a {
+                        display: inline-flex;
 
-#top #area-main .area-input {
-    text-align: center;
-}
+                        background: #fff;
+                        border-radius: 100px;
 
-#top #area-main .area-input p {
-    margin-top: 0;
-    margin-bottom: 1em;
-}
+                        padding: 8px 24px;
 
-/* -------------------------------------------------- */
-/* リンク */
-/* -------------------------------------------------- */
+                        color: #000;
+                        font-weight: bold;
+                        text-align: center;
+                        text-decoration: none;
 
-#top #area-main .links {
-    display: flex;
-    gap: 8px;
-}
+                        transition: all 0.25s;
 
-#top #area-main .links>a {
-    display: inline-flex;
+                        /* アイコン */
+                        >.buttonIcon {
+                            margin-left: 0;
 
-    background: #fff;
-    border-radius: 100px;
+                            width: 16px;
+                        }
 
-    padding: 4px 16px;
+                        /* ホバー */
+                        @media (hover: hover) {
+                            &:hover {
+                                background: var(--color-main);
+                                color: #fff;
+                            }
+                        }
+                    }
 
-    color: #000;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
+                }
+            }
+        }
 
-    transition: all 0.25s;
-}
+        /* スマホ用 */
+        @media (max-width: 779px) {
 
-#top #area-main .links>a>.buttonIcon {
-    margin-left: 0;
+            /* タイトル */
+            h1 {
+                font-size: 48px;
+            }
 
-    width: 16px;
-}
+        }
 
-/* ホバー */
-@media (hover: hover) {
-    #top #area-main .links>a:hover {
-        background: var(--color-main);
-        color: #fff;
     }
 }

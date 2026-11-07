@@ -1,0 +1,88 @@
+#mail {
+
+    background: #eee;
+
+    /* ラッパー */
+    #area-main>section {
+        display: grid;
+        grid-template-columns: 200px 1fr;
+        width: 100%;
+
+        /* サイドバー */
+        #sideBar {
+            border-right: solid 2px #444;
+
+            padding: 8px;
+            padding-left: 0;
+
+            /* タイトル */
+            h1 {
+                margin: 0;
+                padding-left: 8px;
+            }
+
+            /* ボタンラッパー */
+            ul.buttons {
+                list-style: none;
+                padding: 0;
+
+                /* ボタン */
+                li {
+                    display: flex;
+                    justify-content: space-between;
+                    background: #fff;
+                    border-radius: 0 100px 100px 0;
+                    padding: 4px 8px 4px 16px;
+                    cursor: pointer;
+
+                    /* 間隔 */
+                    &+li {
+                        margin-top: 8px;
+                    }
+
+                    /* アクティブ */
+                    &.is-active {
+                        background: #e0e0ff !important;
+                        cursor: inherit;
+                    }
+
+                    /* ホバー */
+                    @media (hover: hover) {
+                        &:hover {
+                            background: #ddd;
+                        }
+                    }
+
+                    /* 新着バッジ */
+                    >.count {
+                        background: #444;
+                        border-radius: 100px;
+                        padding: 4px 8px;
+                        color: #fff;
+                        font-size: 0.5em;
+                        font-weight: bold;
+
+                        &.new {
+                            animation: badgeNew 0.8s ease-in-out infinite alternate;
+                        }
+                    }
+                }
+            }
+        }
+
+        /* メール本文 */
+        #mailDetail {}
+    }
+
+}
+
+/* -------------------------------------------------- */
+/* アニメーション */
+/* -------------------------------------------------- */
+
+/* 新着バッジ */
+@keyframes badgeNew {
+    to {
+        background-color: #00f;
+    }
+}

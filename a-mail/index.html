@@ -6,14 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="../common/style.css">
-    <link rel="stylesheet" href="../css/a-mail.css">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
 
     <title>怪異調査報告／Amail</title>
 </head>
 
-<body>
+<body id="mail">
 
     <!-- -------------------------------------------------- -->
     <!-- ヘッダー -->
@@ -28,11 +26,47 @@
     <!-- -------------------------------------------------- -->
 
     <main>
-        <section>
 
+        <div id="area-main">
+            <section>
 
+                <!-- サイドバー -->
+                <div id="sideBar">
 
-        </section>
+                    <h1>Amail</h1>
+
+                    <ul class="buttons">
+
+                        <li class="is-active">
+                            受信ボックス
+                            <span class="count new">1</span>
+                        </li>
+
+                        <li>
+                            送信ボックス
+                            <span class="count">0</span>
+                        </li>
+
+                        <li>
+                            お気に入り
+                            <span class="count">0</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- メール本文 -->
+                <div id="mailDetail">
+                    <ul class="mails"></ul>
+                </div>
+
+            </section>
+        </div>
+
+        <!-- キーワードリスト -->
+        <div id="collectListContainer"></div>
+
     </main>
 
     <!-- -------------------------------------------------- -->
@@ -47,7 +81,7 @@
 
 
             <!-- メール -->
-            <button id="buttonMail">
+            <button id="buttonMail" class="is-current">
                 <svg class="buttonIcon" viewBox="0 0 512 512">
                     <path fill="currentColor" d="M510.678,112.275c-2.308-11.626-7.463-22.265-14.662-31.054c-1.518-1.915-3.104-3.63-4.823-5.345
                         c-12.755-12.818-30.657-20.814-50.214-20.814H71.021c-19.557,0-37.395,7.996-50.21,20.814c-1.715,1.715-3.301,3.43-4.823,5.345
@@ -66,7 +100,7 @@
             </button>
 
             <!-- データベース -->
-            <button id="buttonDatabase">
+            <button id="buttonDatabase" class="is-hidden">
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path class="st0" d="M459.991,82.262c-5.818-13.388-15.866-24.916-28.61-34.854c-19.179-14.896-44.758-26.522-74.674-34.691
                         C326.789,4.575,292.498,0,256,0c-55.622,0.036-106.071,10.548-143.848,28.374c-18.889,8.959-34.692,19.76-46.31,32.713
@@ -95,7 +129,7 @@
             </button>
 
             <!-- レポート -->
-            <button id="buttonReport">
+            <button id="buttonReport" class="is-hidden">
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M503.556,156.001l-18.569-18.561c-11.258-11.266-29.518-11.257-40.776,0l-17.37,17.379l59.346,59.346
 		                l17.369-17.369C514.814,185.528,514.814,167.268,503.556,156.001z"></path>
@@ -111,7 +145,7 @@
             </button>
 
             <!-- キーワード -->
-            <button id="buttonWord">
+            <button id="buttonWord" class="is-hidden">
 
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M509.217,148.087c-5.531-28.661-19.512-56.207-41.673-78.34c-14.752-14.752-31.924-25.923-50.213-33.34
@@ -139,8 +173,8 @@
     <!-- スクリプト -->
     <!-- -------------------------------------------------- -->
 
-    <script type="module" src="../common/js/controler.js"></script>
-    <script src="./controler.js"></script>
+    <script type="module" src="../common/controler.js"></script>
+    <script type="module" src="./controler.js"></script>
 
 </body>
 
