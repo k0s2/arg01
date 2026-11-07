@@ -4,25 +4,25 @@ body#mail {
     background-position: bottom;
     background-repeat: no-repeat;
 
-    /* ボタン */
-    button {
-        transition: none;
-
-        /* ホバー */
-        @media (hover: hover) {
-            &:hover {
-                background: #eef;
-                color: inherit;
-            }
-        }
-    }
-
     /* ラッパー */
     #area-main>section {
         display: grid;
         grid-template-columns: 200px 1fr;
         width: 100%;
         min-width: 0;
+
+        /* ボタン */
+        button {
+            transition: none;
+
+            /* ホバー */
+            @media (hover: hover) {
+                &:hover {
+                    background: #eef;
+                    color: inherit;
+                }
+            }
+        }
 
         /* サイドバー */
         #sideBar {
@@ -211,7 +211,40 @@ body#mail {
         }
     }
 
+    /* -------------------------------------------------- */
+    /* ダイアログ上書き */
+    /* -------------------------------------------------- */
+
+    #dialog:not(.mode-mind) {
+        transition: none;
+
+        &.is-hidden {
+            display: none;
+        }
+
+        section {
+            border: solid 1px #444;
+            transition: none;
+        }
+
+        button {
+            background: #eee;
+            border: solid 1px #444;
+            border-radius: 0;
+            transition: none;
+
+            /* ホバー */
+            @media (hover: hover) {
+                &:hover {
+                    opacity: 0.5;
+                    color: inherit;
+                }
+            }
+        }
+    }
+
 }
+
 
 /* -------------------------------------------------- */
 /* アニメーション */

@@ -28,7 +28,7 @@ function hideDialog() {
  * @param {String} message 確認文章
  * @param {String} title 見出し（省略可）
  */
-export async function showDialog(message, title = "", buttons = null) {
+export async function showDialog(message, title = "", buttons = null, modeMind = false) {
     return new Promise(async (resolve) => {
 
         // --------------------------------------------------
@@ -40,6 +40,18 @@ export async function showDialog(message, title = "", buttons = null) {
             import.meta.url,
             null
         );
+
+        // --------------------------------------------------
+        // モード
+        // --------------------------------------------------
+
+        if (modeMind) {
+            // ラッパーを取得
+            const targetBack = resultContainer.querySelector("#dialog");
+
+            // モード切替
+            targetBack.classList.add("mode-mind");
+        }
 
         // --------------------------------------------------
         // 見出しを設定
@@ -142,4 +154,14 @@ export async function showDialog(message, title = "", buttons = null) {
 
     });
 
+}
+
+/**
+ * ダイアログ（精神モード）を表示
+ * @param {String} message 確認文章
+ * @param {String} title 見出し（省略可）
+ */
+export async function showMindDialog(message, title = "", buttons = null) {
+    // 精神モードで、既存のダイアログ表示処理を呼び出し
+    showDialog(message, title, buttons, true);
 }

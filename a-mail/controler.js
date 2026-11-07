@@ -1,3 +1,5 @@
+import { showDialog, showMindDialog } from "../common/template/dialog/controler.js";
+
 // 現在日時
 const date = new Date();
 const today = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}`;
@@ -32,6 +34,7 @@ if (true) {
 報酬は弾むぞ。検討を祈る。`,
             date: today,
             new: true,
+            replyAction: "reply_1",
         },
         {
             user: "退会済みユーザー",
@@ -128,20 +131,84 @@ targetNew.textContent = countNew || "";
 targetNew.classList.toggle("new", countNew >= 1);
 
 // --------------------------------------------------
+// 返信処理
+// --------------------------------------------------
+
+const replyActions = {
+
+    // 怪異調査依頼
+    async reply_1() {
+        // ダイアログを表示
+        const result = await showMindDialog(
+            "なんと返そうか？",
+            "返信する",
+            [
+                "分かった。やってみる。",
+                "誰だお前は？",
+                "意味不明なメールもお前の仕業か？",
+            ]
+        );
+
+        // 選択肢により分岐
+        switch (result) {
+            // 「分かった。やってみる。」
+            case 0:
+                break;
+
+            // 「誰だお前は？」
+            case 1:
+                break;
+
+            // 「意味不明なメールもお前の仕業か？」
+            case 2:
+                break;
+
+            // キャンセル
+            default:
+        }
+    },
+
+};
+
+// --------------------------------------------------
 // メール詳細
 // --------------------------------------------------
 
 // 戻るボタン
 const buttonBack = targetDetail.querySelector(".detailHeader button#button-return");
 buttonBack.addEventListener("click", () => {
+
+    // 詳細を非表示
     targetDetail.classList.add("is-hidden");
+
+    // 一覧を表示
     targetList.classList.remove("is-hidden");
+
 });
 
-// メールを開く
-function openMail(index) {
+// 返信ボタン
+const buttonReply = targetDetail.querySelector("#button-reply");
+let currentMail = null;
+buttonReply.addEventListener("click", async () => {
 
+    // 設定された返信ファンクションを呼び出し
+    const action = replyActions[currentMail?.replyAction];
+    if (action) {
+        await action();
+    } else {
+        showDialog("退会済みユーザーには返信できません。")
+    }
+
+});
+
+/**
+ * メールを開く
+ * @param {Number} index メールのインデックス（連番）
+ */
+function openMail(index) {
+    // メール情報を取得
     const data = mails[index];
+    currentMail = data;
 
     // 送信者
     targetDetail.querySelector("#mailInfo .user").textContent = data.user;
@@ -181,15 +248,18 @@ function openMail(index) {
 
 document.querySelector("#button-receive").addEventListener("click", () => {
 
-    // アクティブ表示
+    // 「受信ボックス」を選択
+    document.querySelector("#button-receive").classList.add("is-active");
+
+    // それ以外を選択解除
     document.querySelectorAll("#sideBar .buttons li").forEach(element => {
         element.classList.remove("is-active");
     });
 
-    document.querySelector("#button-receive").classList.add("is-active");
-
-    // 一覧表示
+    // 詳細を非表示
     targetDetail.classList.add("is-hidden");
+
+    // 一覧を表示
     targetList.classList.remove("is-hidden");
 
 });
