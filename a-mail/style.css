@@ -42,7 +42,7 @@
 
                     /* アクティブ */
                     &.is-active {
-                        background: #e0e0ff !important;
+                        background: #ddf !important;
                         cursor: inherit;
                     }
 
@@ -71,7 +71,50 @@
         }
 
         /* メール本文 */
-        #mailDetail {}
+        #mailDetail {
+            ul.mails {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+
+                li {
+                    display: flex;
+                    gap: 16px;
+                    justify-content: space-between;
+                    border-bottom: solid 1px #444;
+                    padding: 4px 8px;
+                    cursor: pointer;
+
+                    /* ホバー */
+                    @media (hover: hover) {
+                        &:hover {
+                            background: #ddf;
+                        }
+                    }
+
+                    &.mailHeader {
+                        background: #ccc;
+                    }
+
+                    &.new {
+                        background: #fff;
+                        font-weight: bold;
+                    }
+
+                    .user {
+                        width: 10em;
+                    }
+
+                    .title {
+                        flex: 1;
+                    }
+
+                    .date {
+                        width: 7em;
+                    }
+                }
+            }
+        }
     }
 
 }
