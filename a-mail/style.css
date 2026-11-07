@@ -1,15 +1,33 @@
-#mail {
+body#mail {
+    background-image: url("./image/bg.svg");
+    background-size: cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
 
-    background: #eee;
+    /* ボタン */
+    button {
+        transition: none;
+
+        /* ホバー */
+        @media (hover: hover) {
+            &:hover {
+                background: #eef;
+                color: inherit;
+            }
+        }
+    }
 
     /* ラッパー */
     #area-main>section {
         display: grid;
         grid-template-columns: 200px 1fr;
         width: 100%;
+        min-width: 0;
 
         /* サイドバー */
         #sideBar {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
             border-right: solid 2px #444;
 
             padding: 8px;
@@ -35,6 +53,13 @@
                     padding: 4px 8px 4px 16px;
                     cursor: pointer;
 
+                    /* ホバー */
+                    @media (hover: hover) {
+                        &:hover {
+                            background: #eef;
+                        }
+                    }
+
                     /* 間隔 */
                     &+li {
                         margin-top: 8px;
@@ -42,15 +67,9 @@
 
                     /* アクティブ */
                     &.is-active {
-                        background: #ddf !important;
+                        background: #aaf !important;
+                        color: #fff;
                         cursor: inherit;
-                    }
-
-                    /* ホバー */
-                    @media (hover: hover) {
-                        &:hover {
-                            background: #ddd;
-                        }
                     }
 
                     /* 新着バッジ */
@@ -62,6 +81,10 @@
                         font-size: 0.5em;
                         font-weight: bold;
 
+                        &:empty {
+                            display: none;
+                        }
+
                         &.new {
                             animation: badgeNew 0.8s ease-in-out infinite alternate;
                         }
@@ -72,6 +95,8 @@
 
         /* 一覧／詳細 */
         #mail {
+            min-width: 0;
+            overflow: auto;
 
             /* 一覧 */
             ul#list {
@@ -80,50 +105,109 @@
                 padding: 0;
 
                 li {
-                    display: flex;
-                    gap: 16px;
-                    justify-content: space-between;
-                    border-bottom: solid 1px #444;
-                    padding: 4px 8px;
-                    cursor: pointer;
+                    background: rgba(255, 255, 255, 0.75);
+                    backdrop-filter: blur(10px);
 
-                    /* ホバー */
-                    @media (hover: hover) {
-                        &:hover {
-                            background: #ddf !important;
-                        }
+                    /* ポインター */
+                    &.mailRow {
+                        cursor: pointer;
                     }
 
-                    &.header {
-                        background: #ccc !important;
-                        cursor: inherit;
-                    }
-
+                    /* 新着 */
                     &.new {
                         background: #fff;
                         font-weight: bold;
                     }
 
-                    .user {
-                        width: 10em;
+                    /* ホバー */
+                    @media (hover: hover) {
+                        &:not(.header):hover {
+                            background: #ddf;
+                        }
                     }
 
-                    .title {
-                        flex: 1;
-                    }
+                }
+            }
 
-                    .date {
-                        width: 7em;
+            /* メール情報 */
+            .mailRow {
+                display: flex;
+                justify-content: space-between;
+                gap: 16px;
+                border-bottom: solid 1px #444;
+                padding: 4px 8px;
+
+                /* 見出し */
+                &.header {
+                    background: #888 !important;
+                    color: #fff !important;
+                    cursor: inherit !important;
+                }
+
+                .user {
+                    width: 10em;
+                    flex-shrink: 0;
+                }
+
+                .title {
+                    flex: 1;
+                    min-width: 0;
+                }
+
+                .date {
+                    width: 7em;
+                    flex-shrink: 0;
+                    text-align: right;
+                }
+            }
+
+            /* 詳細 */
+            #detail {
+                background: rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(10px);
+                height: 100%;
+
+                /* ボタンエリア */
+                .detailHeader {
+                    background: #888;
+                    border-bottom: solid 1px #444;
+                    padding: 8px;
+
+                    /* ボタン */
+                    button {
+                        margin: 0;
+                        padding: 4px 16px;
+
+                        /* 間隔 */
+                        &+button {
+                            margin-left: 4px;
+                        }
+                    }
+                }
+
+                /* 本文 */
+                .message {
+                    padding: 24px 8px;
+                    line-height: 1.8;
+                    white-space: pre-wrap;
+                    overflow-wrap: anywhere;
+
+                    /* ボタン */
+                    button {
+                        background: none;
+                        margin: 0;
+                        padding: 0;
+                        color: #00f;
+                        font-weight: normal;
+                        text-decoration: underline;
                     }
                 }
             }
 
-            #detail {}
-
+            /* 非表示 */
             .is-hidden {
                 display: none;
             }
-
         }
     }
 
@@ -137,5 +221,61 @@
 @keyframes badgeNew {
     to {
         background-color: #00f;
+    }
+}
+
+/* -------------------------------------------------- */
+/* スマートフォン */
+/* -------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    body#mail {
+
+        #area-main>section {
+            grid-template-columns: 120px 1fr;
+
+            #sideBar {
+                ul.buttons li {
+                    padding-left: 8px;
+                    font-size: 0.85em;
+                }
+            }
+
+            #mail {
+                ul#list li {
+                    gap: 8px;
+                    font-size: 0.8em;
+
+                    .user {
+                        width: 6em;
+                    }
+
+                    .date {
+                        width: 6em;
+                    }
+                }
+
+                #detail {
+                    padding: 8px;
+
+                    .header2 {
+                        gap: 4px 8px;
+
+                        .title {
+                            font-size: 1em;
+                        }
+
+                        .date {
+                            font-size: 0.7em;
+                        }
+                    }
+
+                    .message {
+                        padding: 16px 4px;
+                    }
+                }
+            }
+        }
     }
 }

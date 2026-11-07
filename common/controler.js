@@ -57,7 +57,7 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
 // ====================================================================================================
 
 // インポート
-import { initWordCollect } from "./templates/word-list/controler.js";
+import { initWordCollect } from "./template/word-list/controler.js";
 
 // 初期化
 initWordCollect();
