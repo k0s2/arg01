@@ -27,14 +27,7 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
     }
 
     try {
-        // HTMLを取得
-        const htmlUrl = new URL("./index.html", baseUrl);
-        const response = await fetch(htmlUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-
-        // CSSを取得
+        // CSSを取得して設定
         const cssUrl = new URL("./style.css", baseUrl);
         if (!document.querySelector(`link[href="${cssUrl.href}"]`)) {
             const link = document.createElement("link");
@@ -43,7 +36,12 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
             document.head.appendChild(link);
         }
 
-        // HTMLを描画
+        // HTMLを取得して設定
+        const htmlUrl = new URL("./index.html", baseUrl);
+        const response = await fetch(htmlUrl);
+        if (!response.ok) {
+            throw new Error(`HTTP error: ${response.status}`);
+        }
         container.innerHTML = await response.text();
 
         return container;
@@ -53,12 +51,6 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
         return null;
     }
 }
-
-// ====================================================================================================
-// ダイアログ
-// ====================================================================================================
-
-import { showDialog } from "../common/templates/dialog/controler.js";
 
 // ====================================================================================================
 // キーワード

@@ -58,6 +58,7 @@ function renderCollectList() {
         words.forEach(function (word) {
             const li = document.createElement("li");
             li.textContent = word;
+            li.classList.add("is-disabled");
             list.appendChild(li);
 
             setEventWordInput(li);
@@ -71,6 +72,29 @@ function renderCollectList() {
         element.id = "listEmpty";
         target.appendChild(element);
     }
+}
+
+/**
+ * キーワードボタンの活性状態切り替え
+ * @param {Boolean} active 活性状態にする
+ */
+function shiftKeywordButton(active) {
+    // 各キーワード要素に適用
+    const targetsKeyword = document.querySelectorAll("#keywords>li");
+    targetsKeyword.forEach(target => {
+
+        // ●活性化
+        if (active) {
+            // 非活性クラスを除去
+            target.classList.remove("is-disabled");
+        }
+        // ●非活性化
+        else {
+            // 非活性クラスを付与
+            target.classList.add("is-disabled");
+        }
+
+    });
 }
 
 // ====================================================================================================
@@ -314,15 +338,21 @@ export async function initWordCollect() {
 
         target.addEventListener("click", function () {
 
-            // ●同じ入力欄をクリックした場合：入力ＯＦＦ
+            // ●入力欄を再びクリックした場合
             if (target === activeInput) {
+                // アクティブ状態を解除
                 target.classList.remove("is-active");
                 activeInput = null;
+
+                // キーワードボタンを非活性化
+                shiftKeywordButton(false);
+
                 return;
             }
 
             // ●前の入力欄のアクティブ状態を解除
             if (activeInput) {
+                // アクティブ状態を解除
                 activeInput.classList.remove("is-active");
             }
 
@@ -330,6 +360,9 @@ export async function initWordCollect() {
             activeInput = target;
             activeInput.textContent = "";
             activeInput.classList.add("is-active");
+
+            // キーワードボタンを非活性化
+            shiftKeywordButton(true);
 
             // キーワードリストを開く
             initCollectPanel(1);

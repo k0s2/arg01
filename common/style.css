@@ -100,29 +100,39 @@ ul {
 }
 
 /* 入力待機中：左右の三角カーソル */
-.inputBox.is-active {
+.inputBox {
     position: relative;
+}
+
+.inputBox::before,
+.inputBox::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    z-index: 2000;
+    width: 8px;
+    height: 12px;
+    background-color: var(--color-main);
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.inputBox::before {
+    left: -8px;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    transform: translate(-8px, -50%);
+}
+
+.inputBox::after {
+    right: -8px;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    transform: translate(8px, -50%);
 }
 
 .inputBox.is-active::before,
 .inputBox.is-active::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 8px;
-    height: 12px;
-    background-color: var(--color-main);
-    transform: translateY(-50%);
-}
-
-.inputBox.is-active::before {
-    left: -8px;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-}
-
-.inputBox.is-active::after {
-    right: -8px;
-    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    opacity: 1;
+    transform: translate(0, -50%);
 }
 
 /* -------------------------------------------------- */
@@ -132,6 +142,7 @@ ul {
 /* 基本 */
 button {
     display: inline-flex;
+    justify-content: center;
 
     background: #fff;
     border: none;

@@ -2,7 +2,7 @@
 /* 基本 */
 /* -------------------------------------------------- */
 
-body {
+body#top {
     background-image: url("../common/images/bg.jpg");
     background-size: cover;
     background-position: center;
@@ -11,13 +11,13 @@ body {
     color: #fff;
 }
 
-#area-main>section {
+#top #area-main>section {
     padding: 0 20px;
     max-width: 720px;
     height: fit-content;
 }
 
-h1 {
+#top #area-main h1 {
     display: flex;
     flex-direction: column;
 
@@ -29,41 +29,42 @@ h1 {
     word-break: keep-all;
 }
 
-h1>span.subTitle {
+#top #area-main h1>span.subTitle {
     font-size: 0.25em;
 }
 
-h2 {
+#top #area-main h2 {
     border-bottom: solid 1px #fff;
     margin: 0 0 1rem 0;
 }
 
-h3 {
+#top #area-main h3 {
     margin: 0;
 }
 
-section>div {
+#top #area-main section>div {
     margin-bottom: 8px;
 }
 
-section p {
+#top #area-main section p {
     margin: 0;
 }
 
-section p+p {
+#top #area-main section p+p {
     margin-top: 1em;
 }
 
-.box {
+#top #area-main .box {
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
 
     padding: 1em;
 }
 
+/* スマホ用 */
 @media (max-width: 779px) {
 
-    h1 {
+    #top #area-main h1 {
         font-size: 48px;
     }
 
@@ -73,11 +74,11 @@ section p+p {
 /* 入力エリア */
 /* -------------------------------------------------- */
 
-.area-input {
+#top #area-main .area-input {
     text-align: center;
 }
 
-.area-input p {
+#top #area-main .area-input p {
     margin-top: 0;
     margin-bottom: 1em;
 }
@@ -86,12 +87,12 @@ section p+p {
 /* リンク */
 /* -------------------------------------------------- */
 
-.links {
+#top #area-main .links {
     display: flex;
     gap: 8px;
 }
 
-.links>a {
+#top #area-main .links>a {
     display: inline-flex;
 
     background: #fff;
@@ -107,7 +108,7 @@ section p+p {
     transition: all 0.25s;
 }
 
-.links>a>.buttonIcon {
+#top #area-main .links>a>.buttonIcon {
     margin-left: 0;
 
     width: 16px;
@@ -115,7 +116,7 @@ section p+p {
 
 /* ホバー */
 @media (hover: hover) {
-    .links>a:hover {
+    #top #area-main .links>a:hover {
         background: var(--color-main);
         color: #fff;
     }

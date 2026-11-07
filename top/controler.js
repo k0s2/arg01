@@ -1,21 +1,9 @@
 // ====================================================================================================
-// ファンクション
+// インポート
 // ====================================================================================================
 
-/**
- * ゲームのリセット
- */
-function listReset() {
-
-    // ダイアログ表示
-    showDialog("テスト");
-
-    // ローカルストレージを全削除
-    localStorage.clear();
-
-    // ページのリロード
-    location.reload();
-}
+// ダイアログ
+import { showDialog } from "../common/templates/dialog/controler.js";
 
 // ====================================================================================================
 // イベントを設定
@@ -37,6 +25,10 @@ function showListButton() {
 
 // 入力欄
 const targetInput = document.getElementById("input-start");
+
+// --------------------------------------------------
+// 初期化
+// --------------------------------------------------
 
 // ●初回
 if (!localStorage.getItem("gameStart")) {
@@ -85,6 +77,35 @@ else {
 }
 
 // --------------------------------------------------
+// 「進行状況をリセットする」ボタン
+// --------------------------------------------------
+
+// クリックイベントを付与
+const buttonReset = document.getElementById("button-reset");
+buttonReset.addEventListener("click", async function () {
+
+    // ダイアログ表示
+    const result = await showDialog(
+        "進行状況をリセットしてもいいですか？",
+        "確認",
+        ["はい", "いいえ"]
+    );
+
+    // ●「はい」
+    if (result === 0) {
+        // ローカルストレージを全削除
+        localStorage.clear();
+
+        // リセットフラグを設定
+        sessionStorage.setItem("resetCompleted", true);
+
+        // ページのリロード
+        location.reload();
+    }
+
+});
+
+// --------------------------------------------------
 // 「決定」ボタン
 // --------------------------------------------------
 
@@ -105,3 +126,15 @@ buttonDecide.addEventListener("click", function () {
     }
 
 });
+
+// --------------------------------------------------
+// リセット表示
+// --------------------------------------------------
+
+if (sessionStorage.getItem("resetCompleted") === "true") {
+    // フラグを削除
+    sessionStorage.removeItem("resetCompleted");
+
+    // ダイアログ表示
+    showDialog("進捗状況をリセットしました。");
+}

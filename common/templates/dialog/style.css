@@ -1,5 +1,53 @@
-section#dialog {
+#dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: 5000;
+
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+
+    transition: all 0.25s;
+}
+
+#dialog.is-closed {
+    opacity: 0;
+}
+
+#dialog section {
+    background: #fff;
+
+    padding: 24px;
+
+    color: #000;
+}
+
+#dialog h1 {
+    border-bottom: solid 1px #000;
+
+    margin: 0;
+
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#dialog .buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+
+    margin: 24px 0 0 0;
+}
+
+#dialog .buttons>button {
+    border: solid 2px var(--color-main);
+
+    margin: 0;
+    min-width: 100px;
 }
