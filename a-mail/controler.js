@@ -143,7 +143,7 @@ export async function initFavorite() {
     document.querySelector("#button-receive:not(.is-active)")?.addEventListener("click", () => {
 
         // 「受信ボックス」ページへ遷移
-        location.href = "/a-mail/list/#receive";
+        location.href = "../list/#receive";
 
     });
 
@@ -151,7 +151,7 @@ export async function initFavorite() {
     document.querySelector("#button-send:not(.is-active)")?.addEventListener("click", () => {
 
         // 「送信ボックス」ページへ遷移
-        location.href = "/a-mail/list/#send";
+        location.href = "../list/#send";
 
     });
 
@@ -159,8 +159,14 @@ export async function initFavorite() {
     document.querySelector("#button-favorite:not(.is-active)")?.addEventListener("click", () => {
 
         // 「お気に入り」ページへ遷移
-        location.href = "/a-mail/list/#favorite";
+        location.href = "../list/#favorite";
 
+    });
+
+    // ハッシュが切り替わった際に発火
+    window.addEventListener("hashchange", () => {
+        // ページのリロード
+        location.reload();
     });
 
     // --------------------------------------------------
