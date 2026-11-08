@@ -68,7 +68,7 @@ ul {
 
     cursor: pointer;
 
-    transition: all 0.25s;
+    transition: outline 0.25s;
 }
 
 /* ホバー */
@@ -150,7 +150,7 @@ button {
     font-size: 16px;
     font-weight: bold;
 
-    transition: all 0.25s;
+    transition: background-color 0.25s, color 0.25s;
 
     cursor: pointer;
 }
@@ -176,58 +176,6 @@ button:disabled {
 
     width: 24px;
     height: auto;
-}
-
-/* -------------------------------------------------- */
-/* ヘッダー＆フッター */
-/* -------------------------------------------------- */
-
-/* ラッパー */
-:is(header, footer)>.buttons {
-    display: flex;
-}
-
-/* ボタン */
-:is(header, footer)>.buttons>button {
-    display: flex;
-    align-items: center;
-
-    background: var(--color-main);
-    border: solid 1px var(--color-main);
-    border-radius: 40px;
-
-    margin: 0 4px;
-    padding: 0 4px;
-
-    font-size: 24px;
-    font-weight: bold;
-
-    transition: all 0.25s;
-
-    cursor: pointer;
-}
-
-/* ボタン：非活性 */
-:is(header, footer)>.buttons>button.is-hidden {
-    transform: translateY(50px);
-}
-
-/* ボタン：ホバー */
-@media (hover: hover) {
-    :is(header, footer)>.buttons>button:hover {
-        background: #000 !important;
-
-        color: var(--color-main);
-    }
-}
-
-/* ボタン：カレント */
-:is(header, footer)>.buttons>button.is-current {
-    background: #000 !important;
-
-    color: var(--color-main);
-
-    cursor: inherit;
 }
 
 /* -------------------------------------------------- */
@@ -268,11 +216,77 @@ footer {
 
     color: var(--color-main);
     font-size: 0.75em;
-    text-align: center;
-}
 
-footer>p {
-    margin: 0;
+    p {
+        margin: 0;
+    }
+
+    /* ラッパー */
+    .buttons {
+        display: flex;
+        gap: 8px;
+
+        /* ボタン */
+        button {
+            display: flex;
+            align-items: center;
+
+            background: var(--color-main);
+            border: solid 1px var(--color-main);
+            border-radius: 40px;
+
+            margin: 0;
+            padding: 0 4px;
+
+            font-size: 24px;
+            font-weight: bold;
+
+            transition: background-color 0.25s, color 0.25s, transform 0.25s;
+
+            cursor: pointer;
+
+            /* ボタン：非活性 */
+            &.is-hidden {
+                transform: translateY(50px);
+            }
+
+            /* ボタン：カレント */
+            &.is-current {
+                background: #000 !important;
+
+                color: var(--color-main);
+
+                cursor: inherit;
+            }
+
+            /* ボタン：ホバー */
+            @media (hover: hover) {
+                &:hover {
+                    background: #000 !important;
+
+                    color: var(--color-main);
+                }
+            }
+        }
+    }
+
+    /* スマホ用 */
+    @media (max-width: 779px) {
+        display: block;
+
+        p {
+            margin-bottom: 8px;
+        }
+
+        .buttons {
+            justify-content: center;
+
+            button {
+                padding: 4px 8px;
+            }
+        }
+    }
+
 }
 
 /* -------------------------------------------------- */
@@ -351,13 +365,21 @@ footer>p {
 }
 
 /* -------------------------------------------------- */
+/* リサイズ時のトランジション防止 */
+/* -------------------------------------------------- */
+
+body.is-resizing * {
+    transition: none !important;
+}
+
+/* -------------------------------------------------- */
 /* キーワード */
 /* -------------------------------------------------- */
 
 /* 基本 */
 .keyword {
     border-bottom: dotted 2px var(--color-main);
-    transition: all 0.25s;
+    transition: background-color 0.25s, color 0.25s;
 }
 
 /* ホバー */

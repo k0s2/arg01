@@ -10,7 +10,7 @@
     background: rgba(0, 0, 0, 0.5);
     opacity: 1;
 
-    transition: all 0.25s;
+    transition: opacity 0.25s;
 
     &.is-hidden {
         opacity: 0;
@@ -28,7 +28,12 @@
         color: #000;
 
         transform: scale(1.0);
-        transition: all 0.25s;
+        transition: opacity 0.25s, transform 0.25s;
+
+        /* スマホ用 */
+        @media (max-width: 479px) {
+            width: 100%;
+        }
 
         h1 {
             border-bottom: solid 1px #000;
@@ -55,6 +60,11 @@
                 margin: 0;
                 min-width: 100px;
             }
+
+            /* スマホ用 */
+            @media (max-width: 479px) {
+                flex-direction: column;
+            }
         }
     }
 
@@ -78,4 +88,5 @@
             }
         }
     }
+
 }

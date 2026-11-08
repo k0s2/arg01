@@ -12,6 +12,7 @@
         /* ラッパー */
         section {
             padding: 0 20px;
+            width: stretch;
             max-width: 720px;
             height: fit-content;
 
@@ -33,6 +34,11 @@
                     /* サブタイトル */
                     span.subTitle {
                         font-size: 0.25em;
+                    }
+
+                    /* スマホ用 */
+                    @media (max-width: 779px) {
+                        font-size: 60px;
                     }
                 }
 
@@ -89,7 +95,7 @@
                         text-align: center;
                         text-decoration: none;
 
-                        transition: all 0.25s;
+                        transition: background-color 0.25s, color 0.25s;
 
                         /* アイコン */
                         >.buttonIcon {
@@ -109,16 +115,6 @@
 
                 }
             }
-        }
-
-        /* スマホ用 */
-        @media (max-width: 779px) {
-
-            /* タイトル */
-            h1 {
-                font-size: 48px;
-            }
-
         }
 
     }
