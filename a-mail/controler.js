@@ -143,7 +143,7 @@ export async function initFavorite() {
     document.querySelector("#button-receive:not(.is-active)")?.addEventListener("click", () => {
 
         // 「受信ボックス」ページへ遷移
-        location.href = "../list/#receive";
+        location.href = new URL("../list/#receive", location.href).href
 
     });
 
@@ -151,7 +151,7 @@ export async function initFavorite() {
     document.querySelector("#button-send:not(.is-active)")?.addEventListener("click", () => {
 
         // 「送信ボックス」ページへ遷移
-        location.href = "../list/#send";
+        location.href = new URL("../list/#send", location.href).href
 
     });
 
@@ -159,7 +159,7 @@ export async function initFavorite() {
     document.querySelector("#button-favorite:not(.is-active)")?.addEventListener("click", () => {
 
         // 「お気に入り」ページへ遷移
-        location.href = "../list/#favorite";
+        location.href = new URL("../list/#favorite", location.href).href
 
     });
 
