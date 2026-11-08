@@ -89,3 +89,51 @@ document.querySelector("#button-favorite:not(.is-active)")?.addEventListener("cl
     location.reload();
 
 });
+
+// --------------------------------------------------
+// お気に入り
+// --------------------------------------------------
+
+// ローカルストレージから取得
+let favorites = JSON.parse(
+    localStorage.getItem("mail-favorite") || "[]"
+);
+
+// 「★」を取得
+const targetsFavorite = document.querySelectorAll(".mailRow:not(.header) > .star");
+targetsFavorite.forEach(target => {
+
+    // お気に入り済みか
+    if (favorites.includes(target.favoriteId)) {
+        target.classList.add("is-favorite");
+    }
+
+    // クリックイベントを設定
+    target.addEventListener("click", (event) => {
+
+        // 詳細遷移イベントを発火しないようにする
+        event.stopPropagation();
+
+        // ●お気に入り済み
+        if (favorites.includes(target.favoriteId)) {
+            // 削除
+            favorites = favorites.filter(item => item !== target.favoriteId);
+
+            // クラス除去
+            target.classList.remove("is-favorite");
+        }
+        // ●それ以外の場合
+        else {
+            // 追加
+            favorites.push(target.favoriteId);
+
+            // クラス付与
+            target.classList.add("is-favorite");
+        }
+
+        // ローカルストレージに反映
+        localStorage.setItem("mail-favorite", JSON.stringify(favorites));
+
+    });
+
+});

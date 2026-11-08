@@ -166,12 +166,10 @@ body#mail {
                         color: #aaa;
                         -webkit-text-stroke-width: 1px;
                         -webkit-text-stroke-color: black;
+                        cursor: pointer;
 
-                        /* ホバー */
-                        @media (hover: hover) {
-                            &:hover {
-                                color: #ff0;
-                            }
+                        &.is-favorite {
+                            color: #ff0;
                         }
                     }
 

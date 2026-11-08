@@ -22,8 +22,7 @@ const targetDetail = document.querySelector("#area-main #detail");
 const currentId = location.hash.slice(1);;
 
 // ローカルストレージからメール情報を取得
-let mails = localStorage.getItem("mail-receive");
-mails = JSON.parse(mails);
+let mails = JSON.parse(localStorage.getItem("mail-receive") || []);
 
 // ====================================================================================================
 // イベント設定
@@ -107,6 +106,10 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 
 // メール情報を取得
 const data = mails.filter(mail => mail.id == currentId)[0];
+
+// お気に入り
+const star = targetDetail.querySelector("#mailInfo .star");
+star.favoriteId = data.id;
 
 // 送信者
 targetDetail.querySelector("#mailInfo .user").innerHTML = data.user;
