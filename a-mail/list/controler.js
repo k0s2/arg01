@@ -2,8 +2,8 @@
 // インポート
 // ====================================================================================================
 
-// メール情報
-import { getMails } from "../data/mail.js";
+// メール共通
+import { initFavorite, getBoxMails, addBoxMail, getMailStatus } from "../controler.js";
 
 // ====================================================================================================
 // 初期化
@@ -21,75 +21,25 @@ const targetList = document.querySelector("#area-main #list");
 
 let mails = [];
 
-switch (currentCategory) {
-    // --------------------------------------------------
-    // ●受信ボックス
-    // --------------------------------------------------
-    case "receive":
+// メール情報を取得
+mails = getBoxMails(currentCategory);
 
-        // ローカルストレージから受信ボックスを取得
-        mails = localStorage.getItem("mail-receive");
+// ●初回（受信メール情報が無い場合）
+if (
+    currentCategory == "receive"
+    && mails.length == 0
+) {
+    // メール情報を生成
+    addBoxMail(currentCategory, "100");
 
-        // ●初回（メール情報が無い場合）
-        if (mails == null) {
-            // メール情報を生成
-            mails = getMails([
-                "100",
-                "001",
-                "002",
-                "003",
-            ]);
+    addBoxMail(currentCategory, "001", true, "1900/01/01");
 
-            // ローカルストレージに保存
-            localStorage.setItem("mail-receive", JSON.stringify(mails));
-        }
-        // ●それ以外
-        else {
-            // 配列として取得
-            mails = JSON.parse(mails);
-        }
+    addBoxMail(currentCategory, "002", true, "1900/01/01");
 
-        break;
+    addBoxMail(currentCategory, "003", true, "1900/01/01");
 
-    // --------------------------------------------------
-    // ●送信ボックス
-    // --------------------------------------------------
-    case "send":
-
-        // ローカルストレージから送信ボックスを取得
-        mails = localStorage.getItem("mail-send");
-
-        // 配列として取得
-        mails = JSON.parse(mails);
-
-        break;
-
-    // --------------------------------------------------
-    // ●お気に入り
-    // --------------------------------------------------
-    case "favorite":
-
-        // ローカルストレージから受信ボックスを取得
-        mails = localStorage.getItem("mail-receive");
-
-        // ローカルストレージからお気に入り情報を取得
-        const favorites = JSON.parse(
-            localStorage.getItem("mail-favorite") || "[]"
-        );
-
-        // 配列として取得
-        mails = JSON.parse(mails);
-
-        // お気に入りを抽出
-        mails = mails.filter(mail => favorites.includes(mail.id));
-
-        break;
-
-    // --------------------------------------------------
-    // ●それ以外
-    // --------------------------------------------------
-    default:
-
+    // メール情報を取得
+    mails = getBoxMails(currentCategory);
 }
 
 // --------------------------------------------------
@@ -103,8 +53,6 @@ document.querySelector(".mailRow.header > .user").textContent = (currentCategory
 // メールデータを展開
 // --------------------------------------------------
 
-console.dir(mails);
-
 mails.forEach((data) => {
 
     // 親要素を生成
@@ -112,15 +60,15 @@ mails.forEach((data) => {
     elementParent.classList.add("mailRow");
 
     // 新着メール
-    if (!data.readed) {
+    if (getMailStatus(data.id).readed == false) {
         elementParent.classList.add("new");
     }
 
     // お気に入り
     const elementStar = document.createElement("div");
     elementStar.classList.add("star");
-    elementStar.favoriteId = data.id;
     elementStar.innerHTML = "★";
+    elementStar.setAttribute("favoriteId", data.id);
     elementParent.appendChild(elementStar);
 
     // 送信者
@@ -138,7 +86,7 @@ mails.forEach((data) => {
     // 受信日時
     const elementDate = document.createElement("div");
     elementDate.classList.add("date");
-    elementDate.innerHTML = data.date;
+    elementDate.innerHTML = getMailStatus(data.id).date;
     elementParent.appendChild(elementDate);
 
     // クリックイベント
@@ -151,3 +99,6 @@ mails.forEach((data) => {
     targetList.querySelector("ul").appendChild(elementParent);
 
 });
+
+// 共通初期化処理
+initFavorite();

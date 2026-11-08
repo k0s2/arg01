@@ -11,6 +11,9 @@ import { getMails } from "../data/mail.js";
 // 返信情報
 import { getReplyData } from "../data/reply.js";
 
+// メール共通
+import { initFavorite, addBoxMail, setMailRead, getMailStatus } from "../controler.js";
+
 // ====================================================================================================
 // 準備
 // ====================================================================================================
@@ -20,9 +23,6 @@ const targetDetail = document.querySelector("#area-main #detail");
 
 // 表示中のメールID（URLから取得）
 const currentId = location.hash.slice(1);;
-
-// ローカルストレージからメール情報を取得
-let mails = JSON.parse(localStorage.getItem("mail-receive") || []);
 
 // ====================================================================================================
 // イベント設定
@@ -73,16 +73,10 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 
             if (newMail) {
                 // 新着メールとして追加
-                mails.unshift({
-                    ...newMail,
-                    new: true,
-                });
-
-                // ローカルストレージに保存
-                localStorage.setItem("mail-receive", JSON.stringify(mails));
+                addBoxMail("receive", newMail);
 
                 // メール一覧ページへ遷移
-                window.location.href = new URL("../list/#receive", location.href).href;
+                window.location.href = new URL("../../a-mail/list/#receive", location.href).href;
             }
         }
         // ●それ以外
@@ -97,16 +91,12 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 // 初期化
 // ====================================================================================================
 
-// --------------------------------------------------
-// 詳細を描画
-// --------------------------------------------------
-
 // メール情報を取得
-const data = mails.filter(mail => mail.id == currentId)[0];
+const data = getMails(currentId)[0];
 
 // お気に入り
 const star = targetDetail.querySelector("#mailInfo .star");
-star.favoriteId = data.id;
+star.setAttribute("favoriteId", data.id);
 
 // 送信者
 targetDetail.querySelector("#mailInfo .user").innerHTML = data.user;
@@ -115,16 +105,13 @@ targetDetail.querySelector("#mailInfo .user").innerHTML = data.user;
 targetDetail.querySelector("#mailInfo .title").innerHTML = data.title;
 
 // 受信日時
-targetDetail.querySelector("#mailInfo .date").innerHTML = data.date;
+targetDetail.querySelector("#mailInfo .date").innerHTML = getMailStatus(data.id).date;
 
 // 本文
 targetDetail.querySelector(".message>p").innerHTML = data.message;
 
-// 既読にする
-if (!data.readed) {
-    // フラグをON
-    data.readed = true;
+// 既読情報の登録
+setMailRead(data.id);
 
-    // メールデータを保存
-    localStorage.setItem("mail-receive", JSON.stringify(mails));
-}
+// 共通初期化処理
+initFavorite();

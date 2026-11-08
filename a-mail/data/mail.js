@@ -3,22 +3,6 @@
 // ====================================================================================================
 
 /**
- * 現在年月日を取得
- * @param {Number} dayPlus 加算する日付
- * @returns 現在年月日＋加算する日付（yyyy/mm/dd）
- */
-const getDate = (dayPlus = 0) => {
-    // 現在日付を取得
-    const date = new Date();
-
-    // 加算
-    date.setDate(date.getDate() + dayPlus);
-
-    // 整形して返す
-    return date.getFullYear() + "/" + String(date.getMonth() + 1).padStart(2, "0") + "/" + String(date.getDate()).padStart(2, "0");
-};
-
-/**
  * メール情報
  */
 const mailList = [
@@ -43,7 +27,6 @@ const mailList = [
             + "このメールを無視してくれてもいい。\n"
             + "……でも、お前は「面白いことが好き」だろ？\n"
             + "返信待ってるぞ。",
-        date: getDate(),
     },
     {
         id: "001",
@@ -51,7 +34,6 @@ const mailList = [
         title: "縺雁燕縺ｯ閭ｽ蜉帙ｒ遉ｺ縺励◆",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        readed: true,
     },
     {
         id: "002",
@@ -59,7 +41,6 @@ const mailList = [
         title: "蟆代＠縺ｯ蠖ｹ縺ｫ遶九▽繧医≧縺�縺ｪ縲�",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        readed: true,
     },
     {
         id: "003",
@@ -67,7 +48,6 @@ const mailList = [
         title: "螟ｱ譛帙＆縺帙ｉ繧後◆繧�",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        readed: true,
     },
 
     // --------------------------------------------------
@@ -90,7 +70,6 @@ const mailList = [
             + "<a>調査レポート</a>\n"
             + "\n"
             + "では、健闘を祈る。",
-        date: getDate(),
     },
 
     {
@@ -102,7 +81,6 @@ const mailList = [
             + "まあいい。調査を進めていけば、そのうち思い出せるだろう。\n"
             + "\n"
             + "で、やる気になったか？",
-        date: getDate(),
     },
 
     {
@@ -114,7 +92,6 @@ const mailList = [
             + "今のアカウントでお前にメールを送ったのはさっきのが初めてだぞ？\n"
             + "\n"
             + "まあ、それはこっちで調べてみるから、お前は調査に専念してくれ。",
-        date: getDate(),
     },
 
     // --------------------------------------------------
@@ -129,9 +106,14 @@ const mailList = [
 
 /**
  * メール情報の取得
- * @param {[String]} ids 配列：呼び出すメールのID
- * @returns {Object|undefined} 配列：メール情報
+ * @param {String|String[]} ids 呼び出すメールのID（単数・複数）
+ * @returns {Object[]} メール情報の配列
  */
 export function getMails(ids) {
+    // 単数の場合、配列化
+    if (!Array.isArray(ids)) {
+        ids = [ids];
+    }
+
     return ids.map(id => mailList.find(mail => mail.id == id)).filter(Boolean);
 }
