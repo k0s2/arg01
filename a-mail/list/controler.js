@@ -22,9 +22,12 @@ const targetList = document.querySelector("#area-main #list");
 let mails = [];
 
 switch (currentCategory) {
-    // ●送信ボックス
+    // --------------------------------------------------
+    // ●受信ボックス
+    // --------------------------------------------------
     case "receive":
-        // ローカルストレージを取得
+
+        // ローカルストレージから受信ボックスを取得
         mails = localStorage.getItem("mail-receive");
 
         // ●初回（メール情報が無い場合）
@@ -48,9 +51,12 @@ switch (currentCategory) {
 
         break;
 
-    // ●受信ボックス
+    // --------------------------------------------------
+    // ●送信ボックス
+    // --------------------------------------------------
     case "send":
-        // ローカルストレージを取得
+
+        // ローカルストレージから送信ボックスを取得
         mails = localStorage.getItem("mail-send");
 
         // 配列として取得
@@ -58,11 +64,18 @@ switch (currentCategory) {
 
         break;
 
+    // --------------------------------------------------
     // ●お気に入り
+    // --------------------------------------------------
     case "favorite":
-        // ローカルストレージを取得
+
+        // ローカルストレージから受信ボックスを取得
         mails = localStorage.getItem("mail-receive");
-        const favorites = localStorage.getItem("mail-favorite");
+
+        // ローカルストレージからお気に入り情報を取得
+        const favorites = JSON.parse(
+            localStorage.getItem("mail-favorite") || "[]"
+        );
 
         // 配列として取得
         mails = JSON.parse(mails);
@@ -71,6 +84,11 @@ switch (currentCategory) {
         mails = mails.filter(mail => favorites.includes(mail.id));
 
         break;
+
+    // --------------------------------------------------
+    // ●それ以外
+    // --------------------------------------------------
+    default:
 
 }
 

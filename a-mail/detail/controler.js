@@ -48,19 +48,16 @@ targetDetail.querySelector(".detailHeader button#button-return").addEventListene
 targetDetail.querySelector("#button-reply").addEventListener("click", async () => {
 
     // 返信情報を取得
-    const reply = getReplyData(currentId);
+    let reply = getReplyData(currentId);
 
     // ●文字化けメール
     if (reply == undefined) {
         showDialog("退会済みユーザーには返信できません。");
     }
     // ●選択肢あり
-    else if (reply.length > 1) {
-        // 返信情報を取得
-        let reply = getReplyData(currentId);
-
+    else {
         // 返信済み選択肢は除外
-        reply = reply.filter(item => !mails.some(mail => mail.id === item.mailId));
+        reply = reply.filter(item => !mails.some(mail => mail.id == item.mailId));
 
         // 選択ダイアログを表示
         const result = await showMindDialog(
@@ -88,10 +85,10 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
                 window.location.href = new URL("../list/#receive", location.href).href;
             }
         }
-    }
-    // ●それ以外
-    else {
-        showMindDialog("返信の必要は無いな。");
+        // ●それ以外
+        else {
+            showMindDialog("返信の必要は無いな。");
+        }
     }
 
 });
@@ -130,7 +127,4 @@ if (!data.readed) {
 
     // メールデータを保存
     localStorage.setItem("mail-receive", JSON.stringify(mails));
-
-    // 新着件数を再計算
-    countNew = mails.filter(mail => mail.new).length;
 }
