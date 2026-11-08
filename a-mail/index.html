@@ -57,27 +57,31 @@
                 <!-- メール本文 -->
                 <div id="mail">
 
-                    <ul id="list">
+                    <!-- 一覧 -->
+                    <div id="list">
 
-                        <li class="mailRow header">
+                        <div class="mailRow header">
                             <div class="user">送信者</div>
                             <div class="title">件名</div>
                             <div class="date">受信日時</div>
-                        </li>
+                        </div>
 
-                    </ul>
+                        <ul></ul>
 
+                    </div>
+
+                    <!-- 詳細 -->
                     <div id="detail" class="is-hidden">
                         <div class="detailHeader">
                             <button id="button-return">一覧に戻る</button>
                             <button id="button-reply">返信する</button>
                         </div>
 
-                        <li class="mailRow header">
+                        <div class="mailRow header">
                             <div class="user">送信者</div>
                             <div class="title">件名</div>
                             <div class="date">受信日時</div>
-                        </li>
+                        </div>
 
                         <div id="mailInfo" class="mailRow">
                             <div class="user"></div>

@@ -10,7 +10,7 @@ import { showDialog, showMindDialog } from "../common/template/dialog/controler.
 // ====================================================================================================
 
 // 一覧
-const targetList = document.querySelector("#area-main #mail > ul#list");
+const targetList = document.querySelector("#area-main #list");
 
 // 詳細
 const targetDetail = document.querySelector("#area-main #detail");
@@ -32,7 +32,7 @@ let mails = localStorage.getItem("mail-receive");
 if (true) {
     // 現在日時を取得(yyyy/mm/dd)
     const date = new Date();
-    const today = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}`;
+    const today = date.getFullYear() + "/" + String(date.getMonth() + 1).padStart(2, "0") + "/" + String(date.getDate()).padStart(2, "0");
 
     // メール情報を生成
     mails = [
@@ -127,7 +127,7 @@ mails.forEach((data, index) => {
     });
 
     // メール一覧に追加
-    targetList.appendChild(elementParent);
+    targetList.querySelector("ul").appendChild(elementParent);
 
 });
 
@@ -265,19 +265,21 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 // イベント設定
 document.querySelector("#button-receive").addEventListener("click", () => {
 
-    // 「受信ボックス」を選択
-    document.querySelector("#button-receive").classList.add("is-active");
+    // TODO:
 
-    // それ以外を選択解除
-    document.querySelectorAll("#sideBar .buttons li").forEach(element => {
-        element.classList.remove("is-active");
-    });
+    // // 「受信ボックス」を選択
+    // document.querySelector("#button-receive").classList.add("is-active");
 
-    // 詳細を非表示
-    targetDetail.classList.add("is-hidden");
+    // // それ以外を選択解除
+    // document.querySelectorAll("#sideBar .buttons li").forEach(element => {
+    //     element.classList.remove("is-active");
+    // });
 
-    // 一覧を表示
-    targetList.classList.remove("is-hidden");
+    // // 詳細を非表示
+    // targetDetail.classList.add("is-hidden");
+
+    // // 一覧を表示
+    // targetList.classList.remove("is-hidden");
 
 });
 

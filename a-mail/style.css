@@ -97,35 +97,40 @@ body#mail {
         /* 一覧／詳細 */
         #mail {
             min-width: 0;
-            overflow: auto;
+            overflow: hidden;
 
             /* 一覧 */
-            ul#list {
-                list-style: none;
-                margin: 0;
-                padding: 0;
+            #list {
+                height: stretch;
 
-                li {
-                    background: rgba(255, 255, 255, 0.75);
-                    backdrop-filter: blur(10px);
+                ul {
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    height: stretch;
+                    overflow: auto;
 
-                    /* ポインター */
-                    &.mailRow {
-                        cursor: pointer;
-                    }
+                    li {
+                        background: rgba(255, 255, 255, 0.75);
+                        backdrop-filter: blur(10px);
 
-                    /* 新着 */
-                    &.new {
-                        background: #fff;
-                    }
+                        /* ポインター */
+                        &.mailRow {
+                            cursor: pointer;
+                        }
 
-                    /* ホバー */
-                    @media (hover: hover) {
-                        &:not(.header):hover {
-                            background: #ddf;
+                        /* 新着 */
+                        &.new {
+                            background: #fff;
+                        }
+
+                        /* ホバー */
+                        @media (hover: hover) {
+                            &:not(.header):hover {
+                                background: #ddf;
+                            }
                         }
                     }
-
                 }
             }
 
@@ -306,7 +311,7 @@ body#mail {
             }
 
             #mail {
-                ul#list>li {
+                #list li {
                     padding: 8px;
                 }
 
