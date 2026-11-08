@@ -12,7 +12,7 @@ import { getMails } from "../data/mail.js";
 import { getReplyData } from "../data/reply.js";
 
 // メール共通
-import { initFavorite, addBoxMail, setMailRead, getMailStatus } from "../controler.js";
+import { initFavorite, addBoxMail, setMailRead, getMailStatus, getBoxMails } from "../controler.js";
 
 // ====================================================================================================
 // 準備
@@ -56,27 +56,36 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
     }
     // ●選択肢あり
     else {
+        // 送信ボックスを取得
+        const mails = getBoxMails("send");
+
         // 返信済み選択肢は除外
-        reply = reply.filter(item => !mails.some(mail => mail.id == item.mailId));
+        reply = reply.filter(item => !mails.includes(item.id));
 
-        // 選択ダイアログを表示
-        const result = await showMindDialog(
-            "なんと返そうか？",
-            "返信する",
-            reply.map(item => item.text),
-        );
+        // 選択肢がある
+        if (reply.length >= 1) {
+            // 選択ダイアログを表示
+            const result = await showMindDialog(
+                "なんと返そうか？",
+                "返信する",
+                reply.map(item => item.text),
+            );
 
-        // ●選択された場合
-        if (result >= 0) {
-            // 返信メールを取得
-            const newMail = getMails([reply[result].mailId])[0];
+            // ●選択された場合
+            if (result >= 0) {
+                // 返信メールを取得
+                const newMail = getMails([reply[result].mailId])[0];
 
-            if (newMail) {
-                // 新着メールとして追加
-                addBoxMail("receive", newMail);
+                if (newMail) {
+                    // 返信を、送信ボックスへ追加
+                    addBoxMail("send", "r" + newMail.id);
 
-                // メール一覧ページへ遷移
-                window.location.href = new URL("../../a-mail/list/#receive", location.href).href;
+                    // 返信への返信を、受信ボックスへ追加
+                    addBoxMail("receive", newMail.id);
+
+                    // 「受信ボックス」ページへ遷移
+                    location.href = new URL("../list/#receive", location.href).href
+                }
             }
         }
         // ●それ以外
@@ -91,12 +100,29 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 // 初期化
 // ====================================================================================================
 
+// 受信メールか
+const isReceive = !(currentId.includes("r"));
+
+// --------------------------------------------------
+// ヘッダー
+// --------------------------------------------------
+
+// 受信者／送信者
+document.querySelector(".mailRow.header > .user").textContent = (isReceive) ? "受信者" : "送信者";
+
+// --------------------------------------------------
+// ディティール
+// --------------------------------------------------
+
 // メール情報を取得
 const data = getMails(currentId)[0];
 
 // お気に入り
 const star = targetDetail.querySelector("#mailInfo .star");
-star.setAttribute("favoriteId", data.id);
+if (isReceive) {
+    star.innerHTML = "★";
+    star.setAttribute("favoriteId", data.id);
+}
 
 // 送信者
 targetDetail.querySelector("#mailInfo .user").innerHTML = data.user;
@@ -113,5 +139,8 @@ targetDetail.querySelector(".message>p").innerHTML = data.message;
 // 既読情報の登録
 setMailRead(data.id);
 
+// --------------------------------------------------
 // 共通初期化処理
+// --------------------------------------------------
+
 initFavorite();

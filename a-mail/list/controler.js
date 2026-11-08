@@ -12,6 +12,9 @@ import { initFavorite, getBoxMails, addBoxMail, getMailStatus } from "../control
 // カテゴリー（URLから取得）
 const currentCategory = location.hash.slice(1);
 
+// 送信ボックスか
+const isSend = (currentCategory == "send");
+
 // 要素取得
 const targetList = document.querySelector("#area-main #list");
 
@@ -30,13 +33,10 @@ if (
     && mails.length == 0
 ) {
     // メール情報を生成
-    addBoxMail(currentCategory, "100");
-
-    addBoxMail(currentCategory, "001", true, "1900/01/01");
-
-    addBoxMail(currentCategory, "002", true, "1900/01/01");
-
     addBoxMail(currentCategory, "003", true, "1900/01/01");
+    addBoxMail(currentCategory, "002", true, "1900/01/01");
+    addBoxMail(currentCategory, "001", true, "1900/01/01");
+    addBoxMail(currentCategory, "100");
 
     // メール情報を取得
     mails = getBoxMails(currentCategory);
@@ -47,7 +47,7 @@ if (
 // --------------------------------------------------
 
 // 受信者／送信者
-document.querySelector(".mailRow.header > .user").textContent = (currentCategory == "send") ? "受信者" : "送信者";
+document.querySelector(".mailRow.header > .user").textContent = (isSend) ? "受信者" : "送信者";
 
 // --------------------------------------------------
 // メールデータを展開
@@ -60,15 +60,20 @@ mails.forEach((data) => {
     elementParent.classList.add("mailRow");
 
     // 新着メール
-    if (getMailStatus(data.id).readed == false) {
+    if (
+        currentCategory != "send"
+        && getMailStatus(data.id).readed == false
+    ) {
         elementParent.classList.add("new");
     }
 
     // お気に入り
     const elementStar = document.createElement("div");
     elementStar.classList.add("star");
-    elementStar.innerHTML = "★";
-    elementStar.setAttribute("favoriteId", data.id);
+    if (!isSend) {
+        elementStar.innerHTML = "★";
+        elementStar.setAttribute("favoriteId", data.id);
+    }
     elementParent.appendChild(elementStar);
 
     // 送信者

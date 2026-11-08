@@ -50,7 +50,7 @@ export function addBoxMail(box, id, readed = false, date = null) {
     // 登録済みでない場合
     if (!ids.includes(id)) {
         // 追加
-        ids.push(id);
+        ids.unshift(id);
         localStorage.setItem("mail-" + box, JSON.stringify(ids));
 
         // 既読情報の登録
@@ -124,6 +124,9 @@ export function setMailRead(id, readed = true, date = null) {
  * 共通初期化処理
  */
 export async function initFavorite() {
+    // カテゴリー（URLから取得）
+    const currentCategory = location.hash.slice(1);
+
     // --------------------------------------------------
     // サイドバー
     // --------------------------------------------------
@@ -132,9 +135,6 @@ export async function initFavorite() {
     document.querySelectorAll("#sideBar .buttons li").forEach(element => {
         element.classList.remove("is-active");
     });
-
-    // カテゴリー（URLから取得）
-    const currentCategory = location.hash.slice(1);
 
     // 対象カテゴリーをアクティブ
     document.querySelector("#button-" + currentCategory)?.classList.add("is-active");
@@ -188,7 +188,7 @@ export async function initFavorite() {
     // お気に入り
     // --------------------------------------------------
 
-    const targetsFavorite = document.querySelectorAll(".mailRow:not(.header) > .star");
+    const targetsFavorite = document.querySelectorAll(".mailRow:not(.header) > .star[favoriteId]");
     targetsFavorite.forEach(target => {
 
         // お気に入り済みか

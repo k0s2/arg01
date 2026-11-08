@@ -55,6 +55,13 @@ const mailList = [
     // --------------------------------------------------
 
     {
+        id: "r101",
+        user: "J.Smith",
+        title: "Re:怪異調査依頼",
+        message:
+            "分かった。やってみる。",
+    },
+    {
         id: "101",
         user: "J.Smith",
         title: "Re:分かった。やってみる。",
@@ -73,6 +80,13 @@ const mailList = [
     },
 
     {
+        id: "r102",
+        user: "J.Smith",
+        title: "Re:怪異調査依頼",
+        message:
+            "お前は誰だ？",
+    },
+    {
         id: "102",
         user: "J.Smith",
         title: "Re:お前は誰だ？",
@@ -83,6 +97,14 @@ const mailList = [
             + "で、やる気になったか？",
     },
 
+
+    {
+        id: "r103",
+        user: "J.Smith",
+        title: "Re:怪異調査依頼",
+        message:
+            "意味不明なメールはお前の仕業か？",
+    },
     {
         id: "103",
         user: "J.Smith",
