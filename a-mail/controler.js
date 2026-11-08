@@ -5,6 +5,12 @@
 // ダイアログ
 import { showDialog, showMindDialog } from "../common/template/dialog/controler.js";
 
+// メール情報
+import { getMails } from "./data/mail.js";
+
+// 返信情報
+import { getReplyGroup } from "./data/reply.js";
+
 // ====================================================================================================
 // 準備
 // ====================================================================================================
@@ -26,57 +32,15 @@ const targetDetail = document.querySelector("#area-main #detail");
 // ローカルストレージを取得
 let mails = localStorage.getItem("mail-receive");
 
-// FIXME:
 // ●初回（メール情報が無い場合）
-// if (mails == null) {
-if (true) {
-    // 現在日時を取得(yyyy/mm/dd)
-    const date = new Date();
-    const today = date.getFullYear() + "/" + String(date.getMonth() + 1).padStart(2, "0") + "/" + String(date.getDate()).padStart(2, "0");
-
+if (mails == null) {
     // メール情報を生成
-    mails = [
-        {
-            id: "100",
-            user: "J.Smith",
-            title: "怪異調査依頼",
-            message:
-                "突然の連絡、すまない。\n"
-                + "お前の調査能力を見込んで頼みがある。\n"
-                + "\n"
-                + "掲示板で騒がれている連続怪奇事件の裏には、俺たちが「怪異」と呼んでいる人外の存在が関わっている。\n"
-                + "奴らは超常の力を用いて、人間を脅かし、時には命さえも奪う。\n"
-                + "\n"
-                + "お前には掲示板で情報を集め、それらをデータベースと照らし合わせ、事件を引き起こした怪異を特定してもらいたい。\n"
-                + "\n"
-                + "このメールを無視してくれてもいい。\n"
-                + "……でも、お前は「面白いことが好き」だろ？\n"
-                + "返信待ってるぞ。",
-            date: today,
-            new: true,
-        },
-        {
-            id: "001",
-            user: '<span class="c-gray">退会済みユーザー</span>',
-            title: "縺雁燕縺ｯ閭ｽ蜉帙ｒ遉ｺ縺励◆",
-            message: '<span class="c-gray">本文はありません</span>',
-            date: "1900/01/01",
-        },
-        {
-            id: "002",
-            user: '<span class="c-gray">退会済みユーザー</span>',
-            title: "蟆代＠縺ｯ蠖ｹ縺ｫ遶九▽繧医≧縺�縺ｪ縲�",
-            message: '<span class="c-gray">本文はありません</span>',
-            date: "1900/01/01",
-        },
-        {
-            id: "003",
-            user: '<span class="c-gray">退会済みユーザー</span>',
-            title: "螟ｱ譛帙＆縺帙ｉ繧後◆繧�",
-            message: '<span class="c-gray">本文はありません</span>',
-            date: "1900/01/01",
-        },
-    ];
+    mails = getMails([
+        "100",
+        "001",
+        "002",
+        "003",
+    ]);
 
     // ローカルストレージに保存
     localStorage.setItem("mail-receive", JSON.stringify(mails));
@@ -210,55 +174,32 @@ targetDetail.querySelector(".detailHeader button#button-return").addEventListene
 // 「返信する」ボタン
 // --------------------------------------------------
 
-// FIXME:
-// 返信ファンクション
-const replyActions = {
-
-    // 「怪異調査依頼」
-    "100": {
-        async reply() {
-            // ダイアログを表示
-            const result = await showMindDialog(
-                "なんと返そうか？",
-                "返信する",
-                [
-                    "分かった。やってみる。",
-                    "お前は誰だ？",
-                    "意味不明なメールはお前の仕業か？",
-                ]
-            );
-
-            // 選択肢により分岐
-            switch (result) {
-                // 「分かった。やってみる。」
-                case 0:
-                    break;
-
-                // 「誰だお前は？」
-                case 1:
-                    break;
-
-                // 「意味不明なメールもお前の仕業か？」
-                case 2:
-                    break;
-
-                // キャンセル
-                default:
-            }
-        },
-    },
-
-};
-
 // イベント設定
 targetDetail.querySelector("#button-reply").addEventListener("click", async () => {
 
-    // 設定された返信ファンクションを呼び出し
-    const action = replyActions[currentMail?.id]?.reply();
-    if (action) {
-        await action();
-    } else {
-        showDialog("退会済みユーザーには返信できません。")
+    // 返信情報を取得
+    const reply = getReplyChoice(currentMail?.id);
+
+    // ●選択肢
+    if (reply.length > 1) {
+        // 選択ダイアログを表示
+        const result = await showMindDialog(
+            "なんと返そうか？",
+            "返信する",
+            reply,
+        );
+
+        //
+    }
+    // ●閉じるのみ
+    else if (reply.length == 0) {
+        showDialog("退会済みユーザーには返信できません。");
+    }
+    // ●それ以外
+    else {
+        showMindDialog(
+            "返信の必要は無いな。"
+        );
     }
 
 });

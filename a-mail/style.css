@@ -107,7 +107,7 @@ body#mail {
             }
 
             /* 一覧／詳細 */
-            #mail {
+            #mailContent {
                 min-width: 0;
                 overflow: hidden;
 
@@ -328,7 +328,7 @@ body#mail {
                 }
             }
 
-            #mail {
+            #mailContent {
                 #list li {
                     padding: 8px;
                 }

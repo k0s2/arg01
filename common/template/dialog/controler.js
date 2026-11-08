@@ -1,5 +1,13 @@
-// テンプレート読み込みモジュール
+// ====================================================================================================
+// インポート
+// ====================================================================================================
+
+// テンプレート
 import { loadTemplate } from "../../controler.js";
+
+// ====================================================================================================
+//
+// ====================================================================================================
 
 // ダイアログ要素
 let resultContainer = null;
@@ -170,5 +178,5 @@ export async function showDialog(message, title = "", buttons = null, modeMind =
  */
 export async function showMindDialog(message, title = "", buttons = null) {
     // 精神モードで、既存のダイアログ表示処理を呼び出し
-    showDialog(message, title, buttons, true);
+    return showDialog(message, title, buttons, true);
 }
