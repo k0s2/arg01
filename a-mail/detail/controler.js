@@ -56,11 +56,11 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
     }
     // ●選択肢あり
     else {
-        // 送信ボックスを取得
-        const mails = getBoxMails("send");
+        // 受信済みメールのIDを取得
+        const receivedIds = getBoxMails("receive").map(mail => mail.id);
 
         // 返信済み選択肢は除外
-        reply = reply.filter(item => !mails.includes(item.id));
+        reply = reply.filter(item => !receivedIds.includes(item.mailId));
 
         // 選択肢がある
         if (reply.length >= 1) {

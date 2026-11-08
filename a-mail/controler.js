@@ -41,9 +41,6 @@ export function getBoxMails(box) {
  * @param {String} date メールID
  */
 export function addBoxMail(box, id, readed = false, date = null) {
-    console.dir(box);
-    console.dir(id);
-
     // 登録済みのメールIDを取得
     const ids = JSON.parse(localStorage.getItem("mail-" + box) || "[]");
 

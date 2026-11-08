@@ -167,11 +167,18 @@ function addCollectWord(word) {
     const addToList = () => {
         // 対象要素を取得
         const list = document.querySelector("#keywords");
-        if (!list) return;
+        if (!list) {
+            return;
+        }
 
         const li = document.createElement("li");
         li.textContent = word;
         li.classList.add("is-new");
+
+        const inputActive = document.querySelector(".inputBox.is-active");
+        if (!inputActive) {
+            li.classList.add("is-disabled");
+        }
 
         list.appendChild(li);
 
@@ -217,9 +224,6 @@ function addCollectWord(word) {
 // アクティブなインプットボックス
 let activeInput = null;
 
-// タイピング演出用
-let typingTimer = null;
-
 /**
  * タイピング演出
  * @param {HTMLElement} target 入力対称
@@ -246,7 +250,7 @@ function typeWord(target, word) {
             target.textContent += word[index];
             index++;
 
-            typingTimer = setTimeout(typeNext, 100);
+            setTimeout(typeNext, 100);
         }
 
         // 描画の実行

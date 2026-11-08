@@ -81,7 +81,7 @@
 
                     /* 非活性 */
                     &.is-disabled {
-                        background: #888 !important;
+                        background: #888;
 
                         cursor: inherit;
                     }
@@ -99,7 +99,7 @@
 
                     /* ホバー */
                     @media (hover: hover) {
-                        &:hover {
+                        &:not(.is-disabled):hover {
                             background: var(--color-main);
                             color: #000;
                         }
@@ -219,18 +219,14 @@
 /* キーワードボタン追加 */
 @keyframes wordSlideIn {
     0% {
-        background: var(--color-main);
+        background-color: var(--color-main);
         opacity: 0;
         transform: translateX(100%);
     }
 
     50% {
-        background: var(--color-main);
+        background-color: var(--color-main);
         opacity: 1;
         transform: translateX(0);
-    }
-
-    100% {
-        background: #fff;
     }
 }
