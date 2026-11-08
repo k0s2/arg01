@@ -1,41 +1,91 @@
 // ====================================================================================================
-// 受信ボックス
+// 初期化
 // ====================================================================================================
 
-// イベント設定
-document.querySelector("#button-receive").addEventListener("click", () => {
+// ローカルストレージからメール情報を取得
+let mails = localStorage.getItem("mail-receive");
+mails = JSON.parse(mails);
 
-    // TODO:
+// --------------------------------------------------
+// サイドバー
+// --------------------------------------------------
 
-    // // 「受信ボックス」を選択
-    // document.querySelector("#button-receive").classList.add("is-active");
-
-    // // それ以外を選択解除
-    // document.querySelectorAll("#sideBar .buttons li").forEach(element => {
-    //     element.classList.remove("is-active");
-    // });
-
-    // // 詳細を非表示
-    // targetDetail.classList.add("is-hidden");
-
-    // // 一覧を表示
-    // targetList.classList.remove("is-hidden");
-
+// 一旦全てアクティブ解除
+document.querySelectorAll("#sideBar .buttons li").forEach(element => {
+    element.classList.remove("is-active");
 });
 
-// ====================================================================================================
-// 送信ボックス
-// ====================================================================================================
+// カテゴリー（URLから取得）
+const currentCategory = location.hash.slice(1);
 
-// TODO:
+// 対象カテゴリーをアクティブ
+document.querySelector("#button-" + currentCategory)?.classList.add("is-active");
 
-// ====================================================================================================
-// 表示
-// ====================================================================================================
+// --------------------------------------------------
+// 新着件数を表示
+// --------------------------------------------------
 
-// わざと0.5秒ウェイト
-await new Promise(resolve => setTimeout(resolve, 500));
+// 件数を取得
+const countNew = mails.filter(mail => !mail.readed).length;
+
+// 描画
+const targetNew = document.querySelector("#button-receive .count");
+targetNew.textContent = countNew || "";
+targetNew.classList.toggle("new", countNew >= 1);
+
+// --------------------------------------------------
+// ロード表示
+// --------------------------------------------------
+
+// ウェイト
+await new Promise(resolve => setTimeout(resolve, 250));
 
 // ロード完了
 document.querySelector("#area-main>p").classList.add("is-hidden");
 document.querySelector("#area-main>section").classList.remove("is-hidden");
+
+// ====================================================================================================
+// イベント設定
+// ====================================================================================================
+
+// --------------------------------------------------
+// 受信ボックス
+// --------------------------------------------------
+
+document.querySelector("#button-receive:not(.is-active)")?.addEventListener("click", () => {
+
+    // 「受信ボックス」ページへ遷移
+    window.location.href = new URL("../list/#receive", location.href).href;
+
+    // ページのリロード
+    location.reload();
+
+});
+
+// --------------------------------------------------
+// 送信ボックス
+// --------------------------------------------------
+
+document.querySelector("#button-send:not(.is-active)")?.addEventListener("click", () => {
+
+    // 「送信ボックス」ページへ遷移
+    window.location.href = new URL("../list/#send", location.href).href;
+
+    // ページのリロード
+    location.reload();
+
+});
+
+// --------------------------------------------------
+// お気に入り
+// --------------------------------------------------
+
+document.querySelector("#button-favorite:not(.is-active)")?.addEventListener("click", () => {
+
+    // 「お気に入り」ページへ遷移
+    window.location.href = new URL("../list/#favorite", location.href).href;
+
+    // ページのリロード
+    location.reload();
+
+});

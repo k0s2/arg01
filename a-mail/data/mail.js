@@ -86,6 +86,9 @@ const mailList = [
             + "<button id=\"button-install\">FUGURUMA SYSTEM</button>\n"
             + "\n"
             + "また、調査に必要なページのリンクも貼っておく。\n"
+            + "<a>怪異データベース</a>\n"
+            + "<a>調査レポート</a>\n"
+            + "\n"
             + "では、健闘を祈る。",
         date: getDate(),
     },

@@ -8,7 +8,7 @@ body#mail {
     #area-main {
 
         /* ロード中 */
-        p {
+        >p {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -161,6 +161,20 @@ body#mail {
                         cursor: inherit !important;
                     }
 
+                    .star {
+                        width: 1em;
+                        color: #aaa;
+                        -webkit-text-stroke-width: 1px;
+                        -webkit-text-stroke-color: black;
+
+                        /* ホバー */
+                        @media (hover: hover) {
+                            &:hover {
+                                color: #ff0;
+                            }
+                        }
+                    }
+
                     .user {
                         width: 10em;
                     }
@@ -177,6 +191,8 @@ body#mail {
 
                 /* 詳細 */
                 #detail {
+                    display: flex;
+                    flex-direction: column;
                     background: rgba(255, 255, 255, 0.75);
                     backdrop-filter: blur(10px);
                     height: 100%;
@@ -202,9 +218,13 @@ body#mail {
                     /* 本文 */
                     .message {
                         padding: 8px;
-                        line-height: 1.8;
-                        white-space: pre-wrap;
-                        overflow-wrap: anywhere;
+                        height: stretch;
+                        overflow: auto;
+
+                        p {
+                            margin: 0;
+                            white-space: break-spaces;
+                        }
 
                         /* ボタン */
                         button {
@@ -341,12 +361,6 @@ body#mail {
 
                     .date {
                         width: 6em;
-                    }
-                }
-
-                #detail {
-                    .message {
-                        padding: 16px 4px;
                     }
                 }
             }

@@ -12,7 +12,7 @@ import { getMails } from "../data/mail.js";
 import { getReplyData } from "../data/reply.js";
 
 // ====================================================================================================
-// 詳細
+// 準備
 // ====================================================================================================
 
 // 要素取得
@@ -21,13 +21,13 @@ const targetDetail = document.querySelector("#area-main #detail");
 // 表示中のメールID（URLから取得）
 const currentId = location.hash.slice(1);;
 
-// --------------------------------------------------
-// メール情報を取得
-// --------------------------------------------------
-
-// ローカルストレージを取得
+// ローカルストレージからメール情報を取得
 let mails = localStorage.getItem("mail-receive");
 mails = JSON.parse(mails);
+
+// ====================================================================================================
+// イベント設定
+// ====================================================================================================
 
 // --------------------------------------------------
 // 「一覧へ戻る」ボタン
@@ -85,8 +85,8 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
                 // ローカルストレージに保存
                 localStorage.setItem("mail-receive", JSON.stringify(mails));
 
-                // ページのリロード
-                location.reload();
+                // メール一覧ページへ遷移
+                window.location.href = new URL("../list/#receive", location.href).href;
             }
         }
     }
@@ -101,14 +101,9 @@ targetDetail.querySelector("#button-reply").addEventListener("click", async () =
 // 初期化
 // ====================================================================================================
 
-// 新着件数
-let countNew = 0;
-mails.forEach((data) => {
-    // 新着メール
-    if (!data.readed) {
-        countNew++;
-    }
-});
+// --------------------------------------------------
+// 詳細を描画
+// --------------------------------------------------
 
 // メール情報を取得
 const data = mails.filter(mail => mail.id == currentId)[0];
@@ -123,7 +118,7 @@ targetDetail.querySelector("#mailInfo .title").innerHTML = data.title;
 targetDetail.querySelector("#mailInfo .date").innerHTML = data.date;
 
 // 本文
-targetDetail.querySelector(".message").innerHTML = data.message;
+targetDetail.querySelector(".message>p").innerHTML = data.message;
 
 // 既読にする
 if (!data.readed) {
@@ -136,12 +131,3 @@ if (!data.readed) {
     // 新着件数を再計算
     countNew = mails.filter(mail => mail.new).length;
 }
-
-// --------------------------------------------------
-// 新着件数を表示
-// --------------------------------------------------
-
-const targetNew = document.querySelector("#button-receive .count");
-
-targetNew.textContent = countNew || "";
-targetNew.classList.toggle("new", countNew >= 1);

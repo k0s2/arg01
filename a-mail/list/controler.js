@@ -42,9 +42,6 @@ else {
 // メールデータを展開
 // --------------------------------------------------
 
-// 新着件数
-let countNew = 0;
-
 mails.forEach((data) => {
 
     // 親要素を生成
@@ -54,8 +51,13 @@ mails.forEach((data) => {
     // 新着メール
     if (!data.readed) {
         elementParent.classList.add("new");
-        countNew++;
     }
+
+    // お気に入り
+    const elementStar = document.createElement("div");
+    elementStar.classList.add("star");
+    elementStar.innerHTML = "★";
+    elementParent.appendChild(elementStar);
 
     // 送信者
     const elementUser = document.createElement("div");
@@ -85,12 +87,3 @@ mails.forEach((data) => {
     targetList.querySelector("ul").appendChild(elementParent);
 
 });
-
-// --------------------------------------------------
-// 新着件数を表示
-// --------------------------------------------------
-
-const targetNew = document.querySelector("#button-receive .count");
-
-targetNew.textContent = countNew || "";
-targetNew.classList.toggle("new", countNew >= 1);
