@@ -65,7 +65,7 @@ buttonDecide.addEventListener("click", function () {
         localStorage.setItem("gameStart", true);
 
         // メールページへ遷移
-        window.location.href = new URL("../a-mail/", location.href).href;
+        window.location.href = new URL("../a-mail/list/#receive", location.href).href;
 
     } else if (inputStart.textContent == "") {
         // ダイアログ表示

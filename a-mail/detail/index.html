@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="../common/style.css">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../../common/style.css">
+    <link rel="stylesheet" href="../style.css">
 
     <title>怪異調査報告／Amail</title>
 </head>
@@ -59,22 +59,8 @@
 
                 <!-- メール本文 -->
                 <div id="mailContent">
+                    <div id="detail">
 
-                    <!-- 一覧 -->
-                    <div id="list">
-
-                        <div class="mailRow header">
-                            <div class="user">送信者</div>
-                            <div class="title">件名</div>
-                            <div class="date">受信日時</div>
-                        </div>
-
-                        <ul></ul>
-
-                    </div>
-
-                    <!-- 詳細 -->
-                    <div id="detail" class="is-hidden">
                         <div class="detailHeader">
                             <button id="button-return">一覧に戻る</button>
                             <button id="button-reply">返信する</button>
@@ -96,7 +82,6 @@
                         </div>
 
                     </div>
-
                 </div>
 
             </section>
@@ -211,7 +196,8 @@
     <!-- スクリプト -->
     <!-- -------------------------------------------------- -->
 
-    <script type="module" src="../common/controler.js"></script>
+    <script type="module" src="../../common/controler.js"></script>
+    <script type="module" src="../controler.js"></script>
     <script type="module" src="./controler.js"></script>
 
 </body>

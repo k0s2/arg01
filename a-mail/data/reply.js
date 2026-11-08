@@ -17,8 +17,6 @@ const replyGroups = [
             "002",
             "003",
         ],
-        choice: [],
-        reply: [],
     },
 
     // --------------------------------------------------
@@ -31,7 +29,6 @@ const replyGroups = [
             "102",
             "103",
         ],
-        choice: [],
         reply: [
             {
                 mailId: "101",
@@ -59,11 +56,11 @@ const replyGroups = [
 // ====================================================================================================
 
 /**
- * 返信情報：選択肢の取得
+ * 返信情報の取得
  * @param {string} id メールID
  * @returns {Object|undefined} 配列：返信情報
  */
-export function getReplyChoice(id) {
+export function getReplyData(id) {
     const group = replyGroups.find(group => group.ids.includes(id));
-    return group ? group.reply.map(reply => reply.text) : [];
+    return group ? group.reply : [];
 }

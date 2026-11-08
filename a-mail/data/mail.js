@@ -51,7 +51,7 @@ const mailList = [
         title: "縺雁燕縺ｯ閭ｽ蜉帙ｒ遉ｺ縺励◆",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        new: false,
+        readed: true,
     },
     {
         id: "002",
@@ -59,7 +59,7 @@ const mailList = [
         title: "蟆代＠縺ｯ蠖ｹ縺ｫ遶九▽繧医≧縺�縺ｪ縲�",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        new: false,
+        readed: true,
     },
     {
         id: "003",
@@ -67,7 +67,7 @@ const mailList = [
         title: "螟ｱ譛帙＆縺帙ｉ繧後◆繧�",
         message: '<span class="c-gray">本文はありません</span>',
         date: "1900/01/01",
-        new: false,
+        readed: true,
     },
 
     // --------------------------------------------------
@@ -96,7 +96,9 @@ const mailList = [
         title: "Re:お前は誰だ？",
         message:
             "おいおい、俺を忘れたのか？\n"
-            + "……まあいい。調査を進めていけば、そのうち思い出せるだろう。",
+            + "まあいい。調査を進めていけば、そのうち思い出せるだろう。\n"
+            + "\n"
+            + "で、やる気になったか？",
         date: getDate(),
     },
 
@@ -106,7 +108,9 @@ const mailList = [
         title: "Re:意味不明なメールはお前の仕業か？",
         message:
             "何のことだ？\n"
-            + "今のアカウントでお前にメールを送ったのはさっきのが初めてだぞ？",
+            + "今のアカウントでお前にメールを送ったのはさっきのが初めてだぞ？\n"
+            + "\n"
+            + "まあ、それはこっちで調べてみるから、お前は調査に専念してくれ。",
         date: getDate(),
     },
 
