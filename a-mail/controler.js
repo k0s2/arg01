@@ -37,9 +37,10 @@ if (true) {
     // メール情報を生成
     mails = [
         {
-            "user": "J.Smith",
-            "title": "怪異調査依頼",
-            "message":
+            id: "100",
+            user: "J.Smith",
+            title: "怪異調査依頼",
+            message:
                 "突然の連絡、すまない。\n"
                 + "お前の調査能力を見込んで頼みがある。\n"
                 + "\n"
@@ -51,26 +52,28 @@ if (true) {
                 + "このメールを無視してくれてもいい。\n"
                 + "……でも、お前は「面白いことが好き」だろ？\n"
                 + "返信待ってるぞ。",
-            "date": today,
-            "new": true,
-            "replyAction": "reply_1"
+            date: today,
+            new: true,
         },
         {
-            user: '<span class="c-gray">（退会済みユーザー）</span>',
+            id: "001",
+            user: '<span class="c-gray">退会済みユーザー</span>',
             title: "縺雁燕縺ｯ閭ｽ蜉帙ｒ遉ｺ縺励◆",
-            message: '<span class="c-gray">（本文はありません）</span>',
+            message: '<span class="c-gray">本文はありません</span>',
             date: "1900/01/01",
         },
         {
-            user: '<span class="c-gray">（退会済みユーザー）</span>',
+            id: "002",
+            user: '<span class="c-gray">退会済みユーザー</span>',
             title: "蟆代＠縺ｯ蠖ｹ縺ｫ遶九▽繧医≧縺�縺ｪ縲�",
-            message: '<span class="c-gray">（本文はありません）</span>',
+            message: '<span class="c-gray">本文はありません</span>',
             date: "1900/01/01",
         },
         {
-            user: '<span class="c-gray">（退会済みユーザー）</span>',
+            id: "003",
+            user: '<span class="c-gray">退会済みユーザー</span>',
             title: "螟ｱ譛帙＆縺帙ｉ繧後◆繧�",
-            message: '<span class="c-gray">（本文はありません）</span>',
+            message: '<span class="c-gray">本文はありません</span>',
             date: "1900/01/01",
         },
     ];
@@ -211,36 +214,38 @@ targetDetail.querySelector(".detailHeader button#button-return").addEventListene
 // 返信ファンクション
 const replyActions = {
 
-    // 怪異調査依頼
-    async reply_1() {
-        // ダイアログを表示
-        const result = await showMindDialog(
-            "なんと返そうか？",
-            "返信する",
-            [
-                "分かった。やってみる。",
-                "お前は誰だ？",
-                "意味不明なメールはお前の仕業か？",
-            ]
-        );
+    // 「怪異調査依頼」
+    "100": {
+        async reply() {
+            // ダイアログを表示
+            const result = await showMindDialog(
+                "なんと返そうか？",
+                "返信する",
+                [
+                    "分かった。やってみる。",
+                    "お前は誰だ？",
+                    "意味不明なメールはお前の仕業か？",
+                ]
+            );
 
-        // 選択肢により分岐
-        switch (result) {
-            // 「分かった。やってみる。」
-            case 0:
-                break;
+            // 選択肢により分岐
+            switch (result) {
+                // 「分かった。やってみる。」
+                case 0:
+                    break;
 
-            // 「誰だお前は？」
-            case 1:
-                break;
+                // 「誰だお前は？」
+                case 1:
+                    break;
 
-            // 「意味不明なメールもお前の仕業か？」
-            case 2:
-                break;
+                // 「意味不明なメールもお前の仕業か？」
+                case 2:
+                    break;
 
-            // キャンセル
-            default:
-        }
+                // キャンセル
+                default:
+            }
+        },
     },
 
 };
@@ -249,7 +254,7 @@ const replyActions = {
 targetDetail.querySelector("#button-reply").addEventListener("click", async () => {
 
     // 設定された返信ファンクションを呼び出し
-    const action = replyActions[currentMail?.replyAction];
+    const action = replyActions[currentMail?.id]?.reply();
     if (action) {
         await action();
     } else {
@@ -288,3 +293,14 @@ document.querySelector("#button-receive").addEventListener("click", () => {
 // ====================================================================================================
 
 // TODO:
+
+// ====================================================================================================
+// 表示
+// ====================================================================================================
+
+// わざと1秒ウェイト
+await new Promise(resolve => setTimeout(resolve, 1000));
+
+// ロード完了
+document.querySelector("#area-main>p").classList.add("is-hidden");
+document.querySelector("#area-main>section").classList.remove("is-hidden");

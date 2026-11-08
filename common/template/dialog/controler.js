@@ -11,16 +11,23 @@ function hideDialog() {
     // ダイアログを取得
     const target = resultContainer.querySelector("#dialog");
 
-    // 非表示クラスを付与
-    target.classList.add("is-hidden");
+    // トランジション終了イベント
+    const onTransitionEnd = (event) => {
+        // ダイアログ自身のopacity以外は無視
+        if (event.target !== target || event.propertyName !== "opacity") {
+            return;
+        }
 
-    // 非表示アニメーションが終わった後に処理
-    target.addEventListener("transitionend", () => {
+        // イベントリスナーを解除
+        target.removeEventListener("transitionend", onTransitionEnd);
 
         // ダイアログ要素を削除
         resultContainer.remove();
+    };
+    target.addEventListener("transitionend", onTransitionEnd);
 
-    }, { once: true });
+    // 非表示クラスを付与
+    target.classList.add("is-hidden");
 }
 
 /**

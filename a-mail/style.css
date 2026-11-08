@@ -5,216 +5,234 @@ body#mail {
     background-repeat: no-repeat;
 
     /* ラッパー */
-    #area-main>section {
-        display: grid;
-        grid-template-columns: 200px 1fr;
-        width: 100%;
-        min-width: 0;
+    #area-main {
 
-        /* ボタン */
-        button {
-            transition: none;
-
-            /* ホバー */
-            @media (hover: hover) {
-                &:hover {
-                    background: #eef;
-                    color: inherit;
-                }
-            }
+        /* ロード中 */
+        p {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0;
+            background: #fff;
         }
 
-        /* サイドバー */
-        #sideBar {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(10px);
-            border-right: solid 2px #444;
-
-            padding: 8px;
-            padding-left: 0;
-
-            /* タイトル */
-            h1 {
-                margin: 0;
-                padding-left: 16px;
-                line-height: 100%;
-            }
-
-            /* ボタンラッパー */
-            ul.buttons {
-                list-style: none;
-                padding: 0;
-
-                /* ボタン */
-                li {
-                    display: flex;
-                    justify-content: space-between;
-                    background: #fff;
-                    border-radius: 0 100px 100px 0;
-                    padding: 4px 8px 4px 16px;
-                    cursor: pointer;
-
-                    /* ホバー */
-                    @media (hover: hover) {
-                        &:hover {
-                            background: #eef;
-                        }
-                    }
-
-                    /* 間隔 */
-                    &+li {
-                        margin-top: 8px;
-                    }
-
-                    /* アクティブ */
-                    &.is-active {
-                        background: #88f !important;
-                        color: #fff;
-                        cursor: inherit;
-                    }
-
-                    /* 新着バッジ */
-                    >.count {
-                        background: #444;
-                        border-radius: 100px;
-                        padding: 4px 8px;
-                        color: #fff;
-                        font-size: 0.5em;
-                        font-weight: bold;
-
-                        &:empty {
-                            display: none;
-                        }
-
-                        &.new {
-                            animation: badgeNew 0.8s ease-in-out infinite alternate;
-                        }
-                    }
-                }
-            }
-        }
-
-        /* 一覧／詳細 */
-        #mail {
+        section {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            width: 100%;
             min-width: 0;
-            overflow: hidden;
 
-            /* 一覧 */
-            #list {
-                height: stretch;
+            /* ボタン */
+            button {
+                transition: none;
 
-                ul {
-                    list-style: none;
+                /* ホバー */
+                @media (hover: hover) {
+                    &:hover {
+                        background: #eef;
+                        color: inherit;
+                    }
+                }
+            }
+
+            /* サイドバー */
+            #sideBar {
+                background: rgba(255, 255, 255, 0.75);
+                backdrop-filter: blur(10px);
+                border-right: solid 2px #444;
+
+                padding: 8px;
+                padding-left: 0;
+
+                /* タイトル */
+                h1 {
                     margin: 0;
+                    padding-left: 16px;
+                    line-height: 100%;
+                }
+
+                /* ボタンラッパー */
+                ul.buttons {
+                    list-style: none;
                     padding: 0;
-                    height: stretch;
-                    overflow: auto;
 
+                    /* ボタン */
                     li {
-                        background: rgba(255, 255, 255, 0.75);
-                        backdrop-filter: blur(10px);
-
-                        /* ポインター */
-                        &.mailRow {
-                            cursor: pointer;
-                        }
-
-                        /* 新着 */
-                        &.new {
-                            background: #fff;
-                        }
+                        display: flex;
+                        justify-content: space-between;
+                        background: #fff;
+                        border-radius: 0 100px 100px 0;
+                        padding: 4px 8px 4px 16px;
+                        cursor: pointer;
 
                         /* ホバー */
                         @media (hover: hover) {
-                            &:not(.header):hover {
-                                background: #ddf;
+                            &:hover {
+                                background: #eef;
+                            }
+                        }
+
+                        /* 間隔 */
+                        &+li {
+                            margin-top: 8px;
+                        }
+
+                        /* アクティブ */
+                        &.is-active {
+                            background: #88f !important;
+                            color: #fff;
+                            cursor: inherit;
+                        }
+
+                        /* 新着バッジ */
+                        >.count {
+                            background: #444;
+                            border-radius: 100px;
+                            padding: 4px 8px;
+                            color: #fff;
+                            font-size: 0.5em;
+                            font-weight: bold;
+
+                            &:empty {
+                                display: none;
+                            }
+
+                            &.new {
+                                animation: badgeNew 0.8s ease-in-out infinite alternate;
                             }
                         }
                     }
                 }
             }
 
-            /* メール情報 */
-            .mailRow {
-                display: flex;
-                justify-content: space-between;
-                gap: 16px;
-                border-bottom: solid 1px #444;
-                padding: 4px 8px;
+            /* 一覧／詳細 */
+            #mail {
+                min-width: 0;
+                overflow: hidden;
 
-                /* 見出し */
-                &.header {
-                    background: #888 !important;
-                    color: #fff !important;
-                    cursor: inherit !important;
-                }
+                /* 一覧 */
+                #list {
+                    height: stretch;
 
-                .user {
-                    width: 10em;
-                }
-
-                .title {
-                    flex: 1;
-                    min-width: 0;
-                }
-
-                .date {
-                    width: 7em;
-                }
-            }
-
-            /* 詳細 */
-            #detail {
-                background: rgba(255, 255, 255, 0.75);
-                backdrop-filter: blur(10px);
-                height: 100%;
-
-                /* ボタンエリア */
-                .detailHeader {
-                    background: #888;
-                    border-bottom: solid 1px #444;
-                    padding: 8px;
-
-                    /* ボタン */
-                    button {
+                    ul {
+                        list-style: none;
                         margin: 0;
-                        padding: 4px 16px;
+                        padding: 0;
+                        height: stretch;
+                        overflow: auto;
 
-                        /* 間隔 */
-                        &+button {
-                            margin-left: 4px;
+                        li {
+                            background: rgba(255, 255, 255, 0.75);
+                            backdrop-filter: blur(10px);
+
+                            /* ポインター */
+                            &.mailRow {
+                                cursor: pointer;
+                            }
+
+                            /* 新着 */
+                            &.new {
+                                background: #fff;
+                            }
+
+                            /* ホバー */
+                            @media (hover: hover) {
+                                &:not(.header):hover {
+                                    background: #ddf;
+                                }
+                            }
                         }
                     }
                 }
 
-                /* 本文 */
-                .message {
-                    padding: 8px;
-                    line-height: 1.8;
-                    white-space: pre-wrap;
-                    overflow-wrap: anywhere;
+                /* メール情報 */
+                .mailRow {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 16px;
+                    border-bottom: solid 1px #444;
+                    padding: 4px 8px;
 
-                    /* ボタン */
-                    button {
-                        background: none;
-                        margin: 0;
-                        padding: 0;
-                        color: #00f;
-                        font-weight: normal;
-                        text-decoration: underline;
+                    /* 見出し */
+                    &.header {
+                        background: #888 !important;
+                        color: #fff !important;
+                        cursor: inherit !important;
+                    }
+
+                    .user {
+                        width: 10em;
+                    }
+
+                    .title {
+                        flex: 1;
+                        min-width: 0;
+                    }
+
+                    .date {
+                        width: 7em;
                     }
                 }
-            }
 
-            /* 非表示 */
-            .is-hidden {
-                display: none;
-            }
+                /* 詳細 */
+                #detail {
+                    background: rgba(255, 255, 255, 0.75);
+                    backdrop-filter: blur(10px);
+                    height: 100%;
 
-            /* グレー文字 */
-            span.c-gray {
-                color: #888;
+                    /* ボタンエリア */
+                    .detailHeader {
+                        background: #888;
+                        border-bottom: solid 1px #444;
+                        padding: 8px;
+
+                        /* ボタン */
+                        button {
+                            margin: 0;
+                            padding: 4px 16px;
+
+                            /* 間隔 */
+                            &+button {
+                                margin-left: 4px;
+                            }
+                        }
+                    }
+
+                    /* 本文 */
+                    .message {
+                        padding: 8px;
+                        line-height: 1.8;
+                        white-space: pre-wrap;
+                        overflow-wrap: anywhere;
+
+                        /* ボタン */
+                        button {
+                            background: none;
+                            margin: 0;
+                            padding: 0;
+                            color: #00f;
+                            font-weight: normal;
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                /* 非表示 */
+                .is-hidden {
+                    display: none;
+                }
+
+                /* グレー文字 */
+                span.c-gray {
+                    color: #888;
+                }
             }
+        }
+
+        /* 非表示 */
+        .is-hidden {
+            display: none;
         }
     }
 
