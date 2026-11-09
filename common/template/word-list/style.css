@@ -66,39 +66,8 @@
 
                     /* ボタン */
                     button {
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        background: #fff;
-                        border-radius: 100px;
-
-                        margin: 0;
                         padding: 4px 16px;
-
                         width: 100%;
-
-                        color: #000;
-                        font-weight: bold;
-
-                        list-style: none;
-                        cursor: pointer;
-                        transition: background-color 0.25s;
-
-                        /* 非活性 */
-                        &:disabled {
-                            background: #888;
-
-                            cursor: inherit;
-                        }
-
-                        /* ホバー */
-                        @media (hover: hover) {
-                            &:hover {
-                                background: var(--color-main);
-                                color: #000;
-                            }
-                        }
 
                         /* 新規キーワード */
                         .is-new>& {

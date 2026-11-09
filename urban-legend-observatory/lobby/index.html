@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../common/style.css">
     <link rel="stylesheet" href="../style.css">
 
-    <title>怪異調査報告／掲示板</title>
+    <title>怪異調査報告／都市伝説観測所</title>
 </head>
 
 <body id="bulletin">
@@ -18,7 +18,9 @@
     <!-- -------------------------------------------------- -->
 
     <header>
-        <h1>怪異調査報告</h1>
+        <a href="/top/">
+            <h1>怪異調査報告</h1>
+        </a>
     </header>
 
     <!-- -------------------------------------------------- -->
@@ -30,16 +32,43 @@
         <div id="area-main">
             <section>
 
-                <h1>オカルト掲示板</h1>
+                <h1>都市伝説観測所</h1>
 
-                <div>
+                <ul>
 
-                    <h2>ピックアップ</h2>
+                    <li>
+                        <button>
+                            <div class="title">都市伝説目撃報告スレ(4)</div>
+                            <div class="responceCount">4</div>
+                        </button>
+                    </li>
 
-                    <ul>
-                    </ul>
+                    <li>
+                        <button>
+                            <div class="title">【急募】一緒に●んでくれる人</div>
+                            <div class="responceCount">2</div>
+                        </button>
+                    </li>
 
-                </div>
+                    <li>
+                        <button>
+                            <div class="title">最近変な夢見たんだが</div>
+                            <div class="responceCount">8</div>
+                        </button>
+                    </li>
+
+                    <li>
+                        <button>
+                            <div class="title">【第3夜】Phan†asmagoria 実況スレ</div>
+                            <div class="responceCount">12</div>
+                        </button>
+                    </li>
+
+                </ul>
+
+                <p>
+                    7日間書き込みの無かったスレッドは削除されます。
+                </p>
 
             </section>
         </div>
@@ -55,12 +84,12 @@
 
     <footer>
 
-        <p>このサイトはフィクションです。</p>
+        <div>このサイトはフィクションです。</div>
 
         <div class="buttons">
 
             <!-- メール -->
-            <button id="buttonMail">
+            <button id="buttonMail" data-tooltip="メール">
                 <svg class="buttonIcon" viewBox="0 0 512 512">
                     <path fill="currentColor" d="M510.678,112.275c-2.308-11.626-7.463-22.265-14.662-31.054c-1.518-1.915-3.104-3.63-4.823-5.345
                         c-12.755-12.818-30.657-20.814-50.214-20.814H71.021c-19.557,0-37.395,7.996-50.21,20.814c-1.715,1.715-3.301,3.43-4.823,5.345
@@ -79,7 +108,7 @@
             </button>
 
             <!-- 掲示板 -->
-            <button id="buttonBulletin">
+            <button id="buttonBulletin" data-tooltip="掲示板">
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M0,0.002v511.996h512v-18.071V0.002H0z M475.859,475.856H36.141v-364.43h439.718V475.856z"></path>
                     <rect x="78.305" y="167.994" class="st0" width="355.386" height="96.723"></rect>
@@ -91,7 +120,7 @@
             </button>
 
             <!-- データベース -->
-            <button id="buttonDatabase">
+            <button id="buttonDatabase" data-tooltip="データベース">
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path class="st0" d="M459.991,82.262c-5.818-13.388-15.866-24.916-28.61-34.854c-19.179-14.896-44.758-26.522-74.674-34.691
                         C326.789,4.575,292.498,0,256,0c-55.622,0.036-106.071,10.548-143.848,28.374c-18.889,8.959-34.692,19.76-46.31,32.713
@@ -120,7 +149,7 @@
             </button>
 
             <!-- レポート -->
-            <button id="buttonReport">
+            <button id="buttonReport" data-tooltip="レポート">
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M503.556,156.001l-18.569-18.561c-11.258-11.266-29.518-11.257-40.776,0l-17.37,17.379l59.346,59.346
 		                l17.369-17.369C514.814,185.528,514.814,167.268,503.556,156.001z"></path>
@@ -136,7 +165,7 @@
             </button>
 
             <!-- キーワード -->
-            <button id="buttonWord">
+            <button id="buttonWord" data-tooltip="キーワード">
 
                 <svg class="buttonIcon" viewBox="0 0 512 512" fill="currentColor">
                     <path d="M509.217,148.087c-5.531-28.661-19.512-56.207-41.673-78.34c-14.752-14.752-31.924-25.923-50.213-33.34

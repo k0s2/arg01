@@ -1,0 +1,76 @@
+@font-face {
+    font-family: "honoka-min";
+    src: url("./font/Harenosora.otf");
+}
+
+:root {
+    --color-bulletin-bg: #102;
+    --color-bulletin-main: #edf;
+}
+
+body#bulletin {
+    background: var(--color-bulletin-bg);
+    color: var(--color-bulletin-main);
+
+    * {
+        font-family: "honoka-min";
+    }
+
+    #area-main>section {
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        min-width: 720px;
+
+        ul {
+            list-style: none;
+            border: solid 1px currentColor;
+            padding: 0;
+
+            li {
+
+                button {
+                    background: none;
+                    border-radius: 0;
+                    width: 100%;
+                    height: 100%;
+                    padding: 16px;
+                    color: inherit;
+
+                    /* ホバー */
+                    @media (hover: hover) {
+                        &:hover {
+                            background-color: var(--color-bulletin-main);
+                            color: var(--color-bulletin-bg);
+                        }
+                    }
+
+                    .title {
+                        margin: 0;
+                        width: 100%;
+                        text-align: left;
+                    }
+
+                    .responceCount {
+                        width: 4em;
+                        font-weight: normal;
+                        text-align: right;
+                    }
+                }
+
+                &+li {
+                    border-top: solid 1px currentColor;
+                }
+
+            }
+        }
+
+        p {
+            text-align: center;
+        }
+
+    }
+}

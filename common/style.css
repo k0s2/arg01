@@ -101,7 +101,7 @@ ul {
         position: absolute;
         top: 50%;
         width: 8px;
-        height: 12px;
+        height: 16px;
         background-color: var(--color-main);
         opacity: 0;
         transition: opacity 0.25s ease, transform 0.25s ease;
@@ -153,7 +153,6 @@ button {
     border: none;
     border-radius: 100px;
 
-    margin-left: 16px;
     padding: 8px 24px;
 
     color: #000;
@@ -208,11 +207,23 @@ header {
 
     padding: 8px;
 
-    h1 {
-        margin: 0;
-        color: var(--color-main);
-        font-size: 1rem;
-        text-align: start;
+    a {
+        text-decoration: none;
+
+        h1 {
+            margin: 0;
+            color: var(--color-main);
+            font-size: 1rem;
+            text-align: start;
+            transition: color 0.25s;
+        }
+
+        /* ホバー */
+        @media (hover: hover) {
+            &:hover h1 {
+                color: #fff;
+            }
+        }
     }
 }
 
@@ -327,50 +338,52 @@ footer {
 }
 
 /* 基本 */
-#buttonWord .toggleButtonIcon {
-    position: relative;
-    flex-shrink: 0;
+#buttonWord {
+    .toggleButtonIcon {
+        position: relative;
+        flex-shrink: 0;
 
-    width: calc(var(--toggleSize) * 2 + var(--togglePadding) * 2);
-    height: calc(var(--toggleSize) + var(--togglePadding) * 2);
+        width: calc(var(--toggleSize) * 2 + var(--togglePadding) * 2);
+        height: calc(var(--toggleSize) + var(--togglePadding) * 2);
 
-    margin: 4px 0;
+        margin: 4px 0;
 
-    background: #fff;
-    border-radius: 100px;
+        background: #fff;
+        border-radius: 100px;
 
-    transition: background-color 0.25s;
-}
+        transition: background-color 0.25s;
 
-/* トグルボタン：アイコン */
-#buttonWord .toggleButtonIcon::after {
-    content: "";
+        /* アイコン */
+        &::after {
+            content: "";
 
-    position: absolute;
-    top: var(--togglePadding);
-    right: var(--togglePadding);
+            position: absolute;
+            top: var(--togglePadding);
+            right: var(--togglePadding);
 
-    width: var(--toggleSize);
-    height: var(--toggleSize);
+            width: var(--toggleSize);
+            height: var(--toggleSize);
 
-    background: var(--color-main);
-    border: solid 2px #fff;
-    border-radius: 50%;
-    box-sizing: border-box;
+            background: var(--color-main);
+            border: solid 2px #fff;
+            border-radius: 50%;
+            box-sizing: border-box;
 
-    transition: right 0.25s, border-color 0.25s;
-}
+            transition: right 0.25s, border-color 0.25s;
+        }
+    }
 
-/* トグルボタン：ＯＮ */
-#buttonWord.is-active .toggleButtonIcon {
-    background: #cfc;
-}
+    /* トグルボタン：ＯＮ */
+    &.is-active .toggleButtonIcon {
+        background: #cfc;
 
-/* トグルボタン：ＯＮ：アイコン */
-#buttonWord.is-active .toggleButtonIcon::after {
-    right: calc(100% - var(--toggleSize) - var(--togglePadding));
+        /* アイコン */
+        &::after {
+            right: calc(100% - var(--toggleSize) - var(--togglePadding));
 
-    border-color: #cfc;
+            border-color: #cfc;
+        }
+    }
 }
 
 /* -------------------------------------------------- */
@@ -435,6 +448,39 @@ body.is-resizing * {
             font-weight: bold;
             cursor: pointer;
         }
+    }
+}
+
+/* -------------------------------------------------- */
+/* ツールチップ */
+/* -------------------------------------------------- */
+
+[data-tooltip] {
+    position: relative;
+
+    &::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        bottom: calc(100% + 16px);
+        left: 50%;
+        transform: translate(-50%, 8px);
+        padding: 4px 8px;
+        border-radius: 4px;
+        background: #000;
+        color: #fff;
+        font-size: 12px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+        z-index: 100;
+    }
+
+    &:is(:hover, :focus-visible)::after {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        visibility: visible;
     }
 }
 

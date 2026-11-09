@@ -53,7 +53,7 @@ buttonDecide.addEventListener("click", function () {
         localStorage.setItem("gameStart", true);
 
         // メールページへ遷移
-        location.href = new URL("../bulletin/lobby/", location.href).href
+        location.href = new URL("../urban-legend-observatory/lobby/", location.href).href
 
     } else if (inputStart.textContent == "") {
         // ダイアログ表示

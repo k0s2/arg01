@@ -48,6 +48,11 @@
                     margin: 0 0 1rem 0;
                 }
 
+                /* 入力欄＋ボタン */
+                .inputBox+button {
+                    margin-left: 16px;
+                }
+
                 /* ボックス */
                 &.box {
                     background: rgba(0, 0, 0, 0.5);
