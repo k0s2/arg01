@@ -2,23 +2,15 @@
 // インポート
 // ====================================================================================================
 
+// 共通
+import { showButtonKeyword } from "../common/controler.js";
+
 // ダイアログ
-import { showDialog } from "../common/template/dialog/controler.js";
+import { showDialog, showAlert } from "../common/template/dialog/controler.js";
 
 // ====================================================================================================
 // イベントを設定
 // ====================================================================================================
-
-/**
- * キーワードリスト開閉ボタンを表示
- */
-function showListButton() {
-    // 対象を取得
-    const targetToggleButton = document.getElementById("buttonWord");
-
-    // 非表示クラスを除去
-    targetToggleButton.classList.remove("is-hidden");
-}
 
 // --------------------------------------------------
 // 「進行状況をリセットする」ボタン
@@ -29,11 +21,7 @@ const buttonReset = document.getElementById("button-reset");
 buttonReset.addEventListener("click", async function () {
 
     // ダイアログ表示
-    const result = await showDialog(
-        "進行状況をリセットしてもいいですか？",
-        "確認",
-        ["はい", "いいえ"]
-    );
+    const result = await showAlert("進行状況をリセットしてもいいですか？");
 
     // ●「はい」
     if (result === 0) {
@@ -65,7 +53,7 @@ buttonDecide.addEventListener("click", function () {
         localStorage.setItem("gameStart", true);
 
         // メールページへ遷移
-        location.href = new URL("../a-mail/list/#receive", location.href).href
+        location.href = new URL("../bulletin/lobby/", location.href).href
 
     } else if (inputStart.textContent == "") {
         // ダイアログ表示
@@ -101,8 +89,8 @@ if (!localStorage.getItem("gameStart")) {
         // クリックイベントを付与
         target.addEventListener("click", async function () {
 
-            // キーワードリスト開閉ボタンを表示
-            showListButton();
+            // キーワードリストボタン表示（一時的）
+            showButtonKeyword(true);
 
         });
 
@@ -115,8 +103,8 @@ if (!localStorage.getItem("gameStart")) {
     // クリックイベントを付与
     targetInput.addEventListener("click", async function () {
 
-        // キーワードリスト開閉ボタンを表示
-        showListButton();
+        // キーワードリストボタン表示（一時的）
+        showButtonKeyword(true);
 
     });
 

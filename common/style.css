@@ -13,6 +13,7 @@
 html {
     width: 100%;
     height: 100%;
+
     margin: 0;
     overflow: hidden;
 }
@@ -53,6 +54,7 @@ ul {
 
 /* 基本 */
 .inputBox {
+    position: relative;
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -69,19 +71,59 @@ ul {
     cursor: pointer;
 
     transition: outline 0.25s;
-}
 
-/* ホバー */
-@media (hover: hover) {
-    .inputBox:hover {
-        outline: solid 3px var(--color-main);
+    /* フォーカス */
+    &:focus {
+        outline: 3px solid #888;
+        outline-offset: 2px;
     }
-}
 
-/* アクティブ */
-.inputBox.is-active {
-    outline: solid 3px var(--color-main);
-    animation: inputBoxActive 0.8s ease-in-out infinite alternate;
+    /* アクティブ */
+    &.is-active {
+        outline: solid 3px var(--color-main);
+        animation: inputBoxActive 0.8s ease-in-out infinite alternate;
+    }
+
+    /* ホバー */
+    @media (hover: hover) {
+        &:hover {
+            outline: solid 3px var(--color-main);
+        }
+    }
+
+    /* 三角カーソル */
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 8px;
+        height: 12px;
+        background-color: var(--color-main);
+        opacity: 0;
+        transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    /* 三角カーソル：左 */
+    &::before {
+        left: -8px;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+        transform: translate(-8px, -50%);
+    }
+
+    /* 三角カーソル：右 */
+    &::after {
+        right: -8px;
+        clip-path: polygon(100% 0, 0 50%, 100% 100%);
+        transform: translate(8px, -50%);
+    }
+
+    /* 三角カーソル：表示 */
+    &.is-active::before,
+    &.is-active::after {
+        opacity: 1;
+        transform: translate(0, -50%);
+    }
 }
 
 /* 枠の点滅 */
@@ -93,41 +135,6 @@ ul {
     to {
         outline-color: inherit;
     }
-}
-
-/* 入力待機中：左右の三角カーソル */
-.inputBox {
-    position: relative;
-}
-
-.inputBox::before,
-.inputBox::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 8px;
-    height: 12px;
-    background-color: var(--color-main);
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.inputBox::before {
-    left: -8px;
-    clip-path: polygon(0 0, 100% 50%, 0 100%);
-    transform: translate(-8px, -50%);
-}
-
-.inputBox::after {
-    right: -8px;
-    clip-path: polygon(100% 0, 0 50%, 100% 100%);
-    transform: translate(8px, -50%);
-}
-
-.inputBox.is-active::before,
-.inputBox.is-active::after {
-    opacity: 1;
-    transform: translate(0, -50%);
 }
 
 /* -------------------------------------------------- */
@@ -153,30 +160,36 @@ button {
     transition: background-color 0.25s, color 0.25s;
 
     cursor: pointer;
-}
 
-/* 非活性 */
-button:disabled {
-    background: #888;
-    cursor: not-allowed;
-}
+    /* フォーカス */
+    &:focus {
+        outline: 3px solid #888;
+        outline-offset: 2px;
+    }
 
-/* ホバー */
-@media (hover: hover) {
-    button:not(:disabled):hover {
-        background-color: var(--color-main);
+    /* 無効 */
+    &:disabled {
+        background: #888;
+        cursor: not-allowed;
+    }
 
-        color: #fff;
+    /* ホバー */
+    @media (hover: hover) {
+        &:not(:disabled):hover {
+            background-color: var(--color-main);
+            color: #fff;
+        }
+    }
+
+    /* アイコン */
+    .buttonIcon {
+        margin: 0 8px;
+
+        width: 24px;
+        height: auto;
     }
 }
 
-/* アイコン */
-.buttonIcon {
-    margin: 0 8px;
-
-    width: 24px;
-    height: auto;
-}
 
 /* -------------------------------------------------- */
 /* ヘッダー */
@@ -191,14 +204,13 @@ header {
     border-bottom: solid 1px var(--color-main);
 
     padding: 8px;
-}
 
-header>h1 {
-    margin: 0;
-
-    color: var(--color-main);
-    font-size: 1rem;
-    text-align: start;
+    h1 {
+        margin: 0;
+        color: var(--color-main);
+        font-size: 1rem;
+        text-align: start;
+    }
 }
 
 /* -------------------------------------------------- */
@@ -210,13 +222,15 @@ footer {
     align-items: center;
     justify-content: space-between;
 
-    padding: 8px;
     background: #000;
     border-top: solid 1px var(--color-main);
+
+    padding: 8px;
 
     color: var(--color-main);
     font-size: 0.75em;
 
+    /* 段落 */
     p {
         margin: 0;
     }
@@ -241,16 +255,16 @@ footer {
             font-size: 24px;
             font-weight: bold;
 
-            transition: background-color 0.25s, color 0.25s, transform 0.25s;
+            transition: background-color 0.25s, color 0.25s;
 
             cursor: pointer;
 
-            /* ボタン：非活性 */
-            &.is-hidden {
-                transform: translateY(50px);
+            /* 非活性 */
+            &:not(.is-show) {
+                display: none;
             }
 
-            /* ボタン：カレント */
+            /* カレント */
             &.is-current {
                 background: #000 !important;
 
@@ -259,7 +273,12 @@ footer {
                 cursor: inherit;
             }
 
-            /* ボタン：ホバー */
+            /* 解放時アニメーション */
+            &.is-slide-in {
+                animation: slideIn 0.25s ease-out forwards;
+            }
+
+            /* ホバー */
             @media (hover: hover) {
                 &:hover {
                     background: #000 !important;
@@ -274,13 +293,16 @@ footer {
     @media (max-width: 779px) {
         display: block;
 
+        /* 段落 */
         p {
             margin-bottom: 8px;
         }
 
+        /* ボタンラッパー */
         .buttons {
             justify-content: center;
 
+            /* ボタン */
             button {
                 padding: 4px 8px;
             }
@@ -380,21 +402,42 @@ body.is-resizing * {
 .keyword {
     border-bottom: dotted 2px var(--color-main);
     transition: background-color 0.25s, color 0.25s;
-}
 
-/* ホバー */
-@media (hover: hover) {
-    .keyword:not(.collected):hover {
-        background: var(--color-main);
-        color: #fff;
-        font-weight: bold;
-        cursor: pointer;
+    /* 取得済み */
+    &.collected {
+        border-color: #888;
+
+        cursor: inherit;
+    }
+
+    /* フォーカス */
+    &:focus {
+        outline: 3px solid #888;
+        outline-offset: 2px;
+    }
+
+    /* ホバー */
+    @media (hover: hover) {
+        &:not(.collected):hover {
+            background: var(--color-main);
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
     }
 }
 
-/* 取得済み */
-.keyword.collected {
-    border-color: #888;
+/* -------------------------------------------------- */
+/* アニメーション */
+/* -------------------------------------------------- */
 
-    cursor: inherit;
+/* フッターボタン解放 */
+@keyframes slideIn {
+    from {
+        transform: translateY(50px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }

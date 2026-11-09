@@ -217,6 +217,25 @@ function addCollectWord(word) {
     return true;
 }
 
+/**
+ * イベント：キーワード追加
+ * @param {HTMLElement} target 対象要素
+ * @param {String} word 追加するキーワード
+ */
+function eventCollectKeyword(target, word) {
+    // キーワードを追加
+    const newWord = addCollectWord(word);
+
+    // 新規追加された場合だけクラスを付与
+    if (newWord) {
+        // ポップアップ
+        playCollectEffect(target);
+
+        // 取得済み表示に変更
+        target.classList.add("collected");
+    }
+}
+
 // ====================================================================================================
 // キーワード自動入力
 // ====================================================================================================
@@ -273,6 +292,41 @@ function setEventWordInput(target) {
     });
 }
 
+/**
+ * イベント：入力開始
+ * @param {HTMLElement} target 対象要素
+ */
+function eventInputStart(target) {
+    // ●入力欄を再びクリックした場合
+    if (target === activeInput) {
+        // アクティブ状態を解除
+        target.classList.remove("is-active");
+        activeInput = null;
+
+        // キーワードボタンを非活性化
+        shiftKeywordButton(false);
+
+        return;
+    }
+
+    // ●前の入力欄のアクティブ状態を解除
+    if (activeInput) {
+        // アクティブ状態を解除
+        activeInput.classList.remove("is-active");
+    }
+
+    // 新しい入力欄を選択：入力ＯＮ
+    activeInput = target;
+    activeInput.textContent = "";
+    activeInput.classList.add("is-active");
+
+    // キーワードボタンを非活性化
+    shiftKeywordButton(true);
+
+    // キーワードリストを開く
+    initCollectPanel(1);
+}
+
 // ====================================================================================================
 // モジュール初期化
 // ====================================================================================================
@@ -326,19 +380,19 @@ export async function initWordCollect() {
 
         // クリックイベントを付与
         target.addEventListener("click", async function () {
+            // キーワード追加
+            eventCollectKeyword(target, word);
+        });
 
-            // キーワードを追加
-            const newWord = addCollectWord(word);
+        // エンター／スペース
+        target.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                // デフォルトのイベント（スクロールなど）を無効化
+                event.preventDefault();
 
-            // 新規追加された場合だけクラスを付与
-            if (newWord) {
-                // ポップアップ
-                playCollectEffect(target);
-
-                // 取得済み表示に変更
-                target.classList.add("collected");
+                // キーワード追加
+                eventCollectKeyword(target, word);
             }
-
         });
 
     });
@@ -347,37 +401,21 @@ export async function initWordCollect() {
     const targetsInput = document.querySelectorAll(".inputBox");
     targetsInput.forEach(target => {
 
+        // クリック
         target.addEventListener("click", function () {
+            // 入力開始
+            eventInputStart(target);
+        });
 
-            // ●入力欄を再びクリックした場合
-            if (target === activeInput) {
-                // アクティブ状態を解除
-                target.classList.remove("is-active");
-                activeInput = null;
+        // エンター／スペース
+        target.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " ") {
+                // デフォルトのイベント（スクロールなど）を無効化
+                event.preventDefault();
 
-                // キーワードボタンを非活性化
-                shiftKeywordButton(false);
-
-                return;
+                // 入力開始
+                eventInputStart(target);
             }
-
-            // ●前の入力欄のアクティブ状態を解除
-            if (activeInput) {
-                // アクティブ状態を解除
-                activeInput.classList.remove("is-active");
-            }
-
-            // 新しい入力欄を選択：入力ＯＮ
-            activeInput = target;
-            activeInput.textContent = "";
-            activeInput.classList.add("is-active");
-
-            // キーワードボタンを非活性化
-            shiftKeywordButton(true);
-
-            // キーワードリストを開く
-            initCollectPanel(1);
-
         });
 
     });

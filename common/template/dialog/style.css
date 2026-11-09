@@ -1,3 +1,7 @@
+:root {
+    --color-alert: #f44;
+}
+
 #dialog {
     display: flex;
     justify-content: center;
@@ -11,6 +15,59 @@
     opacity: 1;
 
     transition: opacity 0.25s;
+
+    /* 注意 */
+    &.is-alert {
+        section {
+            .buttons {
+                button:first-child {
+                    --icon-size: 16px;
+                    --progress: 0%;
+
+                    position: relative;
+                    isolation: isolate;
+                    border: solid 2px var(--color-alert);
+
+                    /* ボタン：ホバー */
+                    @media (hover: hover) {
+                        &:hover {
+                            background-color: var(--color-alert);
+                            color: #fff;
+                        }
+                    }
+
+                    /* 長押し中 */
+                    &.is-holding {
+                        background-color: var(--color-alert);
+                        color: #fff;
+
+                        /* 長押しアイコン */
+                        &::after {
+                            --ring-width: 3px;
+                            --ring-softness: 1px;
+
+                            content: "";
+
+                            position: absolute;
+                            right: 8px;
+                            top: 50%;
+
+                            width: var(--icon-size);
+                            aspect-ratio: 1;
+
+                            background: conic-gradient(from 1deg, #fff var(--progress), transparent var(--progress));
+                            border-radius: 50%;
+                            mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-width)), #000 calc(100% - var(--ring-width) + var(--ring-softness)));
+
+                            transform: translateY(-50%);
+
+                            pointer-events: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     &.is-hidden {
         opacity: 0;
@@ -68,7 +125,7 @@
         }
     }
 
-    &.mode-mind {
+    &.is-mind {
         background: rgba(255, 255, 255, 0.75);
 
         section {
