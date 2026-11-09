@@ -1,20 +1,6 @@
 export default [
 
     {
-        id: "001",
-        title: "アルバイト募集",
-        threads: [
-            {
-                text:
-                    "アルバイト募集。<br>"
-                    + '<br>'
-                    + '<a href="../../a-mail/detail/#s001">ここから応募する</a>',
-                user: "J.Smith",
-            },
-        ]
-    },
-
-    {
         id: "004",
         title: "Phan†asmagoria 実況スレ／第3夜",
         threads: [

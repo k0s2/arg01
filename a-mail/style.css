@@ -21,6 +21,7 @@ body#mail {
             display: grid;
             grid-template-columns: 200px 1fr;
             width: 100%;
+            max-width: none;
             min-width: 0;
 
             /* ボタン */

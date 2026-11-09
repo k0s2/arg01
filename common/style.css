@@ -34,9 +34,8 @@ main {
     overflow: hidden;
 
     section {
-        min-width: 720px;
+        max-width: 720px;
         min-height: fit-content;
-        /* height: stretch; */
         box-sizing: border-box;
 
         /* スマホ用 */
