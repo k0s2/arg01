@@ -53,49 +53,56 @@
                 display: grid;
                 grid-template-columns: 1fr;
                 gap: 8px;
-
                 margin: 0;
+                list-style: none;
 
                 /* パディング */
                 &:has(li) {
                     padding: 0 16px 16px;
                 }
 
-                /* ボタン */
+                /* 子要素 */
                 li {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
 
-                    background: #fff;
-                    border-radius: 100px;
+                    /* ボタン */
+                    button {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
 
-                    padding: 4px 16px;
+                        background: #fff;
+                        border-radius: 100px;
 
-                    color: #000;
-                    font-weight: bold;
+                        margin: 0;
+                        padding: 4px 16px;
 
-                    list-style: none;
-                    cursor: pointer;
-                    transition: background-color 0.25s;
+                        width: 100%;
 
-                    /* 非活性 */
-                    &.is-disabled {
-                        background: #888;
+                        color: #000;
+                        font-weight: bold;
 
-                        cursor: inherit;
-                    }
+                        list-style: none;
+                        cursor: pointer;
+                        transition: background-color 0.25s;
 
-                    /* 新規キーワード */
-                    &.is-new {
-                        animation: wordSlideIn 0.5s ease-out both;
-                    }
+                        /* 非活性 */
+                        &:disabled {
+                            background: #888;
 
-                    /* ホバー */
-                    @media (hover: hover) {
-                        &:not(.is-disabled):hover {
-                            background: var(--color-main);
-                            color: #000;
+                            cursor: inherit;
+                        }
+
+                        /* ホバー */
+                        @media (hover: hover) {
+                            &:hover {
+                                background: var(--color-main);
+                                color: #000;
+                            }
+                        }
+
+                        /* 新規キーワード */
+                        .is-new>& {
+                            animation: wordSlideIn 0.5s ease-out both;
                         }
                     }
                 }

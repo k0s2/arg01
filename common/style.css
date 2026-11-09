@@ -59,14 +59,17 @@ ul {
     justify-content: center;
     align-items: center;
 
-    background: #fff;
+    background: #fff !important;
+    border-radius: 0;
 
     margin: 0;
     padding: 8px 4px;
     width: 8em;
     height: 1em;
+    box-sizing: content-box;
 
-    color: #000;
+    color: #000 !important;
+    font-weight: normal;
 
     cursor: pointer;
 
@@ -180,14 +183,14 @@ button {
             color: #fff;
         }
     }
+}
 
-    /* アイコン */
-    .buttonIcon {
-        margin: 0 8px;
+/* アイコン */
+.buttonIcon {
+    margin: 0 8px;
 
-        width: 24px;
-        height: auto;
-    }
+    width: 24px;
+    height: auto;
 }
 
 
@@ -400,8 +403,16 @@ body.is-resizing * {
 
 /* 基本 */
 .keyword {
+    background: none !important;
     border-bottom: dotted 2px var(--color-main);
+    border-radius: 0;
     transition: background-color 0.25s, color 0.25s;
+
+    margin: 0;
+    padding: 0;
+
+    color: inherit;
+    font-weight: normal;
 
     /* 取得済み */
     &.collected {

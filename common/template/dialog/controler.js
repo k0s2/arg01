@@ -6,10 +6,6 @@
 import { loadTemplate } from "../../controler.js";
 
 // ====================================================================================================
-//
-// ====================================================================================================
-
-// ====================================================================================================
 // ダイアログを閉じる
 // ====================================================================================================
 
@@ -173,7 +169,7 @@ export async function showDialog(message, title = "", buttons = null, mode = 0) 
         buttons.forEach((text, index) => {
             // ボタンを生成
             const button = document.createElement("button");
-            button.textContent = text;
+            button.innerHTML = text;
 
             // ●警告モードの「はい」
             if (
@@ -338,5 +334,5 @@ export async function showMindDialog(message, title = "", buttons = null) {
  */
 export async function showAlert(message) {
     // 警告モードで、既存のダイアログ表示処理を呼び出し
-    return showDialog(message, "確認", ["はい", "いいえ"], 2);
+    return showDialog(message, "確認", ["はい<span>長押しで実行</span>", "いいえ"], 2);
 }
