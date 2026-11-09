@@ -32,6 +32,18 @@ main {
     justify-content: center;
     flex: 1;
     overflow: hidden;
+
+    section {
+        min-width: 720px;
+        min-height: fit-content;
+        /* height: stretch; */
+        box-sizing: border-box;
+
+        /* スマホ用 */
+        @media (max-width: 719px) {
+            min-width: 0;
+        }
+    }
 }
 
 ul {
@@ -190,8 +202,9 @@ button {
 
     width: 24px;
     height: auto;
-}
 
+    pointer-events: none;
+}
 
 /* -------------------------------------------------- */
 /* ヘッダー */
@@ -264,7 +277,7 @@ footer {
             border-radius: 40px;
 
             margin: 0;
-            padding: 0 4px;
+            padding: 4px 8px;
 
             font-size: 24px;
             font-weight: bold;

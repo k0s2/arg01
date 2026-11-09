@@ -25,14 +25,17 @@ const targetDetail = document.querySelector("#area-main #detail");
 const currentId = location.hash.slice(1);;
 
 // ====================================================================================================
-// イベント設定
+// 初期化
 // ====================================================================================================
 
+// 受信メールか
+const isReceive = (currentId.includes("r"));
+
 // --------------------------------------------------
-// 「一覧へ戻る」ボタン
+// イベント設定
 // --------------------------------------------------
 
-// イベント設定
+// 「一覧へ戻る」ボタン
 targetDetail.querySelector(".detailHeader button#button-return").addEventListener("click", () => {
 
     // メール一覧ページへ遷移
@@ -40,75 +43,69 @@ targetDetail.querySelector(".detailHeader button#button-return").addEventListene
 
 });
 
-// --------------------------------------------------
 // 「返信する」ボタン
-// --------------------------------------------------
+const buttonReply = targetDetail.querySelector("#button-reply");
+if (isReceive) {
+    buttonReply.addEventListener("click", async () => {
 
-// イベント設定
-targetDetail.querySelector("#button-reply").addEventListener("click", async () => {
+        // 返信情報を取得
+        let reply = getReplyData(currentId);
 
-    // 返信情報を取得
-    let reply = getReplyData(currentId);
+        // ●文字化けメール
+        if (reply == undefined) {
+            showDialog("退会済みユーザーには返信できません。");
+        }
+        // ●選択肢あり
+        else {
+            // 受信済みメールのIDを取得
+            const receivedIds = getBoxMails("receive").map(mail => mail.id);
 
-    // ●文字化けメール
-    if (reply == undefined) {
-        showDialog("退会済みユーザーには返信できません。");
-    }
-    // ●選択肢あり
-    else {
-        // 受信済みメールのIDを取得
-        const receivedIds = getBoxMails("receive").map(mail => mail.id);
+            // 返信済み選択肢は除外
+            reply = reply.filter(item => !receivedIds.includes(item.mailId));
 
-        // 返信済み選択肢は除外
-        reply = reply.filter(item => !receivedIds.includes(item.mailId));
+            // 選択肢がある
+            if (reply.length >= 1) {
+                // 選択ダイアログを表示
+                const result = await showMindDialog(
+                    "なんと返そうか？",
+                    "返信する",
+                    reply.map(item => item.text),
+                );
 
-        // 選択肢がある
-        if (reply.length >= 1) {
-            // 選択ダイアログを表示
-            const result = await showMindDialog(
-                "なんと返そうか？",
-                "返信する",
-                reply.map(item => item.text),
-            );
+                // ●選択された場合
+                if (result >= 0) {
+                    // 返信メールを取得
+                    const newMail = getMails([reply[result].mailId])[0];
 
-            // ●選択された場合
-            if (result >= 0) {
-                // 返信メールを取得
-                const newMail = getMails([reply[result].mailId])[0];
+                    if (newMail) {
+                        // 返信を、送信ボックスへ追加
+                        addBoxMail("send", "r" + newMail.id);
 
-                if (newMail) {
-                    // 返信を、送信ボックスへ追加
-                    addBoxMail("send", "r" + newMail.id);
+                        // 返信への返信を、受信ボックスへ追加
+                        addBoxMail("receive", newMail.id);
 
-                    // 返信への返信を、受信ボックスへ追加
-                    addBoxMail("receive", newMail.id);
-
-                    // 「受信ボックス」ページへ遷移
-                    location.href = new URL("../list/#receive", location.href).href
+                        // 「受信ボックス」ページへ遷移
+                        location.href = new URL("../list/#receive", location.href).href
+                    }
                 }
             }
+            // ●それ以外
+            else {
+                showMindDialog("返信の必要は無いな。");
+            }
         }
-        // ●それ以外
-        else {
-            showMindDialog("返信の必要は無いな。");
-        }
-    }
 
-});
-
-// ====================================================================================================
-// 初期化
-// ====================================================================================================
-
-// 受信メールか
-const isReceive = !(currentId.includes("r"));
+    });
+} else {
+    buttonReply.classList.add("is-hidden");
+}
 
 // --------------------------------------------------
 // ヘッダー
 // --------------------------------------------------
 
 // 受信者／送信者
-document.querySelector(".mailRow.header > .user").textContent = (isReceive) ? "受信者" : "送信者";
+document.querySelector(".mailRow.header > .user").textContent = (isReceive) ? "送信者" : "受信者";
 
 // --------------------------------------------------
 // ディティール
@@ -144,3 +141,11 @@ setMailRead(data.id);
 // --------------------------------------------------
 
 initFavorite();
+
+// --------------------------------------------------
+// 進行イベント
+// --------------------------------------------------
+
+if (currentId == "s001") {
+    showMindDialog("は？　勝手にメールが送られてる？");
+}

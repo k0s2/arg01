@@ -1,5 +1,5 @@
 @font-face {
-    font-family: "honoka-min";
+    font-family: "Harenosora";
     src: url("./font/Harenosora.otf");
 }
 
@@ -13,15 +13,16 @@ body#bulletin {
     color: var(--color-bulletin-main);
 
     #area-main>section {
-        padding-top: 1em;
-        font-family: "honoka-min";
+        padding: 24px;
+
+        * {
+            font-family: "Harenosora";
+        }
 
         h1,
         h2 {
             text-align: center;
         }
-
-        min-width: 720px;
 
         ul {
             list-style: none;
@@ -67,6 +68,10 @@ body#bulletin {
                     margin: 0;
                     padding: 16px;
                     text-align: left;
+
+                    a {
+                        color: #88f;
+                    }
                 }
 
                 .threadNo {
@@ -81,11 +86,18 @@ body#bulletin {
             }
         }
 
-        p {
+        /* 注意文 */
+        >p {
             text-align: center;
+
+            /* スマホ用 */
+            @media (max-width: 719px) {
+                text-align: left;
+            }
         }
 
-        a {
+        /* リンク */
+        >a {
             color: var(--color-bulletin-main);
         }
 

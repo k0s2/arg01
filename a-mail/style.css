@@ -262,7 +262,7 @@ body#mail {
     /* ダイアログ上書き */
     /* -------------------------------------------------- */
 
-    #dialog:not(.mode-mind) {
+    #dialog:not(.is-mind) {
         transition: none;
 
         &.is-hidden {

@@ -6,14 +6,14 @@
 import { initWordCollect } from "./template/word-list/controler.js";
 
 // ====================================================================================================
-// メソッド
+// 共通メソッド
 // ====================================================================================================
 
 /**
  * ボタン表示
  * @param {Boolean} anime アニメーションするか
  */
-function showButton(selector, anime) {
+export function showButton(selector, anime) {
     // 対象を取得
     const targetToggleButton = document.getElementById(selector);
 
@@ -25,10 +25,6 @@ function showButton(selector, anime) {
     // ボタンを表示
     targetToggleButton.classList.add("is-show");
 }
-
-// ====================================================================================================
-// 共通メソッド
-// ====================================================================================================
 
 /**
  * HTMLテンプレートを読み込む
@@ -81,22 +77,44 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
 }
 
 /**
- * ボタン表示：キーワード
- * @param {Boolean} anime アニメーションするか
+ * 「メール」解放
  */
-export function showButtonKeyword(anime = false) {
-    showButton("buttonWord", anime);
+export function releaseMail() {
+    const target = "releaseMail";
+
+    if (!localStorage.getItem(target)) {
+        // ローカルストレージに保存
+        localStorage.setItem(target, true);
+
+        // 表示アニメーション
+        showButton("buttonMail", true);
+    }
 }
 
 /**
- * キーワードリスト解放
+ * 「掲示板」解放
+ */
+export function releaseBulletin() {
+    const target = "releaseBulletin";
+
+    if (!localStorage.getItem(target)) {
+        // ローカルストレージに保存
+        localStorage.setItem(target, true);
+
+        // 表示アニメーション
+        showButton("buttonBulletin", true);
+    }
+}
+
+/**
+ * 「キーワード」解放
  */
 export function releaseKeyword() {
     // ローカルストレージに保存
     localStorage.setItem("releaseKeyword", true);
 
     // 表示アニメーション
-    showButtonKeyword(true);
+    showButton("buttonWord", true);
 }
 
 // ====================================================================================================
@@ -124,10 +142,36 @@ window.addEventListener("resize", () => {
 // フッターボタン
 // --------------------------------------------------
 
+// メール
+if (localStorage.getItem("releaseMail") == "true") {
+    const target = "buttonMail";
+
+    // ボタンを表示
+    showButton(target);
+
+    // クリックイベント
+    document.getElementById(target).addEventListener("click", () => {
+        location.href = new URL("../../a-mail/list/#receive", location.href).href
+    });
+}
+
+// 掲示板
+if (localStorage.getItem("releaseBulletin") == "true") {
+    const target = "buttonBulletin";
+
+    // ボタンを表示
+    showButton(target);
+
+    // クリックイベント
+    document.getElementById(target).addEventListener("click", () => {
+        location.href = new URL("../../urban-legend-observatory/lobby/", location.href).href
+    });
+}
+
 // キーワード
 if (localStorage.getItem("releaseKeyword") == "true") {
     // ボタンを表示
-    showButtonKeyword();
+    showButton("buttonWord");
 }
 
 // --------------------------------------------------

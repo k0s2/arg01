@@ -2,6 +2,9 @@
 // インポート
 // ====================================================================================================
 
+// 共通
+import { releaseMail } from "../../common/controler.js";
+
 // メール共通
 import { initFavorite, getBoxMails, addBoxMail, getMailStatus } from "../controler.js";
 
@@ -19,6 +22,13 @@ const isSend = (currentCategory == "send");
 const targetList = document.querySelector("#area-main #list");
 
 // --------------------------------------------------
+// ボタン解放
+// --------------------------------------------------
+
+// 「メール」解放
+releaseMail();
+
+// --------------------------------------------------
 // メール情報を取得
 // --------------------------------------------------
 
@@ -29,14 +39,15 @@ mails = getBoxMails(currentCategory);
 
 // ●初回（受信メール情報が無い場合）
 if (
-    currentCategory == "receive"
+    currentCategory == "send"
     && mails.length == 0
 ) {
     // メール情報を生成
-    addBoxMail(currentCategory, "003", true, "1900/01/01");
-    addBoxMail(currentCategory, "002", true, "1900/01/01");
-    addBoxMail(currentCategory, "001", true, "1900/01/01");
-    addBoxMail(currentCategory, "100");
+    addBoxMail("receive", "r003", true, "1900/01/01");
+    addBoxMail("receive", "r002", true, "1900/01/01");
+    addBoxMail("receive", "r001", true, "1900/01/01");
+    addBoxMail("receive", "r100");
+    addBoxMail("send", "s001");
 
     // メール情報を取得
     mails = getBoxMails(currentCategory);
