@@ -32,6 +32,22 @@ const currentId = location.hash.slice(1);;
 const isReceive = (currentId.includes("r"));
 
 // --------------------------------------------------
+// 進行イベント
+// --------------------------------------------------
+
+if (
+    currentId == "s001"
+    && getBoxMails("receive").length == 0
+) {
+    // 送信ボックスに追加
+    addBoxMail("receive", "r003", true, "1900/01/01");
+    addBoxMail("receive", "r002", true, "1900/01/01");
+    addBoxMail("receive", "r001", true, "1900/01/01");
+    addBoxMail("receive", "r100");
+    addBoxMail("send", "s001");
+}
+
+// --------------------------------------------------
 // イベント設定
 // --------------------------------------------------
 
@@ -39,7 +55,8 @@ const isReceive = (currentId.includes("r"));
 targetDetail.querySelector(".detailHeader button#button-return").addEventListener("click", () => {
 
     // メール一覧ページへ遷移
-    window.location.href = new URL("../list/#receive", location.href).href;
+    const category = (isReceive) ? "receive" : "send";
+    window.location.href = new URL("../list/#" + category, location.href).href;
 
 });
 
@@ -141,11 +158,3 @@ setMailRead(data.id);
 // --------------------------------------------------
 
 initFavorite();
-
-// --------------------------------------------------
-// 進行イベント
-// --------------------------------------------------
-
-if (currentId == "s001") {
-    showMindDialog("は？　勝手にメールが送られてる？");
-}

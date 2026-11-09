@@ -122,7 +122,22 @@ export function setMailRead(id, readed = true, date = null) {
  */
 export async function initFavorite() {
     // カテゴリー（URLから取得）
-    const currentCategory = location.hash.slice(1);
+    let currentCategory = location.hash.slice(1);
+
+    // 詳細画面の場合
+    if (location.href.includes("detail")) {
+        // 一文字目を取得
+        const type = currentCategory.charAt(0);
+        switch (type) {
+            case "r":
+                currentCategory = "receive";
+                break;
+            case "s":
+                currentCategory = "send";
+                break;
+            default:
+        }
+    }
 
     // --------------------------------------------------
     // サイドバー

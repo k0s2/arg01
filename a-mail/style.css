@@ -227,7 +227,8 @@ body#mail {
                             white-space: break-spaces;
                         }
 
-                        /* ボタン */
+                        /* リンク／ボタン */
+                        a,
                         button {
                             background: none;
                             margin: 0;
@@ -235,6 +236,7 @@ body#mail {
                             color: #00f;
                             font-weight: normal;
                             text-decoration: underline;
+                            cursor: pointer;
                         }
                     }
                 }

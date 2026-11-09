@@ -32,26 +32,7 @@ releaseMail();
 // メール情報を取得
 // --------------------------------------------------
 
-let mails = [];
-
-// メール情報を取得
-mails = getBoxMails(currentCategory);
-
-// ●初回（受信メール情報が無い場合）
-if (
-    currentCategory == "send"
-    && mails.length == 0
-) {
-    // メール情報を生成
-    addBoxMail("receive", "r003", true, "1900/01/01");
-    addBoxMail("receive", "r002", true, "1900/01/01");
-    addBoxMail("receive", "r001", true, "1900/01/01");
-    addBoxMail("receive", "r100");
-    addBoxMail("send", "s001");
-
-    // メール情報を取得
-    mails = getBoxMails(currentCategory);
-}
+let mails = getBoxMails(currentCategory);
 
 // --------------------------------------------------
 // メールヘッダー
