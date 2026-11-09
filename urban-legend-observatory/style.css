@@ -12,11 +12,9 @@ body#bulletin {
     background: var(--color-bulletin-bg);
     color: var(--color-bulletin-main);
 
-    * {
-        font-family: "honoka-min";
-    }
-
     #area-main>section {
+        padding-top: 1em;
+        font-family: "honoka-min";
 
         h1,
         h2 {
@@ -65,11 +63,30 @@ body#bulletin {
                     border-top: solid 1px currentColor;
                 }
 
+                p {
+                    margin: 0;
+                    padding: 16px;
+                    text-align: left;
+                }
+
+                .threadNo {
+                    padding-bottom: 0;
+                }
+
+                .userName {
+                    padding-top: 0;
+                    text-align: right;
+                }
+
             }
         }
 
         p {
             text-align: center;
+        }
+
+        a {
+            color: var(--color-bulletin-main);
         }
 
     }
