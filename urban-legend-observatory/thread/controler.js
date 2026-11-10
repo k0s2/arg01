@@ -147,17 +147,24 @@ if (installButton) {
         cover.style.height = `${mainRect.height}px`;
         cover.innerHTML = `
             <div class="install-content">
+
                 <div class="install-title">FUGURUMA SYSTEM</div>
+
                 <div class="install-progress">
+
                     <p>
                         NOW INSTALLING
                         <span class="install-percentage">0%</span>
                     </p>
+
                     <div class="install-gauge">
                         <span></span>
                     </div>
+
                 </div>
+
             </div>
+
             <div class="install-blue-cover"></div>
         `;
 
