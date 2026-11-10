@@ -6,7 +6,13 @@
 import threadList from "../data/thread.js";
 
 // 共通
-import { releaseKeyword } from "../../common/controler.js";
+import { releaseMail, releaseKeyword, showMailNotice } from "../../common/controler.js";
+
+// ダイアログ
+import { showSystemDialog } from "../../common/template/dialog/controler.js";
+
+// メール
+import { addBoxMail } from "../../a-mail/controler.js"
 
 // ====================================================================================================
 // 共通メソッド
@@ -127,15 +133,28 @@ if (thread) {
 // FUGURUMA SYSTEM インストール
 // ====================================================================================================
 
+// フラグ
 let isInstalling = false;
+
+// インストールボタン
 const installButton = document.getElementById("buttonm-install");
 
 if (installButton) {
     installButton.addEventListener("click", async () => {
+
+        // --------------------------------------------------
+        // インストール中判定
+        // --------------------------------------------------
+
+        // フラグチェック
         if (isInstalling) {
+            showSystemDialog("既にインストール済みです。")
             return;
         }
         isInstalling = true;
+
+        // 操作禁止
+        document.body.classList.add("is-disabled");
 
         // --------------------------------------------------
         // カバー：黒
@@ -224,8 +243,14 @@ if (installButton) {
         // キーワードリスト展開
         // --------------------------------------------------
 
+        // ボタンをアクティブ状態にしておく
+        const targetButton = document.getElementById("buttonKeyword");
+        targetButton.classList.add("is-active");
+
+        // リスト要素を取得
         const keywordList = await waitForElement("#collectListContainer");
 
+        // トランジション
         const listTransition = new Promise(resolve => {
             keywordList.addEventListener("transitionend", function onTransitionEnd(event) {
                 if (
@@ -240,7 +265,10 @@ if (installButton) {
             });
         });
 
+        // 裏でリストを展開しておく
         keywordList.classList.add("is-open");
+
+        // トランジション実行
         await listTransition;
 
         // --------------------------------------------------
@@ -292,14 +320,26 @@ if (installButton) {
         // 進行処理
         // --------------------------------------------------
 
+        // 操作禁止の解除
+        document.body.classList.remove("is-disabled");
+
         // ストーリー進行
         localStorage.setItem("system-install", true);
+
+        // 送信ボックスに追加
+        addBoxMail("receive", "r003", true, "1900/01/01");
+        addBoxMail("receive", "r002", true, "1900/01/01");
+        addBoxMail("receive", "r001", true, "1900/01/01");
+        addBoxMail("receive", "r100");
+
+        // 「メール」解放
+        releaseMail();
 
         // 「キーワード」解放
         releaseKeyword();
 
         // メール受信表示
-        // TODO:
+        showMailNotice();
 
     });
 }

@@ -2,6 +2,9 @@
 // インポート
 // ====================================================================================================
 
+// 共通
+import { updateMailBadge } from "../common/controler.js";
+
 // メール情報
 import { getMails } from "./data/mail.js";
 
@@ -115,6 +118,9 @@ export function setMailRead(id, readed = true, date = null) {
     };
 
     localStorage.setItem("mail-status", JSON.stringify(status));
+
+    // 新着メールバッジの更新
+    updateMailBadge();
 }
 
 /**

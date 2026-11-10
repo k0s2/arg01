@@ -256,40 +256,7 @@ body#mail {
 
     }
 
-    /* -------------------------------------------------- */
-    /* ダイアログ上書き */
-    /* -------------------------------------------------- */
-
-    #dialog:not(.is-mind) {
-        transition: none;
-
-        &.is-hidden {
-            display: none;
-        }
-
-        section {
-            border: solid 1px #444;
-            transition: none;
-        }
-
-        button {
-            background: #eee;
-            border: solid 1px #444;
-            border-radius: 0;
-            transition: none;
-
-            /* ホバー */
-            @media (hover: hover) {
-                &:hover {
-                    opacity: 0.5;
-                    color: inherit;
-                }
-            }
-        }
-    }
-
 }
-
 
 /* -------------------------------------------------- */
 /* アニメーション */

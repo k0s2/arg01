@@ -5,9 +5,42 @@
 // キーワードリスト
 import { initWordCollect } from "./template/word-list/controler.js";
 
+// メール通知
+import { showMailNotice as mailNoticeShowMailNotice } from "./template/mail-notice/controler.js";
+
 // ====================================================================================================
 // 共通メソッド
 // ====================================================================================================
+
+/**
+ * メール通知
+ */
+export function showMailNotice() {
+    mailNoticeShowMailNotice();
+}
+
+/**
+ * 新着メールバッジの更新
+ */
+export function updateMailBadge() {
+    const target = document.getElementById("buttonMail");
+
+    if (!target) {
+        return;
+    }
+
+    // 受信メールを取得
+    const mails = JSON.parse(localStorage.getItem("mail-receive") || "[]");
+
+    // 既読情報を取得
+    const status = JSON.parse(localStorage.getItem("mail-status") || "{}");
+
+    // 未読メールがあるか
+    const hasNewMail = mails.some(id => status[id]?.readed == false);
+
+    // バッジ表示
+    target.classList.toggle("has-new-mail", hasNewMail);
+}
 
 /**
  * ボタン表示
@@ -78,32 +111,42 @@ export async function loadTemplate(baseUrl, containerSelector = null) {
 
 /**
  * 「メール」解放
+ * @param {Boolean} first 初回
  */
-export function releaseMail() {
+export function releaseMail(first = false) {
+    // ローカルストレージ操作
     const target = "releaseMail";
-
     if (!localStorage.getItem(target)) {
-        // ローカルストレージに保存
         localStorage.setItem(target, true);
-
-        // 表示アニメーション
-        showButton("buttonMail", true);
     }
+
+    // 表示
+    showButton("buttonMail", first);
+
+    // クリックイベント
+    document.getElementById("buttonMail").addEventListener("click", () => {
+        location.href = new URL("../../a-mail/list/#receive", location.href).href
+    });
 }
 
 /**
  * 「掲示板」解放
+ * @param {Boolean} first 初回
  */
-export function releaseBulletin() {
+export function releaseBulletin(first = false) {
+    // ローカルストレージ操作
     const target = "releaseBulletin";
-
     if (!localStorage.getItem(target)) {
-        // ローカルストレージに保存
         localStorage.setItem(target, true);
-
-        // 表示アニメーション
-        showButton("buttonBulletin", true);
     }
+
+    // 表示
+    showButton("buttonBulletin", first);
+
+    // クリックイベント
+    document.getElementById("buttonBulletin").addEventListener("click", () => {
+        location.href = new URL("../../urban-legend-observatory/lobby/", location.href).href
+    });
 }
 
 /**
@@ -114,7 +157,7 @@ export function releaseKeyword() {
     localStorage.setItem("releaseKeyword", true);
 
     // 表示アニメーション
-    showButton("buttonWord", true);
+    showButton("buttonKeyword", true);
 }
 
 // ====================================================================================================
@@ -144,34 +187,21 @@ window.addEventListener("resize", () => {
 
 // メール
 if (localStorage.getItem("releaseMail") == "true") {
-    const target = "buttonMail";
-
-    // ボタンを表示
-    showButton(target);
-
-    // クリックイベント
-    document.getElementById(target).addEventListener("click", () => {
-        location.href = new URL("../../a-mail/list/#receive", location.href).href
-    });
+    releaseMail();
 }
+
+// 新着メールバッジ
+updateMailBadge();
 
 // 掲示板
 if (localStorage.getItem("releaseBulletin") == "true") {
-    const target = "buttonBulletin";
-
-    // ボタンを表示
-    showButton(target);
-
-    // クリックイベント
-    document.getElementById(target).addEventListener("click", () => {
-        location.href = new URL("../../urban-legend-observatory/lobby/", location.href).href
-    });
+    releaseBulletin();
 }
 
 // キーワード
 if (localStorage.getItem("releaseKeyword") == "true") {
     // ボタンを表示
-    showButton("buttonWord");
+    showButton("buttonKeyword");
 }
 
 // --------------------------------------------------

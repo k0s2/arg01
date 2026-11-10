@@ -12,7 +12,6 @@
     color: var(--color-main);
     transform: translateX(-100%);
     overflow: hidden;
-    pointer-events: none;
 
     /* コンテンツ */
     .install-content {

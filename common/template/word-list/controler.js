@@ -16,7 +16,7 @@ function initCollectPanel(mode = 0) {
     }
 
     // ボタン
-    const button = document.getElementById("buttonWord");
+    const button = document.getElementById("buttonKeyword");
     if (!button) {
         return;
     }
@@ -300,7 +300,7 @@ export async function initWordCollect() {
     });
 
     // トグルボタン
-    const targetToggleButton = document.getElementById("buttonWord");
+    const targetToggleButton = document.getElementById("buttonKeyword");
     if (targetToggleButton) {
 
         // クリックイベントを付与

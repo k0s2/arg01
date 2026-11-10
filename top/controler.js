@@ -17,7 +17,7 @@ import { showDialog, showAlert } from "../common/template/dialog/controler.js";
  * @param {Boolean} anime アニメーションするか
  */
 export function showButtonKeyword(anime = false) {
-    showButton("buttonWord", anime);
+    showButton("buttonKeyword", anime);
 }
 
 // ====================================================================================================

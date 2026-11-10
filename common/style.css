@@ -298,6 +298,35 @@ footer {
                     color: var(--color-main);
                 }
             }
+
+            /* 新着メールバッジ */
+            &#buttonMail {
+                position: relative;
+
+                &.has-new-mail::before {
+                    content: "!";
+
+                    position: absolute;
+                    top: -6px;
+                    right: -4px;
+
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    width: 16px;
+                    height: 16px;
+
+                    background: #f00;
+                    border: 1px solid var(--color-main);
+                    border-radius: 50%;
+
+                    color: #fff;
+                    font-size: 12px;
+                    font-weight: bold;
+                }
+            }
+
         }
     }
 
@@ -336,7 +365,7 @@ footer {
 }
 
 /* 基本 */
-#buttonWord {
+#buttonKeyword {
     .toggleButtonIcon {
         position: relative;
         flex-shrink: 0;
@@ -398,6 +427,16 @@ footer {
     box-sizing: border-box;
 
     overflow: auto;
+}
+
+/* -------------------------------------------------- */
+/* 操作禁止 */
+/* -------------------------------------------------- */
+
+body.is-disabled {
+    * {
+        pointer-events: none;
+    }
 }
 
 /* -------------------------------------------------- */

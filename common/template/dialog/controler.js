@@ -59,7 +59,7 @@ function hideDialog() {
  * @param {String} message 確認文章
  * @param {String} title 見出し（省略可）
  * @param {[String]} buttons ボタン（省略可）
- * @param {Number} mode モード（0:通常 / 1:思考 / 2:警告）
+ * @param {Number} mode モード（0:通常 / 1:思考 / 2:警告 / 3:システム）
  */
 export async function showDialog(message, title = "", buttons = null, mode = 0) {
     return new Promise(async (resolve) => {
@@ -99,6 +99,16 @@ export async function showDialog(message, title = "", buttons = null, mode = 0) 
 
                 // モード切替
                 targetBack.classList.add("is-alert");
+
+                break;
+
+            // --------------------------------------------------
+            // ●システム
+            // --------------------------------------------------
+            case 3:
+
+                // モード切替
+                targetBack.classList.add("is-system");
 
                 break;
 
@@ -335,4 +345,15 @@ export async function showMindDialog(message, title = "", buttons = null) {
 export async function showAlert(message) {
     // 警告モードで、既存のダイアログ表示処理を呼び出し
     return showDialog(message, "確認", ["はい<span>長押しで実行</span>", "いいえ"], 2);
+}
+
+/**
+ * ダイアログ（システムモード）を表示
+ * @param {String} message 確認文章
+ * @param {String} title 見出し（省略可）
+ * @param {[String]} buttons ボタン（省略可）
+ */
+export async function showSystemDialog(message, title = "", buttons = null) {
+    // システムモードで、既存のダイアログ表示処理を呼び出し
+    return showDialog(message, title, buttons, 3);
 }

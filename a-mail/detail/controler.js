@@ -3,7 +3,7 @@
 // ====================================================================================================
 
 // ダイアログ
-import { showDialog, showMindDialog } from "../../common/template/dialog/controler.js";
+import { showSystemDialog, showMindDialog } from "../../common/template/dialog/controler.js";
 
 // メール情報
 import { getMails } from "../data/mail.js";
@@ -32,21 +32,6 @@ const currentId = location.hash.slice(1);;
 const isReceive = (currentId.includes("r"));
 
 // --------------------------------------------------
-// 進行イベント
-// --------------------------------------------------
-
-if (
-    currentId == "s001"
-    && getBoxMails("receive").length == 0
-) {
-    // 送信ボックスに追加
-    addBoxMail("receive", "r003", true, "1900/01/01");
-    addBoxMail("receive", "r002", true, "1900/01/01");
-    addBoxMail("receive", "r001", true, "1900/01/01");
-    addBoxMail("receive", "r100");
-}
-
-// --------------------------------------------------
 // イベント設定
 // --------------------------------------------------
 
@@ -69,7 +54,7 @@ if (isReceive) {
 
         // ●文字化けメール
         if (reply == undefined) {
-            showDialog("退会済みユーザーには返信できません。");
+            showSystemDialog("退会済みユーザーには返信できません。");
         }
         // ●選択肢あり
         else {
