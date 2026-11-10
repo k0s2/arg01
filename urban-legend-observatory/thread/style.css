@@ -12,7 +12,8 @@
     justify-content: center;
     align-items: center;
 
-    overflow: hidden;
+    width: 100%;
+    height: 100%;
     background: #080808;
     color: var(--color-main);
 
@@ -55,7 +56,7 @@
     /* インストール表示 */
     .install-progress {
         opacity: 0;
-        transition: opacity 0.3s ease;
+        transition: opacity 0.25s ease;
 
         p {
             display: flex;
@@ -80,7 +81,7 @@
             background: currentColor;
 
             &.is-loading {
-                animation: installGauge 2.5s linear forwards;
+                animation: installGauge 2.0s linear forwards;
             }
         }
     }
@@ -115,9 +116,30 @@
 
     /* リスト領域だけ残す */
     &.is-minimizing {
+        clip-path: inset(var(--install-top) 0 0 var(--install-left));
+
         .install-content {
             opacity: 0;
         }
+    }
+
+    /* 退場 */
+    &.is-exiting {
+        clip-path: inset(0 0 0 100%);
+    }
+}
+
+@media (max-width: 719px) {
+    .install-cover {
+
+        &.is-minimizing {
+            clip-path: inset(var(--install-top) 0 0 0);
+        }
+
+        &.is-exiting {
+            clip-path: inset(100% 0 0 0);
+        }
+
     }
 }
 
