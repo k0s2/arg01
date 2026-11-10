@@ -1,0 +1,154 @@
+/* ==================================================================================================== */
+/* FUGURUMA SYSTEM インストール演出 */
+/* ==================================================================================================== */
+
+/* 暗色カバー */
+.install-cover {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #080808;
+    color: var(--color-main);
+
+    transform: translateX(-100%);
+    pointer-events: none;
+
+    transition:
+        top 0.8s ease-in-out,
+        left 0.8s ease-in-out,
+        width 0.8s ease-in-out,
+        height 0.8s ease-in-out;
+
+    .install-content {
+        text-align: center;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    /* カバー開始 */
+    &.is-entering {
+        animation: installCoverIn 0.7s ease-out forwards;
+    }
+
+    /* タイトル表示 */
+    &.is-title .install-content {
+        opacity: 1;
+    }
+
+    /* インストール表示 */
+    &.is-progress .install-progress {
+        opacity: 1;
+    }
+
+    .install-title {
+        font-size: clamp(24px, 5vw, 48px);
+        letter-spacing: 0.15em;
+        margin-bottom: 40px;
+    }
+
+    .install-progress {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+
+        p {
+            margin: 0 0 12px;
+            font-size: 14px;
+            letter-spacing: 0.2em;
+        }
+    }
+
+    .install-gauge {
+        width: 100%;
+        height: 6px;
+        border: 1px solid currentColor;
+
+        span {
+            display: block;
+            width: 0;
+            height: 100%;
+            background: currentColor;
+
+            &.is-loading {
+                animation: installGauge 2.5s linear forwards;
+            }
+        }
+    }
+
+    /* リスト位置まで縮小 */
+    &.is-minimizing {
+        .install-content {
+            opacity: 0;
+        }
+    }
+}
+
+/* シアンのカバー */
+.install-blue-cover {
+    position: fixed;
+    z-index: 10001;
+
+    background: #0af;
+    transform: translateX(-100%);
+    pointer-events: none;
+
+    &.is-entering {
+        animation: installBlueIn 0.7s ease-out forwards;
+    }
+
+    &.is-exiting {
+        animation: installBlueOut 0.7s ease-in forwards;
+    }
+}
+
+/* ====================================================================================================
+   アニメーション
+   ==================================================================================================== */
+
+/* 暗色カバー：左から右へ */
+@keyframes installCoverIn {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* インストールゲージ */
+@keyframes installGauge {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+/* シアンカバー：左から右へ */
+@keyframes installBlueIn {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+/* シアンカバー：右へ抜ける */
+@keyframes installBlueOut {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
