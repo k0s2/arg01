@@ -72,6 +72,20 @@ body#bulletin {
                     a {
                         color: #88f;
                     }
+
+                    button {
+                        display: inline;
+                        background: none !important;
+                        border-radius: 0;
+                        margin: 0;
+                        padding: 0;
+                        width: auto;
+
+                        color: #88f !important;
+                        text-align: inherit;
+                        text-decoration: underline;
+                        font-weight: normal;
+                    }
                 }
 
                 .threadNo {
@@ -98,23 +112,7 @@ body#bulletin {
 
         /* リンク */
         >a {
-            color: var(--color-bulletin-main);
-        }
-
-        /* アルバイトバナー */
-        #arbeitBanner {
-            margin-top: 80px;
-            text-align: center;
-
-            a {
-                display: inline-block;
-                width: 60%;
-
-                img {
-                    width: stretch;
-                    min-width: 200px;
-                }
-            }
+            color: #88f;
         }
 
     }

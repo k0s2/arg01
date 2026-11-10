@@ -1,6 +1,23 @@
 export default [
 
     {
+        id: "000",
+        title: "タイトルなし",
+        threads: [
+            {
+                text:
+                    '<button id="buttonm-install">FUGURUMA SYSTEM INSTALL</button>',
+            },
+            {
+                text: "なにこれ？",
+            },
+            {
+                text: "誰がこんな怪しげなリンク踏むん？",
+            },
+        ]
+    },
+
+    {
         id: "004",
         title: "Phan†asmagoria 実況スレ／第3夜",
         threads: [
@@ -129,11 +146,6 @@ export default [
                 text:
                     "タイトルの通り、一緒に●んでくれる人を募集します<br>"
                     + "詳細は xxx-xxxx-xxxx まで",
-            },
-            {
-                condition: "999",
-                text:
-                    "死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね死ね",
             },
         ]
     },

@@ -44,7 +44,6 @@ if (
     addBoxMail("receive", "r002", true, "1900/01/01");
     addBoxMail("receive", "r001", true, "1900/01/01");
     addBoxMail("receive", "r100");
-    addBoxMail("send", "s001");
 }
 
 // --------------------------------------------------
