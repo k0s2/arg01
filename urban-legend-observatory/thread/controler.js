@@ -123,26 +123,28 @@ if (installButton) {
             return;
         }
 
+        // インストールフラグ
         isInstalling = true;
 
+        // スマホか（画面幅で判定）
         const isMobile = window.matchMedia("(max-width: 719px)").matches;
 
-        // --------------------------------------------------
-        // カバーを生成
-        // --------------------------------------------------
-
+        // 描画範囲
         const main = document.querySelector("main");
         const mainRect = main.getBoundingClientRect();
 
+        // --------------------------------------------------
+        // カバー：黒
+        // --------------------------------------------------
+
+        // カバーを生成
         const cover = document.createElement("div");
         cover.className = "install-cover";
-
         cover.style.inset = "auto";
         cover.style.top = `${mainRect.top}px`;
         cover.style.left = `${mainRect.left}px`;
         cover.style.width = `${mainRect.width}px`;
         cover.style.height = `${mainRect.height}px`;
-
         cover.innerHTML = `
             <div class="install-content">
                 <div class="install-title">FUGURUMA SYSTEM</div>
@@ -159,17 +161,21 @@ if (installButton) {
             <div class="install-blue-cover"></div>
         `;
 
+        // カバーを描画範囲に追加
         main.appendChild(cover);
 
+        // スライドアニメーション
         cover.classList.add("is-entering");
         await waitAnimation(cover, "installCoverIn");
 
         // --------------------------------------------------
-        // タイトル表示
+        // タイトル
         // --------------------------------------------------
 
+        // 描画箇所を取得
         const content = cover.querySelector(".install-content");
 
+        // スライドアニメーション
         const titleTransition = new Promise(resolve => {
             content.addEventListener("transitionend", function onTransitionEnd(event) {
                 if (event.target !== content || event.propertyName !== "transform") {
@@ -186,7 +192,7 @@ if (installButton) {
         await titleTransition;
 
         // --------------------------------------------------
-        // インストール表示
+        // インストール演出
         // --------------------------------------------------
 
         cover.classList.add("is-progress");
@@ -218,36 +224,30 @@ if (installButton) {
         percentage.textContent = "100%";
 
         // --------------------------------------------------
-        // キーワードリストを展開
+        // キーワードリスト
         // --------------------------------------------------
 
-        const container = await waitForElement("#collectListContainer");
+        const keywordList = await waitForElement("#collectListContainer");
 
         const listTransition = new Promise(resolve => {
-            container.addEventListener("transitionend", function onTransitionEnd(event) {
+            keywordList.addEventListener("transitionend", function onTransitionEnd(event) {
                 const expectedProperty = isMobile ? "height" : "width";
 
-                if (event.target !== container || event.propertyName !== expectedProperty) {
+                if (event.target !== keywordList || event.propertyName !== expectedProperty) {
                     return;
                 }
 
-                container.removeEventListener("transitionend", onTransitionEnd);
+                keywordList.removeEventListener("transitionend", onTransitionEnd);
                 resolve();
             });
         });
 
-        container.classList.add("is-open");
-
-        const wordButton = document.getElementById("buttonWord");
-
-        if (wordButton) {
-            wordButton.classList.add("is-active");
-        }
+        keywordList.classList.add("is-open");
 
         await listTransition;
 
         // --------------------------------------------------
-        // タイトルとゲージを同時に上へ退場
+        // タイトル・ゲージ；スライドアウト
         // --------------------------------------------------
 
         const contentExit = new Promise(resolve => {
@@ -266,11 +266,13 @@ if (installButton) {
         await contentExit;
 
         // --------------------------------------------------
-        // キーワードリストの領域だけ暗色カバーを残す
+        // カバースライド
         // --------------------------------------------------
 
-        const rect = container.getBoundingClientRect();
+        // キーワードリストの範囲を取得
+        const rect = keywordList.getBoundingClientRect();
 
+        // スライドアニメーション
         const clipTransition = new Promise(resolve => {
             cover.addEventListener("transitionend", function onTransitionEnd(event) {
                 if (event.target !== cover || event.propertyName !== "clip-path") {
@@ -283,11 +285,9 @@ if (installButton) {
         });
 
         if (isMobile) {
-            cover.style.clipPath =
-                `inset(${rect.top - mainRect.top}px 0 0 0)`;
+            cover.style.clipPath = `inset(${rect.top - mainRect.top}px 0 0 0)`;
         } else {
-            cover.style.clipPath =
-                `inset(0 0 0 ${rect.left - mainRect.left}px)`;
+            cover.style.clipPath = `inset(0 0 0 ${rect.left - mainRect.left}px)`;
         }
 
         cover.classList.add("is-minimizing");
@@ -295,50 +295,36 @@ if (installButton) {
         await clipTransition;
 
         // --------------------------------------------------
-        // 残った領域内でシアンカバーを展開
+        // カバー：青
         // --------------------------------------------------
 
+        // カバーを生成
         const blueCover = cover.querySelector(".install-blue-cover");
-
         blueCover.style.top = `${rect.top - mainRect.top}px`;
         blueCover.style.left = `${rect.left - mainRect.left}px`;
         blueCover.style.width = `${rect.width}px`;
         blueCover.style.height = `${rect.height}px`;
 
+        // スライドアニメーション
         blueCover.classList.add("is-entering");
-
         await waitAnimation(blueCover, "installBlueIn");
 
         // --------------------------------------------------
-        // シアンカバーと暗色カバーを同時に退場
+        // 終了
         // --------------------------------------------------
 
+        // スライドアウト
         if (isMobile) {
             cover.style.clipPath = "inset(100% 0 0 0)";
         } else {
             cover.style.clipPath = "inset(0 0 0 100%)";
         }
 
-        await waitAnimation(cover, "installBlueIn");
-
-        new Promise(resolve => {
-            cover.addEventListener("transitionend", function onTransitionEnd(event) {
-                if (event.target !== cover || event.propertyName !== "clip-path") {
-                    return;
-                }
-
-                cover.removeEventListener("transitionend", onTransitionEnd);
-                resolve();
-            });
-        });
-
-        cover.remove();
-
         // --------------------------------------------------
         // 「キーワード」解放
         // --------------------------------------------------
 
-        // releaseKeyword();
+        releaseKeyword();
 
     });
 }
