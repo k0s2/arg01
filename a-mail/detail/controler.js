@@ -62,7 +62,7 @@ if (isReceive) {
             const receivedIds = getBoxMails("receive").map(mail => mail.id);
 
             // 返信済み選択肢は除外
-            reply = reply.filter(item => !receivedIds.includes(item.mailId));
+            reply = reply.filter(item => !receivedIds.includes("r" + item.mailNo));
 
             // 選択肢がある
             if (reply.length >= 1) {
@@ -75,19 +75,14 @@ if (isReceive) {
 
                 // ●選択された場合
                 if (result >= 0) {
-                    // 返信メールを取得
-                    const newMail = getMails([reply[result].mailId])[0];
+                    // 返信を、送信ボックスへ追加
+                    addBoxMail("send", "s" + reply[result].mailNo);
 
-                    if (newMail) {
-                        // 返信を、送信ボックスへ追加
-                        addBoxMail("send", "r" + newMail.id);
+                    // 返信への返信を、受信ボックスへ追加
+                    addBoxMail("receive", "r" + reply[result].mailNo);
 
-                        // 返信への返信を、受信ボックスへ追加
-                        addBoxMail("receive", newMail.id);
-
-                        // 「受信ボックス」ページへ遷移
-                        location.href = new URL("../list/#receive", location.href).href
-                    }
+                    // 「受信ボックス」ページへ遷移
+                    location.href = new URL("../list/#receive", location.href).href
                 }
             }
             // ●それ以外

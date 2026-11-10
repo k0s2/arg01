@@ -33,15 +33,15 @@ const replyGroups = [
         // 返信メール
         reply: [
             {
-                mailId: "r102",
+                mailNo: "102",
                 text: "お前は誰だ？",
             },
             {
-                mailId: "r103",
+                mailNo: "103",
                 text: "意味不明なメールもお前の仕業か？",
             },
             {
-                mailId: "r101",
+                mailNo: "101",
                 text: "分かった。やってみる。",
             },
         ],
