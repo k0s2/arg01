@@ -129,23 +129,39 @@ if (installButton) {
         // カバーを生成
         // --------------------------------------------------
 
+        const main = document.querySelector("main");
+        const mainRect = main.getBoundingClientRect();
+
         const cover = document.createElement("div");
         cover.className = "install-cover";
 
+        cover.style.inset = "auto";
+        cover.style.top = `${mainRect.top}px`;
+        cover.style.left = `${mainRect.left}px`;
+        cover.style.width = `${mainRect.width}px`;
+        cover.style.height = `${mainRect.height}px`;
+
         cover.innerHTML = `
             <div class="install-content">
+
                 <div class="install-title">FUGURUMA SYSTEM</div>
+
                 <div class="install-progress">
+
                     <p>NOW INSTALLING</p>
+
                     <div class="install-gauge">
                         <span></span>
                     </div>
+
                 </div>
+
             </div>
+
             <div class="install-blue-cover"></div>
         `;
 
-        document.querySelector("main").appendChild(cover);
+        main.appendChild(cover);
 
         cover.classList.add("is-entering");
         await waitAnimation(cover, "installCoverIn");
@@ -169,10 +185,12 @@ if (installButton) {
 
         await waitAnimation(gauge, "installGauge");
 
+        // --------------------------------------------------
         // キーワードリストを展開
+        // --------------------------------------------------
+
         const container = await waitForElement("#collectListContainer");
 
-        releaseKeyword();
         container.classList.add("is-open");
 
         const wordButton = document.getElementById("buttonWord");
@@ -199,13 +217,14 @@ if (installButton) {
         const isMobile = window.matchMedia("(max-width: 779px)").matches;
 
         if (isMobile) {
-            cover.style.clipPath = `inset(0 0 ${window.innerHeight - rect.top}px 0)`;
+            cover.style.clipPath = `inset(${rect.top - mainRect.top}px 0 0 0)`;
         } else {
-            cover.style.clipPath = `inset(0 0 0 ${rect.left}px)`;
+            cover.style.clipPath = `inset(0 0 0 ${rect.left - mainRect.left}px)`;
         }
 
         cover.classList.add("is-minimizing");
-        await wait(500);
+
+        await wait(750);
 
         // --------------------------------------------------
         // 残った領域内でシアンカバーを展開
@@ -213,8 +232,8 @@ if (installButton) {
 
         const blueCover = cover.querySelector(".install-blue-cover");
 
-        blueCover.style.top = `${rect.top}px`;
-        blueCover.style.left = `${rect.left}px`;
+        blueCover.style.top = `${rect.top - mainRect.top}px`;
+        blueCover.style.left = `${rect.left - mainRect.left}px`;
         blueCover.style.width = `${rect.width}px`;
         blueCover.style.height = `${rect.height}px`;
 
@@ -236,5 +255,12 @@ if (installButton) {
         await waitAnimation(blueCover, "installBlueOut");
 
         cover.remove();
+
+        // --------------------------------------------------
+        // 「キーワード」解放
+        // --------------------------------------------------
+
+        // releaseKeyword();
+
     });
 }
