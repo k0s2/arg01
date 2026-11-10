@@ -12,45 +12,47 @@
     justify-content: center;
     align-items: center;
 
+    overflow: hidden;
     background: #080808;
     color: var(--color-main);
 
     transform: translateX(-100%);
+    overflow: hidden;
+    clip-path: inset(0);
+
     pointer-events: none;
 
     transition:
-        top 0.8s ease-in-out,
-        left 0.8s ease-in-out,
-        width 0.8s ease-in-out,
-        height 0.8s ease-in-out;
+        top 0.75s ease-in-out,
+        left 0.75s ease-in-out,
+        width 0.75s ease-in-out,
+        height 0.75s ease-in-out,
+        clip-path 0.75s ease-in-out;
 
     .install-content {
+        width: max-content;
+        max-width: none;
+
         text-align: center;
+        white-space: nowrap;
+
         opacity: 0;
-        transition: opacity 0.2s ease;
+        transform: translateY(100%);
+
+        transition:
+            transform 0.5s ease,
+            opacity 0.5s ease;
     }
 
-    /* カバー開始 */
-    &.is-entering {
-        animation: installCoverIn 0.7s ease-out forwards;
-    }
-
-    /* タイトル表示 */
-    &.is-title .install-content {
-        opacity: 1;
-    }
-
-    /* インストール表示 */
-    &.is-progress .install-progress {
-        opacity: 1;
-    }
-
+    /* タイトル */
     .install-title {
         font-size: clamp(24px, 5vw, 48px);
         letter-spacing: 0.15em;
         margin-bottom: 40px;
+        white-space: nowrap;
     }
 
+    /* インストール表示 */
     .install-progress {
         opacity: 0;
         transition: opacity 0.3s ease;
@@ -62,6 +64,7 @@
         }
     }
 
+    /* ゲージ */
     .install-gauge {
         width: 100%;
         height: 6px;
@@ -79,7 +82,35 @@
         }
     }
 
-    /* リスト位置まで縮小 */
+    /* カバー開始 */
+    &.is-entering {
+        animation: installCoverIn 0.5s ease-out forwards;
+    }
+
+    /* タイトル表示 */
+    &.is-title {
+        .install-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* インストール表示 */
+    &.is-progress {
+        .install-progress {
+            opacity: 1;
+        }
+    }
+
+    /* タイトルとゲージを同時に上へ退場 */
+    &.is-content-exiting {
+        .install-content {
+            opacity: 0;
+            transform: translateY(-100%);
+        }
+    }
+
+    /* リスト領域だけ残す */
     &.is-minimizing {
         .install-content {
             opacity: 0;
@@ -89,19 +120,19 @@
 
 /* シアンのカバー */
 .install-blue-cover {
-    position: fixed;
-    z-index: 10001;
+    position: absolute;
+    z-index: 2;
 
     background: #0af;
     transform: translateX(-100%);
     pointer-events: none;
 
     &.is-entering {
-        animation: installBlueIn 0.7s ease-out forwards;
+        animation: installBlueIn 0.25s ease-out forwards;
     }
 
     &.is-exiting {
-        animation: installBlueOut 0.7s ease-in forwards;
+        animation: installBlueOut 0.25s ease-in forwards;
     }
 }
 

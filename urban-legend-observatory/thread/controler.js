@@ -110,9 +110,9 @@ if (thread) {
     section.querySelector("ul").remove();
 }
 
-// --------------------------------------------------
+// ====================================================================================================
 // FUGURUMA SYSTEM インストール
-// --------------------------------------------------
+// ====================================================================================================
 
 let isInstalling = false;
 const installButton = document.getElementById("buttonm-install");
@@ -125,7 +125,10 @@ if (installButton) {
 
         isInstalling = true;
 
+        // --------------------------------------------------
         // カバーを生成
+        // --------------------------------------------------
+
         const cover = document.createElement("div");
         cover.className = "install-cover";
 
@@ -139,19 +142,26 @@ if (installButton) {
                     </div>
                 </div>
             </div>
+            <div class="install-blue-cover"></div>
         `;
 
-        document.body.appendChild(cover);
+        document.querySelector("main").appendChild(cover);
 
-        // ① 画面全体をカバー
         cover.classList.add("is-entering");
         await waitAnimation(cover, "installCoverIn");
 
-        // ② タイトル表示
-        cover.classList.add("is-title");
-        await wait(800);
+        // --------------------------------------------------
+        // タイトル表示
+        // --------------------------------------------------
 
-        // ③ インストール表示
+        cover.classList.add("is-title");
+
+        await wait(500);
+
+        // --------------------------------------------------
+        // インストール表示
+        // --------------------------------------------------
+
         cover.classList.add("is-progress");
 
         const gauge = cover.querySelector(".install-gauge span");
@@ -159,7 +169,7 @@ if (installButton) {
 
         await waitAnimation(gauge, "installGauge");
 
-        // ④ キーワードリストを展開
+        // キーワードリストを展開
         const container = await waitForElement("#collectListContainer");
 
         releaseKeyword();
@@ -171,45 +181,60 @@ if (installButton) {
             wordButton.classList.add("is-active");
         }
 
-        // リストの展開を待つ
-        await wait(400);
+        await wait(250);
 
-        // ⑤ 暗色カバーをリストの大きさに縮小
+        // --------------------------------------------------
+        // タイトルとゲージを同時に上へ退場
+        // --------------------------------------------------
+
+        cover.classList.add("is-content-exiting");
+
+        await wait(500);
+
+        // --------------------------------------------------
+        // キーワードリストの領域だけ暗色カバーを残す
+        // --------------------------------------------------
+
         const rect = container.getBoundingClientRect();
+        const isMobile = window.matchMedia("(max-width: 779px)").matches;
+
+        if (isMobile) {
+            cover.style.clipPath = `inset(0 0 ${window.innerHeight - rect.top}px 0)`;
+        } else {
+            cover.style.clipPath = `inset(0 0 0 ${rect.left}px)`;
+        }
 
         cover.classList.add("is-minimizing");
+        await wait(500);
 
-        cover.style.top = `${rect.top}px`;
-        cover.style.left = `${rect.left}px`;
-        cover.style.width = `${rect.width}px`;
-        cover.style.height = `${rect.height}px`;
-        cover.style.right = "auto";
-        cover.style.bottom = "auto";
+        // --------------------------------------------------
+        // 残った領域内でシアンカバーを展開
+        // --------------------------------------------------
 
-        await wait(850);
-
-        // ⑥ シアンのカバーを生成
-        const blueCover = document.createElement("div");
-        blueCover.className = "install-blue-cover";
+        const blueCover = cover.querySelector(".install-blue-cover");
 
         blueCover.style.top = `${rect.top}px`;
         blueCover.style.left = `${rect.left}px`;
         blueCover.style.width = `${rect.width}px`;
         blueCover.style.height = `${rect.height}px`;
 
-        document.body.appendChild(blueCover);
-
-        // 左から右へカバー
         blueCover.classList.add("is-entering");
         await waitAnimation(blueCover, "installBlueIn");
 
-        // 暗色カバーを削除
-        cover.remove();
+        // --------------------------------------------------
+        // シアンカバーと暗色カバーを同時に退場
+        // --------------------------------------------------
 
-        // ⑦ シアンのカバーを右へ抜く
         blueCover.classList.add("is-exiting");
+
+        if (isMobile) {
+            cover.style.clipPath = "inset(100% 0 0 0)";
+        } else {
+            cover.style.clipPath = "inset(0 0 0 100%)";
+        }
+
         await waitAnimation(blueCover, "installBlueOut");
 
-        blueCover.remove();
+        cover.remove();
     });
 }
