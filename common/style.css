@@ -140,17 +140,6 @@ ul {
     }
 }
 
-/* 枠の点滅 */
-@keyframes inputBoxActive {
-    from {
-        outline-color: var(--color-main);
-    }
-
-    to {
-        outline-color: inherit;
-    }
-}
-
 /* -------------------------------------------------- */
 /* ボタン */
 /* -------------------------------------------------- */
@@ -213,11 +202,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background: #000;
     border-bottom: solid 1px var(--color-main);
-
     padding: 8px;
+    z-index: 2000;
 
     a {
         text-decoration: none;
@@ -247,12 +235,10 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     background: #000;
     border-top: solid 1px var(--color-main);
-
     padding: 8px;
-
+    z-index: 2000;
     color: var(--color-main);
     font-size: 0.75em;
 
@@ -500,7 +486,18 @@ body.is-resizing * {
 /* アニメーション */
 /* -------------------------------------------------- */
 
-/* フッターボタン解放 */
+/* 【入力欄】枠の点滅 */
+@keyframes inputBoxActive {
+    from {
+        outline-color: var(--color-main);
+    }
+
+    to {
+        outline-color: inherit;
+    }
+}
+
+/* 【フッターボタン】解放 */
 @keyframes slideIn {
     from {
         transform: translateY(50px);

@@ -6,7 +6,7 @@
 .install-cover {
     position: fixed;
     inset: 0;
-    z-index: 10000;
+    z-index: 1000;
 
     display: flex;
     justify-content: center;
@@ -16,7 +16,7 @@
     background: #080808;
     color: var(--color-main);
 
-    transform: translateX(-100%);
+    transform: translateY(100%);
     overflow: hidden;
     clip-path: inset(0);
 
@@ -125,17 +125,17 @@
 .install-blue-cover {
     position: absolute;
     z-index: 2;
-
-    background: #0af;
+    background: var(--color-main);
     transform: translateX(-100%);
     pointer-events: none;
 
-    &.is-entering {
-        animation: installBlueIn 0.25s ease-out forwards;
+    /* スマホ用 */
+    @media (max-width: 719px) {
+        transform: translateY(-100%);
     }
 
-    &.is-exiting {
-        animation: installBlueOut 0.25s ease-in forwards;
+    &.is-entering {
+        animation: installBlueIn 0.25s ease-out forwards;
     }
 }
 
@@ -143,14 +143,14 @@
 /* アニメーション */
 /* -------------------------------------------------- */
 
-/* 暗色カバー：左から右へ */
+/*　【カバー：黒】スライド */
 @keyframes installCoverIn {
     from {
-        transform: translateX(-100%);
+        transform: translateY(100%);
     }
 
     to {
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
@@ -165,7 +165,7 @@
     }
 }
 
-/* シアンカバー：左から右へ */
+/* 【カバー：青】スライド */
 @keyframes installBlueIn {
     from {
         transform: translateX(-100%);
@@ -176,13 +176,15 @@
     }
 }
 
-/* シアンカバー：右へ抜ける */
-@keyframes installBlueOut {
-    from {
-        transform: translateX(0);
-    }
+/* スマホ用 */
+@media (max-width: 719px) {
+    @keyframes installBlueIn {
+        from {
+            transform: translateY(-100%);
+        }
 
-    to {
-        transform: translateX(100%);
+        to {
+            transform: translateY(0);
+        }
     }
 }

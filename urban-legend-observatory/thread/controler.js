@@ -125,6 +125,8 @@ if (installButton) {
 
         isInstalling = true;
 
+        const isMobile = window.matchMedia("(max-width: 719px)").matches;
+
         // --------------------------------------------------
         // カバーを生成
         // --------------------------------------------------
@@ -180,6 +182,7 @@ if (installButton) {
         });
 
         cover.classList.add("is-title");
+
         await titleTransition;
 
         // --------------------------------------------------
@@ -220,7 +223,6 @@ if (installButton) {
 
         const container = await waitForElement("#collectListContainer");
 
-        const isMobile = window.matchMedia("(max-width: 779px)").matches;
         const listTransition = new Promise(resolve => {
             container.addEventListener("transitionend", function onTransitionEnd(event) {
                 const expectedProperty = isMobile ? "height" : "width";
@@ -311,9 +313,15 @@ if (installButton) {
         // シアンカバーと暗色カバーを同時に退場
         // --------------------------------------------------
 
-        const blueExit = waitAnimation(blueCover, "installBlueOut");
+        if (isMobile) {
+            cover.style.clipPath = "inset(100% 0 0 0)";
+        } else {
+            cover.style.clipPath = "inset(0 0 0 100%)";
+        }
 
-        const coverExit = new Promise(resolve => {
+        await waitAnimation(cover, "installBlueIn");
+
+        new Promise(resolve => {
             cover.addEventListener("transitionend", function onTransitionEnd(event) {
                 if (event.target !== cover || event.propertyName !== "clip-path") {
                     return;
@@ -323,16 +331,6 @@ if (installButton) {
                 resolve();
             });
         });
-
-        blueCover.classList.add("is-exiting");
-
-        if (isMobile) {
-            cover.style.clipPath = "inset(100% 0 0 0)";
-        } else {
-            cover.style.clipPath = "inset(0 0 0 100%)";
-        }
-
-        await Promise.all([blueExit, coverExit]);
 
         cover.remove();
 
