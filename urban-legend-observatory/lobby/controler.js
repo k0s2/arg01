@@ -22,13 +22,45 @@ threadList.forEach(thread => {
 
     const button = document.createElement("button");
 
+    // --------------------------------------------------
+    // タイトル
+    // --------------------------------------------------
+
     const title = document.createElement("div");
     title.className = "title";
     title.textContent = thread.title;
 
+    // --------------------------------------------------
+    // レス数
+    // --------------------------------------------------
+
+    let countThreads = 0;
+    thread.comment.forEach(item => {
+
+        // 一致
+        if (item.match) {
+            if (!localStorage.getItem(item.match)) {
+                return;
+            }
+        }
+
+        // 不一致
+        if (item.not) {
+            if (localStorage.getItem(item.not)) {
+                return;
+            }
+        }
+
+        countThreads++;
+    })
+
     const count = document.createElement("div");
     count.className = "responceCount";
-    count.textContent = thread.responseCount ?? thread.threads.length;
+    count.textContent = countThreads
+
+    // --------------------------------------------------
+    // 描画
+    // --------------------------------------------------
 
     button.append(title, count);
 

@@ -3,7 +3,7 @@ export default [
     {
         id: "000",
         title: "タイトルなし",
-        threads: [
+        comment: [
             {
                 not: "system-install",
                 text:
@@ -30,7 +30,7 @@ export default [
     {
         id: "004",
         title: "Phan†asmagoria 実況スレ／第3夜",
-        threads: [
+        comment: [
             {
                 text:
                     "ここはアニメ「Phan†asmagoria」の実況スレです。<br>"
@@ -121,7 +121,7 @@ export default [
     {
         id: "001",
         title: "都市伝説目撃報告スレ(4)",
-        threads: [
+        comment: [
             {
                 text: "この前、駅前の電話ボックスに誰もいないのに電話かかってた",
             },
@@ -151,7 +151,7 @@ export default [
     {
         id: "002",
         title: "【急募】一緒に●んでくれる人",
-        threads: [
+        comment: [
             {
                 text:
                     "タイトルの通り、一緒に●んでくれる人を募集します<br>"
@@ -168,7 +168,7 @@ export default [
     {
         id: "003",
         title: "最近変な夢見たんだが",
-        threads: [
+        comment: [
             {
                 text: "気になる人いる？",
                 user: "夢見人",

@@ -76,7 +76,7 @@ if (thread) {
 
     let no = 1;
 
-    thread.threads.forEach((item) => {
+    thread.comment.forEach((item) => {
         // 空のレスは表示しない
         if (!item.text.trim()) {
             return;
