@@ -5,14 +5,24 @@ export default [
         title: "タイトルなし",
         threads: [
             {
+                not: "system-install",
                 text:
                     '<button id="buttonm-install">FUGURUMA SYSTEM INSTALL</button>',
+            },
+            {
+                match: "system-install",
+                text: '<span class="c-gray">この投稿は削除されました。</span>',
+                user: ""
             },
             {
                 text: "なにこれ？",
             },
             {
                 text: "誰がこんな怪しげなリンク踏むん？",
+            },
+            {
+                match: "system-install",
+                text: "やっぱ消されたか",
             },
         ]
     },
@@ -146,6 +156,11 @@ export default [
                 text:
                     "タイトルの通り、一緒に●んでくれる人を募集します<br>"
                     + "詳細は xxx-xxxx-xxxx まで",
+            },
+            {
+                condition: "ending-001",
+                text:
+                    "",
             },
         ]
     },

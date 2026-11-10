@@ -4,6 +4,8 @@
 
 /* ラッパー */
 #collectListContainer {
+    position: relative;
+
     width: 0;
     height: 100%;
 
@@ -15,6 +17,28 @@
     /* 開く */
     &.is-open {
         width: var(--pannel-width);
+    }
+
+    /* インストール演出 */
+    &.is-installing {
+        z-index: 1001;
+
+        &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+
+            background: var(--color-main);
+            pointer-events: none;
+        }
+    }
+
+    /* インストール完了 */
+    &.is-installed {
+        &::after {
+            animation: wordListCoverOut 0.25s ease-in forwards;
+        }
     }
 
     /* セクション */
@@ -198,5 +222,61 @@
         background-color: var(--color-main);
         opacity: 1;
         transform: translateX(0);
+    }
+}
+
+/* キーワードリストのカバー */
+@keyframes wordListCover {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* スマホ用 */
+@media (max-width: 719px) {
+    @keyframes wordListCover {
+        0% {
+            transform: translateY(-100%);
+        }
+
+        50% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(100%);
+        }
+    }
+}
+
+/* インストールカバー：退場 */
+@keyframes wordListCoverOut {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+/* スマホ用 */
+@media (max-width: 719px) {
+    @keyframes wordListCoverOut {
+        from {
+            transform: translateY(0);
+        }
+
+        to {
+            transform: translateY(100%);
+        }
     }
 }

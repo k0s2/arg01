@@ -8,9 +8,6 @@ import threadList from "../data/thread.js";
 // 共通
 import { releaseKeyword } from "../../common/controler.js";
 
-// ダイアログ
-import { showMindDialog } from "../../common/template/dialog/controler.js";
-
 // ====================================================================================================
 // 共通メソッド
 // ====================================================================================================
@@ -57,11 +54,6 @@ function waitAnimation(target, animationName) {
     });
 }
 
-// 指定時間待機
-function wait(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
 // ====================================================================================================
 // 初期化
 // ====================================================================================================
@@ -82,10 +74,26 @@ if (thread) {
     const targetList = section.querySelector("ul");
     targetList.innerHTML = "";
 
-    thread.threads.forEach((item, index) => {
+    let no = 1;
+
+    thread.threads.forEach((item) => {
         // 空のレスは表示しない
         if (!item.text.trim()) {
             return;
+        }
+
+        // 一致
+        if (item.match) {
+            if (!localStorage.getItem(item.match)) {
+                return;
+            }
+        }
+
+        // 不一致
+        if (item.not) {
+            if (localStorage.getItem(item.not)) {
+                return;
+            }
         }
 
         const li = document.createElement("li");
@@ -93,7 +101,7 @@ if (thread) {
         // レス番号
         const threadNo = document.createElement("p");
         threadNo.className = "threadNo";
-        threadNo.textContent = String(index + 1).padStart(4, "0");
+        threadNo.textContent = String(no).padStart(4, "0");
 
         // 本文
         const text = document.createElement("p");
@@ -102,10 +110,12 @@ if (thread) {
         // 投稿者名
         const userName = document.createElement("p");
         userName.className = "userName";
-        userName.textContent = item.user || "ななし";
+        userName.innerHTML = (item.user != undefined) ? item.user : "ななし";
 
         li.append(threadNo, text, userName);
         targetList.appendChild(li);
+
+        no++;
     });
 
 } else {
@@ -116,17 +126,16 @@ if (thread) {
 // ====================================================================================================
 // FUGURUMA SYSTEM インストール
 // ====================================================================================================
+
 let isInstalling = false;
 const installButton = document.getElementById("buttonm-install");
 
 if (installButton) {
     installButton.addEventListener("click", async () => {
-        if (isInstalling) return;
+        if (isInstalling) {
+            return;
+        }
         isInstalling = true;
-
-        // 描画範囲
-        const main = document.querySelector("main");
-        const mainRect = main.getBoundingClientRect();
 
         // --------------------------------------------------
         // カバー：黒
@@ -153,11 +162,9 @@ if (installButton) {
                 </div>
 
             </div>
-
-            <div class="install-blue-cover"></div>
         `;
 
-        main.appendChild(cover);
+        document.querySelector("main").appendChild(cover);
 
         cover.classList.add("is-entering");
         await waitAnimation(cover, "installCoverIn");
@@ -197,7 +204,6 @@ if (installButton) {
         gauge.classList.add("is-loading");
 
         const gaugeDuration = parseFloat(getComputedStyle(gauge).animationDuration) * 1000;
-
         const gaugeStart = performance.now();
 
         const updatePercentage = now => {
@@ -243,7 +249,13 @@ if (installButton) {
 
         const contentExit = new Promise(resolve => {
             content.addEventListener("transitionend", function onTransitionEnd(event) {
-                if (event.target !== content || event.propertyName !== "transform") return;
+                if (
+                    event.target !== content
+                    || event.propertyName !== "transform"
+                ) {
+                    return;
+                }
+
                 content.removeEventListener("transitionend", onTransitionEnd);
                 resolve();
             });
@@ -253,48 +265,41 @@ if (installButton) {
         await contentExit;
 
         // --------------------------------------------------
-        // カバーをリスト領域に縮小
+        // カバーをリスト領域に移行
         // --------------------------------------------------
 
-        const rect = keywordList.getBoundingClientRect();
-
-        cover.style.setProperty("--install-top", `${rect.top - mainRect.top}px`);
-        cover.style.setProperty("--install-left", `${rect.left - mainRect.left}px`);
-
-        const clipTransition = new Promise(resolve => {
-            cover.addEventListener("transitionend", function onTransitionEnd(event) {
-                if (event.target !== cover || event.propertyName !== "clip-path") return;
-                cover.removeEventListener("transitionend", onTransitionEnd);
-                resolve();
-            });
-        });
-
-        cover.classList.add("is-minimizing");
-        await clipTransition;
+        keywordList.classList.add("is-installing");
 
         // --------------------------------------------------
-        // カバー：青
+        // カバー：黒をスライドアウト
         // --------------------------------------------------
-
-        const blueCover = cover.querySelector(".install-blue-cover");
-
-        blueCover.style.top = `${rect.top - mainRect.top}px`;
-        blueCover.style.left = `${rect.left - mainRect.left}px`;
-        blueCover.style.width = `${rect.width}px`;
-        blueCover.style.height = `${rect.height}px`;
-
-        blueCover.classList.add("is-entering");
 
         cover.classList.add("is-exiting");
+        await waitAnimation(cover, "installCoverOut");
+
+        cover.remove();
+
+        // --------------------------------------------------
+        // カバー：青をスライドアウト
+        // --------------------------------------------------
+
+        keywordList.classList.add("is-installed");
+        await waitAnimation(keywordList, "wordListCoverOut");
+
+        keywordList.classList.remove("is-installing", "is-installed");
 
         // --------------------------------------------------
         // 進行処理
         // --------------------------------------------------
 
+        // ストーリー進行
+        localStorage.setItem("system-install", true);
+
         // 「キーワード」解放
-        // releaseKeyword();
+        releaseKeyword();
 
         // メール受信表示
+        // TODO:
 
     });
 }

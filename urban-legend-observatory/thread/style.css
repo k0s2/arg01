@@ -1,92 +1,76 @@
-/* ==================================================================================================== */
-/* FUGURUMA SYSTEM インストール演出 */
-/* ==================================================================================================== */
-
-/* カバー：黒 */
+/* カバー */
 .install-cover {
     position: fixed;
     inset: 0;
-    z-index: 1000;
-
+    z-index: 2001;
     display: flex;
     justify-content: center;
     align-items: center;
-
     width: 100%;
     height: 100%;
-    background: #080808;
+    background: #000;
     color: var(--color-main);
-
-    transform: translateY(100%);
+    transform: translateX(-100%);
     overflow: hidden;
-    clip-path: inset(0);
-
     pointer-events: none;
 
-    transition:
-        top 0.75s ease-in-out,
-        left 0.75s ease-in-out,
-        width 0.75s ease-in-out,
-        height 0.75s ease-in-out,
-        clip-path 0.75s ease-in-out;
-
+    /* コンテンツ */
     .install-content {
         width: max-content;
         max-width: none;
-
         text-align: center;
         white-space: nowrap;
-
         opacity: 0;
-        transform: translateY(100%);
-
+        transform: translateX(-50%);
         transition:
             transform 0.5s ease,
             opacity 0.5s ease;
-    }
 
-    /* タイトル */
-    .install-title {
-        font-size: clamp(24px, 5vw, 48px);
-        letter-spacing: 0.15em;
-        margin-bottom: 40px;
-        white-space: nowrap;
-    }
-
-    /* インストール表示 */
-    .install-progress {
-        opacity: 0;
-        transition: opacity 0.25s ease;
-
-        p {
-            display: flex;
-            justify-content: space-between;
-
-            margin: 0 0 12px;
-            font-size: 14px;
-            letter-spacing: 0.2em;
+        /* タイトル */
+        .install-title {
+            font-size: clamp(24px, 5vw, 48px);
+            letter-spacing: 0.15em;
+            margin-bottom: 40px;
+            white-space: nowrap;
         }
-    }
 
-    /* ゲージ */
-    .install-gauge {
-        width: 100%;
-        height: 6px;
-        border: 1px solid currentColor;
+        /* インストール表示 */
+        .install-progress {
+            opacity: 0;
+            transition: opacity 0.25s ease;
 
-        span {
-            display: block;
-            width: 0;
-            height: 100%;
-            background: currentColor;
+            /* 文章 */
+            p {
+                display: flex;
+                justify-content: space-between;
 
-            &.is-loading {
-                animation: installGauge 2.0s linear forwards;
+                margin: 0 0 12px;
+                font-size: 14px;
+                letter-spacing: 0.2em;
             }
+
+            /* ゲージ */
+            .install-gauge {
+                width: 100%;
+                height: 6px;
+                border: 1px solid currentColor;
+
+                span {
+                    display: block;
+                    width: 0;
+                    height: 100%;
+                    background: currentColor;
+
+                    &.is-loading {
+                        animation: installGauge 2.0s linear forwards;
+                    }
+                }
+            }
+
         }
     }
 
-    /* カバー開始 */
+    /* カバーON*/
     &.is-entering {
         animation: installCoverIn 0.5s ease-out forwards;
     }
@@ -95,84 +79,48 @@
     &.is-title {
         .install-content {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(0);
         }
     }
 
-    /* インストール表示 */
+    /* インストール開始 */
     &.is-progress {
         .install-progress {
             opacity: 1;
         }
     }
 
-    /* タイトルとゲージを同時に上へ退場 */
+    /* インストール完了 */
     &.is-content-exiting {
         .install-content {
             opacity: 0;
-            transform: translateY(-100%);
+            transform: translateX(50%);
         }
     }
 
-    /* リスト領域だけ残す */
-    &.is-minimizing {
-        clip-path: inset(var(--install-top) 0 0 var(--install-left));
-
-        .install-content {
-            opacity: 0;
-        }
-    }
-
-    /* 退場 */
+    /* カバーOFF */
     &.is-exiting {
-        clip-path: inset(0 0 0 100%);
+        animation: installCoverOut 0.5s ease-in forwards;
     }
 }
 
-@media (max-width: 719px) {
-    .install-cover {
-
-        &.is-minimizing {
-            clip-path: inset(var(--install-top) 0 0 0);
-        }
-
-        &.is-exiting {
-            clip-path: inset(100% 0 0 0);
-        }
-
-    }
-}
-
-/* カバー：青 */
-.install-blue-cover {
-    position: absolute;
-    z-index: 2;
-    background: var(--color-main);
-    transform: translateX(-100%);
-    pointer-events: none;
-
-    /* スマホ用 */
-    @media (max-width: 719px) {
-        transform: translateY(-100%);
-    }
-
-    &.is-entering {
-        animation: installBlueIn 0.25s ease-out forwards;
-    }
+/* グレー文字 */
+.c-gray {
+    color: #888;
 }
 
 /* -------------------------------------------------- */
 /* アニメーション */
 /* -------------------------------------------------- */
 
-/*　【カバー：黒】スライド */
+/* カバーON */
 @keyframes installCoverIn {
     from {
-        transform: translateY(100%);
+        transform: translateX(-100%);
     }
 
     to {
-        transform: translateY(0);
+        transform: translateX(0);
     }
 }
 
@@ -187,20 +135,22 @@
     }
 }
 
-/* 【カバー：青】スライド */
-@keyframes installBlueIn {
+/* カバーOFF */
+@keyframes installCoverOut {
     from {
-        transform: translateX(-100%);
+        transform: translateX(0);
     }
 
     to {
-        transform: translateX(0);
+        transform: translateX(100%);
     }
 }
 
 /* スマホ用 */
 @media (max-width: 719px) {
-    @keyframes installBlueIn {
+
+    /* カバーON */
+    @keyframes installCoverIn {
         from {
             transform: translateY(-100%);
         }
@@ -209,4 +159,16 @@
             transform: translateY(0);
         }
     }
+
+    /* カバーOFF */
+    @keyframes installCoverOut {
+        from {
+            transform: translateY(0);
+        }
+
+        to {
+            transform: translateY(100%);
+        }
+    }
+
 }

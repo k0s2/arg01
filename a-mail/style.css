@@ -246,11 +246,6 @@ body#mail {
                 .is-hidden {
                     display: none;
                 }
-
-                /* グレー文字 */
-                span.c-gray {
-                    color: #888;
-                }
             }
         }
 
