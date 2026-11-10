@@ -58,6 +58,9 @@
         transition: opacity 0.3s ease;
 
         p {
+            display: flex;
+            justify-content: space-between;
+
             margin: 0 0 12px;
             font-size: 14px;
             letter-spacing: 0.2em;
